@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 
+	SpringMVC로 요청이 들어오면 제일먼저 DispatcherServlet이 요청을
+	받는다. 그리고 아래 설정된 기본패키지를 scan(검색)후 @Controller
+	어노테이션이 지정된 클래스를 컨트롤러로 인식하고, 요청명에
+	해당하는 메소드를 찾아서 실행한다. 
+	 -->
+	<context:component-scan base-package="com.softlock" />
+	
+	<!-- SPRING JDBC를 사용하기 위한 커넥션 빈 생성. 
+	JAVA파일에서 커넥션 객체를 생성하지 않고 XML설정파일에서 
+	생성한후 컨트롤러에서 자동으로 주입받아 사용함. -->
+	<beans:bean name="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">		   		
+		<beans:property name="driverClassName" 
+			value="oracle.jdbc.OracleDriver" />
+		<beans:property name="url" 
+			value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<beans:property name="username" value="softlock" />
+		<beans:property name="password" value="1234" />
+	</beans:bean>
+	<beans:bean name="template" 
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+	
+	<!-- Mybatis를 사용하기 위한 빈 생성 -->
+	<beans:bean id="sqlSessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" 
+			ref="dataSource" />
+		<beans:property name="mapperLocations" 
+			value="classpath:com/softlock/model/mapper/*.xml" />
+	</beans:bean>
+	<beans:bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
+	</beans:bean>
+ 
+	<!-- 회원가입 메일 인증 -->
+	<beans:bean class="org.springframework.mail.javamail.JavaMailSenderImpl" id="mailSender">
+	<beans:property value="smtp.gmail.com" name="host"/>
+	<beans:property value="587" name="port"/>
+	<!-- 465 or 25 -->
+	<beans:property value="dahyelee7777@gmail.com" name="username"/>
+	<beans:property value="aa12341234!!" name="password"/>
+	<beans:property value="utf-8" name="defaultEncoding"/>
+	<beans:property name="javaMailProperties">
+		<beans:props>
+		<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+		<beans:prop key="mail.smtp.auth">true</beans:prop>
+		<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+		<beans:prop key="mail.debug">true</beans:prop>
+	</beans:props>
+	</beans:property>
+	</beans:bean>
+</beans:beans>
