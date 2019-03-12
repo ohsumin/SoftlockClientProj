@@ -121,4 +121,23 @@ public class MemberController {
 	
 		return "member/mem_joinActionSuccess";
 	}
+	
+	// 아이디중복확인
+	@RequestMapping("/member/checkId")
+	@ResponseBody
+	public Map<String, Object> checkId(HttpServletRequest req, HttpSession session) 
+	{
+		String id = req.getParameter("mem_id");
+		int userId = sqlSession.getMapper(MemberImpl.class).isUserId(id);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(userId == 1) {
+			map.put("isUserId", 1);
+		}
+		else {
+			map.put("isUserId", 0);
+		}
+		return map;
+	}
 }
