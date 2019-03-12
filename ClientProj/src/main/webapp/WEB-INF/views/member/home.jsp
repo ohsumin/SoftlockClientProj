@@ -29,8 +29,7 @@
 		<div style="width:400px; background-color:white; text-align:center; float:none; margin:0 auto;">
 			<br /><br /><br />
 			<div class="logo">
-				<h4>메인페이지</h4>	 
-				<h4>김민수</h4>
+				<h4>메인페이지</h4>	 				
 			</div>	
 			
 		</div>
