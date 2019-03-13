@@ -2,6 +2,8 @@ package com.softlock.model;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface MemberImpl {
 	
 	// 일반회원 회원가입
@@ -28,4 +30,9 @@ public interface MemberImpl {
 	
 	int GetKey(String mem_id, String mem_key); //유저 인증키 생성 메서드
 	int alter_userKey(String mem_id, String key);// 유저 인증키 Y로 바꿔주는 메서드
+	
+	String searchId(@Param("mem_name")String mem_name, @Param("mem_phone")String mem_phone);
+
+	public MemberDTO userInfo(String mem_id); // 유저 ID 찾기
+	int searchPassword(String mem_id, String mem_email, String key); // 회원 임시 비밀번호 변경 메서드
 }

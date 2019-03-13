@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.softlock.model.MemberDTO;
 import com.softlock.model.MemberImpl;
 import com.softlock.model.UserMailSendService;
+import com.softlock.model.UserSearchService;
 
 @Controller
 public class MemberController {
@@ -213,7 +214,52 @@ public class MemberController {
 	}
 	
 	
+	@Autowired
+	private UserSearchService searchService;
 	
+	// 아이디 찾기
+	@RequestMapping(value = "/member/memSearch", method = RequestMethod.POST)
+	@ResponseBody
+	public String userIdSearch(@RequestParam("mem_name") String  mem_name, 
+			@RequestParam("mem_phone") String mem_phone) {
+		
+		String result = searchService.get_searchId(mem_name, mem_phone);
+		System.out.println("mem_name="+mem_name);
+		System.out.println("mem_phone="+mem_phone);
+		return result;
+	}
+	
+	// 비밀번호 찾기
+	@RequestMapping("/member/memSearchPassword")
+	public String searchPassword(
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String mem_id = request.getParameter("mem_id");
+		String mem_email = request.getParameter("mem_email");
+		
+		System.out.println("mem_id="+mem_id);
+		System.out.println("mem_email="+mem_email);
+		
+		//유저 확인하기
+		MemberDTO memberDTO = sqlSession.getMapper(MemberImpl.class).userInfo(mem_id);
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		if(memberDTO==null) {
+			System.out.println("memberDTO="+memberDTO);
+			out.println("<script>alert('해당 아이디가 없습니다.'); location.href='../member/find'; </script>");
+			out.flush();
+		}else {
+			out.println("<script>alert('해당이메일로 임시 비밀번호가 발송되었습니다.'); </script>");
+			out.flush();
+			System.out.println("mem_id="+mem_id);
+			System.out.println("mem_email="+mem_email);
+			//메일 보내기
+			mailsender.mailSendWithPassword(mem_id,mem_email, request);
+		}
+		
+		return "member/mem_login";
+		
+	}
 	
 	
 }
