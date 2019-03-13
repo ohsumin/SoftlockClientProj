@@ -55,6 +55,7 @@ public class MemberController {
 	@RequestMapping("/member/logout")
 	public String memLogout(HttpSession session) {
 		session.setAttribute("memberInfo", null);
+		session.invalidate();
 		return "member/home";
 	}
 	
@@ -148,7 +149,7 @@ public class MemberController {
 			session.setAttribute("memberInfo", vo);
 			sqlSession.getMapper(MemberImpl.class).alter_naverKey(mem_id);
 			PrintWriter out = resp.getWriter();
-			out.println("<script>alert('회원가입이 완료되었습니다.');");
+			out.println("<script>alert('회원가입이 완료되었습니다.');</script>");
 			out.flush();
 			return "member/home";
 		}

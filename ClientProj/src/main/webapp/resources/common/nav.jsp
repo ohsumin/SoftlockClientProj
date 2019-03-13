@@ -1,3 +1,4 @@
+<%@page import="com.softlock.model.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,7 +36,13 @@
 	<button type="button" class="btn btn-outline-success" style="margin-left:10px; margin-right:50px;">병원회원바로가기</button>
     <%} else { %>
     <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/logout';">로그아웃</button>
+    <%
+    MemberDTO dto = new MemberDTO();
+    dto = (MemberDTO)session.getAttribute("memberInfo");
+    if(!dto.getMem_pw().equals("NAVERLOGIN!")){
+    %>
     <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/memberModify';">회원정보수정</button>
+    <%} %>
     <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/memberDeleteCk';">회원탈퇴</button>
     
     <!-- 검색폼

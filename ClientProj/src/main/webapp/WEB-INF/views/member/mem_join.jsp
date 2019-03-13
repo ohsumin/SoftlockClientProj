@@ -378,13 +378,13 @@ $(function() {
 		    </div><br />
 		    <div>
 		      	<div style="display:inline-block; width:22px; text-align:left;"><i class="fas fa-unlock"></i>&nbsp;</div>
-		      	<div style="display:inline-block; width:371px; text-align:right;"><input type="text" class="form-control" id="mem_pw" name="mem_pw" placeholder="비밀번호"
+		      	<div style="display:inline-block; width:371px; text-align:right;"><input type="password" class="form-control" id="mem_pw" name="mem_pw" placeholder="비밀번호"
 					style="font-size:0.8em;"></div>
 				<div id="pwMsg" style="text-align:left; margin-left:30px; font-size:0.7em;"></div>
 		    </div><br />
 		    <div>
 		      	<div style="display:inline-block; width:22px; text-align:left;"><i class="fas fa-lock"></i>&nbsp;</div>
-		      	<div style="display:inline-block; width:371px; text-align:right;"><input type="text" class="form-control" id="mem_pwck" name="mem_pwck" placeholder="비밀번호확인"
+		      	<div style="display:inline-block; width:371px; text-align:right;"><input type="password" class="form-control" id="mem_pwck" name="mem_pwck" placeholder="비밀번호확인"
 					style="font-size:0.8em;"></div>
 				<div id="pwckMsg" style="text-align:left; margin-left:30px; font-size:0.7em;"></div>
 		    </div><br />
@@ -418,14 +418,24 @@ $(function() {
 		       	</select>
 		        <select class="form-control" style="width:120px; display:inline-block; font-size:0.8em;" name="mem_birth_month" id="mem_birth_month">
 		           <option value="월">월</option>
-		           <%for(int i=1; i<=12; i++){ %>
-		       	   <option value="<%=i%>"><%=i %></option>
+		           <%for(int i=1; i<=12; i++){ 
+		        	    String val = String.valueOf(i);
+		           		if(val.length() == 1){
+		           			 val = "0" + val;
+		           		}
+		           %>
+		       	   <option value="<%=val%>"><%=i %></option>
 		       	   <%} %>
 		        </select>
 		        <select class="form-control" style="width:120px; display:inline-block; font-size:0.8em;" name="mem_birth_day" id="mem_birth_day">
 		           <option value="일">일</option>   
-		       	   <%for(int i=1; i<=30; i++){ %>
-		       	   <option value="<%=i%>"><%=i %></option>
+		       	   <%for(int i=1; i<=30; i++){ 
+			       		String val = String.valueOf(i);
+		           		if(val.length() == 1){
+		           			 val = "0" + val;
+		           		}
+		       	   %>
+		       	   <option value="<%=val%>"><%=i %></option>
 		       	   <%} %>
 		        </select>
 		    	</div>

@@ -69,7 +69,7 @@ $(function() {
 <form name="loginForm">
 	<!-- 로그인 처리 후 다시 돌아가야 할 페이지 URL -->
 	<input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
-	<div style="width:1000px; height:500px; background-color:white; text-align:center; float:none; margin:0 auto;">
+	<div style="width:1000px; height:auto; background-color:white; text-align:center; float:none; margin:0 auto;">
 		<div style="width:400px; background-color:white; text-align:center; float:none; margin:0 auto;">
 			<br /><br /><br />
 			<div class="logo">
@@ -114,11 +114,11 @@ $(function() {
 				
 				/* 설정정보를 초기화하고 연동을 준비 */
 				naverLogin.init();
-				
-			</script>
-			<!-- // 네이버아이디로로그인 초기화 Script -->
+
+				</script>
+				<!-- // 네이버아이디로로그인 초기화 Script -->
 			
-		</div>
+		</div><br /><br /><br />
 	</div>
 </form><br />
 </div><br /><br /><br />

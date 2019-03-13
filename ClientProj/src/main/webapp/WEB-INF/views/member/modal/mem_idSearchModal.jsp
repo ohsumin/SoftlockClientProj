@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="../../resources/common/jquery/jquery-3.3.1.js"></script>
+<script src="../resources/common/jquery/jquery-3.3.1.js"></script>
 
 <title></title>
 </head>

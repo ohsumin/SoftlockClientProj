@@ -77,12 +77,12 @@ var idSearch_click = function(){
 
 <div class="container">
 <br /><br /><br /><br />
-<div style="width:1000px; height:500px; background-color:white; text-align:center; float:none; margin:0 auto;">
+<div style="width:1000px; height:auto; background-color:white; text-align:center; float:none; margin:0 auto;">
 	<div style="width:400px; background-color:white; text-align:center; float:none; margin:0 auto;">
 	<br /><br /><br />
 	<div class="logo">
 		<h4>ID/PW찾기</h4>	
-		<br /><br /><br />		
+		<br /><br />	
 	</div>	
 	<!-- 아이디/비밀번호 찾기 버튼 -->
 	<div style="margin-bottom: 10px;"
@@ -93,7 +93,7 @@ var idSearch_click = function(){
 	<div class="custom-control custom-radio custom-control-inline">
 		<input type="radio" class="custom-control-input" id="search_2" name="search_total" onclick="search_check(2)"> 
 		<label class="custom-control-label" for="search_2">비밀번호 찾기</label>
-	</div>
+	</div><br />
 	<!-- 아이디 찾기 폼 -->
 	<div id="searchI">
 	<table style="text-align:center; float:none; margin:0 auto;">
@@ -120,7 +120,7 @@ var idSearch_click = function(){
 		<tr>
 			<td><button type="submit" onclick="idSearch_click()" id="searchBtn" class="btn btn-primary btn-lg btn-block" style="margin-top:10px;">아이디 찾기</button></td>
 		</tr>
-	</table>
+	</table><br /><br /><br />
 	</div>
 	<!-- 비밀번호 찾기 폼 -->
 	<div id="searchP" style="display: none;">
@@ -149,8 +149,8 @@ var idSearch_click = function(){
 		<tr>
 			<td><button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:10px;">이메일로받기</button></td>
 		</tr>
-	</table>
-	</form> 
+	</table><br /><br /><br />
+	</form>
 	</div>
 	<!----------------------------모달창 include-------------------------------------------->   
 	
