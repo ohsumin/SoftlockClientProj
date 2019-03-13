@@ -7,6 +7,7 @@
 <title>타이틀임</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
 <script src="../resources/common/jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
 $(function() {
 	// 로그인 버튼을 눌렀을때
@@ -93,7 +94,30 @@ $(function() {
 				<div style="width:46%; display:inline-block;"><a id="a" href="../member/find" style="font-size:0.7em;">ID/PW찾기</a></div>
 			</div>
 			<hr />
-			<div style="width:49%; display:inline-block;"><button>네이버로그인</button></div>
+<!-- 			<div style="width:49%; display:inline-block;"><button>네이버로그인</button></div> --> 
+			<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+			<div id="naverIdLogin" style="display:inline-block; margin-top:10px;"></div>
+			<div style="font-size:0.7em; display:inline-block; margin-left:15px; color:gray">네이버아이디로 간편로그인하기</div>
+			<!-- <img width="50px" src="../resources/images/네이버 아이디로 로그인_아이콘형_White.PNG" id="naverIdLogin"/> -->
+			<!-- //네이버아이디로로그인 버튼 노출 영역 -->
+			
+			<!-- 네이버아디디로로그인 초기화 Script -->
+			<script type="text/javascript">
+				var naverLogin = new naver.LoginWithNaverId(
+					{
+						clientId: "BzBQXoe0lFvJXPug54xl",
+						callbackUrl: "http://localhost:8080/client/member/join",
+						isPopup: false, /* 팝업을 통한 연동처리 여부 */
+						loginButton: {color: "white", type: 2, height: 40} /* 로그인 버튼의 타입을 지정 */
+					}
+				);
+				
+				/* 설정정보를 초기화하고 연동을 준비 */
+				naverLogin.init();
+				
+			</script>
+			<!-- // 네이버아이디로로그인 초기화 Script -->
+			
 		</div>
 	</div>
 </form><br />

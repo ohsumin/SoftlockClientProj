@@ -43,6 +43,10 @@
 			where mem_id=#{0}
 	</select>
 	
+	<update id="alter_naverKey" parameterType="String">
+		update member set mem_auth='y' where mem_id=#{param1}
+	</update>
+	
 	<!-- 아이디 찾기 -->
 	<select id="searchId" resultType="String">
 		select nvl(mem_id, 0) from member 

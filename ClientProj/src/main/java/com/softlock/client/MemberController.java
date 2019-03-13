@@ -2,7 +2,6 @@ package com.softlock.client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -108,21 +107,50 @@ public class MemberController {
 	}
 	
 	//이메일인증 추가 
-	@RequestMapping("/member/joinAction")
-	public String memJoinAction(MemberDTO memJoinDTO, Model model, HttpServletRequest req, HttpSession session) {
-		String mem_birth_year = req.getParameter("mem_birth_year"); 
-		String mem_birth_month =  req.getParameter("mem_birth_month");
-		String mem_birth_day = req.getParameter("mem_birth_day");
-		String mem_birth = mem_birth_year+mem_birth_month+mem_birth_day;
-		
-		sqlSession.getMapper(MemberImpl.class).memjoinAction(
-				req.getParameter("mem_id"), req.getParameter("mem_pw"), req.getParameter("mem_name"), mem_birth, 
-				req.getParameter("mem_phone"), req.getParameter("mem_gender"), req.getParameter("mem_email"));
-		
-		mailsender.mailSendWithUserKey(memJoinDTO.getMem_email(), memJoinDTO.getMem_id(), req);
+		@RequestMapping("/member/joinAction")
+		public String memJoinAction(MemberDTO memJoinDTO, Model model, HttpServletRequest req, HttpSession session) {
+			String mem_id = req.getParameter("mem_id");
+			String mem_pw = req.getParameter("mem_pw");
+			String mem_name = req.getParameter("mem_name");
+			String mem_phone = req.getParameter("mem_phone");
+			String mem_gender = req.getParameter("mem_gender");
+			String mem_email = req.getParameter("mem_email");
+			String mem_birth_year = req.getParameter("mem_birth_year"); 
+			String mem_birth_month =  req.getParameter("mem_birth_month");
+			String mem_birth_day = req.getParameter("mem_birth_day");
+			String mem_birth = mem_birth_year+mem_birth_month+mem_birth_day;
+			
+			String isNaver = req.getParameter("hiddenPw");
+			
+			if(isNaver.equals("NAVERLOGIN!")) {
+				mem_id = req.getParameter("hiddenId");
+				mem_pw = req.getParameter("hiddenPw");
+				mem_gender = req.getParameter("hiddenGender");
+				mem_birth_month = req.getParameter("hiddenMonth");
+				mem_birth_day = req.getParameter("hiddenDay");
+				mem_birth = mem_birth_year+mem_birth_month+mem_birth_day;
+			}
+			System.out.println("아이디:"+mem_id);
+			System.out.println("비번:"+mem_pw);
+			System.out.println("이름:"+mem_name);
+			System.out.println("폰:"+mem_phone);
+			System.out.println("성별:"+mem_gender);
+			System.out.println("이메일:"+mem_email);
+			System.out.println("생일:"+mem_birth);
+				
+			sqlSession.getMapper(MemberImpl.class).memjoinAction(mem_id, mem_pw, mem_name, mem_birth,mem_phone, mem_gender, mem_email);
+			
+			if(isNaver.equals("NAVERLOGIN!")) {
+				// y로 바꿔주고 홈으로 이동
+				sqlSession.getMapper(MemberImpl.class).alter_naverKey(mem_id);
+				return "member/home";
+			}
+			else
+				// 일반회원일때는 메일보냄
+				mailsender.mailSendWithUserKey(memJoinDTO.getMem_email(), memJoinDTO.getMem_id(), req);
 
-		return "member/mem_joinAction";  
-	}
+			return "member/mem_joinAction";  
+		}
 	 
 	//이메일 인증 컨트롤러('y로바꿈')
 	@RequestMapping(value = "/user/key_alter", method = RequestMethod.GET)
