@@ -25,4 +25,8 @@
 	<!-- 회원 인증키(난수) y로 변경 -->
 	<update id="alter_userKey" parameterType="Map"> update member set mem_auth='y' where mem_id=#{param1} and mem_auth=#{param2} </update>
 	
+	<select id="isUserId" resultType="int" parameterType="String">
+		select count(*) from member
+			where mem_id=#{0}
+	</select>
 </mapper>
