@@ -48,7 +48,6 @@ $(function() {
 	
 	// 비밀번호 폼값 체크
 	$('#mem_pw').change(function() {
-		alert("!");
 		var pwReg = /^[A-za-z0-9]{5,15}/g;
 		if( !pwReg.test( $("input[name=mem_pw]").val()) || $('#mem_pw').val().length > 15) {
 			$('#pwMsg').show();
@@ -63,7 +62,6 @@ $(function() {
 	// 전화번호 폼값 체크
 	$('#mem_phone').change(function() {
 		if($('#mem_phone').val().length!=11) {
-			alert($('#mem_phone').val().length);
 			$('#phoneMsg').show();
             $('#phoneMsg').html("정확한 휴대폰번호를 입력해주세요.");
             $('#phoneMsg').css("color", "red");
