@@ -20,6 +20,19 @@
 		select count(*) from member
 			where mem_id=#{0} and mem_pw=#{1}
 	</select>
+	<!-- 회원정보 수정폼 진입 -->
+	<select id="view" resultType="com.softlock.model.MemberDTO" >
+		SELECT * FROM member where mem_id=#{param1}
+	</select>
+	<!-- 회원정보수정 -->
+	<update id="modifyAction">
+	UPDATE member SET mem_pw=#{param1}, mem_phone=#{param3}, mem_name=#{param2} WHERE mem_id=#{param4}
+	</update>
+	<!-- 회원탈퇴 -->
+	<delete id="delete">
+		DELETE FROM member WHERE mem_id=#{param1}
+	</delete>
+	
 	<!-- 유저 인증키 난수로 업데이트 -->
 	<update id="GetKey" parameterType="Map">update member set mem_auth=#{param2} where mem_id=#{param1} </update>
 	<!-- 회원 인증키(난수) y로 변경 -->

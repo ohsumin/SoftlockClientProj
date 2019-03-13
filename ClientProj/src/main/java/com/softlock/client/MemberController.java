@@ -1,10 +1,13 @@
 package com.softlock.client;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -48,6 +51,13 @@ public class MemberController {
 		return "member/mem_login";
 	}
 	
+	//로그아웃 
+	@RequestMapping("/member/logout")
+	public String memLogout(HttpSession session) {
+		session.setAttribute("memberInfo", null);
+		return "member/home";
+	}
+	
 	@RequestMapping("/member/loginAction")
 	@ResponseBody
 	public Map<String, Object> loginAction(HttpServletRequest req, HttpSession session) 
@@ -60,7 +70,7 @@ public class MemberController {
 		
 		// Mybatis 사용
 		// 회원정보 저장
-		ArrayList<MemberDTO> vo = sqlSession.getMapper(MemberImpl.class).login(id, pass);
+		MemberDTO vo = sqlSession.getMapper(MemberImpl.class).login(id, pass);
 		// 회원존재여부 판단
 		int user = sqlSession.getMapper(MemberImpl.class).isUser(id, pass);
 		
@@ -140,4 +150,70 @@ public class MemberController {
 		}
 		return map;
 	}
+	
+	////회원정보수정폼진입
+	@RequestMapping("/member/memberModify")
+	public String memberModify(Model model, HttpServletRequest req,
+			HttpSession session) {
+	
+		
+	MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
+			.view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
+	model.addAttribute("dto", dto);
+		return "member/mem_modify";
+	}
+	
+	
+	/////회원정보수정액션
+	@RequestMapping("/member/modifyAction")
+	public void modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+		System.out.println("아이디" +((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
+		sqlSession.getMapper(MemberImpl.class).modifyAction(
+				req.getParameter("mem_pw"), req.getParameter("mem_name"), req.getParameter("mem_phone"), ((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('정보수정이 완료되었습니다'); location.href='../member/home';</script>");
+		out.flush();
+	}
+	
+	//회원탈퇴처리 비밀번호확인폼 진입
+	@RequestMapping("/member/memberDeleteCk")
+	public String memDeleteck() {
+		return "member/mem_pwCk";
+	}
+	
+	//회원탈퇴처리
+	@RequestMapping("/member/memDelteAction")
+	@ResponseBody
+	public Map<String, Object> memDelteAction(HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String id = req.getParameter("id");
+		String pass = req.getParameter("pass");
+		
+		int user = sqlSession.getMapper(MemberImpl.class).isUser(id, pass);
+		
+		String retrunLoc="";
+	
+		if(user==1) {
+		
+			sqlSession.getMapper(MemberImpl.class).delete(id);
+			map.put("success", "1");
+			session.invalidate();
+			map.put("returnLoc", "../member/home");
+		
+		} else {
+			map.put("success", "0");
+			map.put("msg", "아이디 및 비밀번호를 확인해주세요");
+			
+		}
+		return map;
+		
+	}
+	
+	
+	
+	
+	
 }

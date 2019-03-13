@@ -29,15 +29,22 @@
         <a class="nav-link" href="#">서비스소개</a>
       </li>
     </ul>
-    
+    <!-- 비로그인 상태 -->
+    <%if(session.getAttribute("memberInfo")==null) {%>
     <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/login';">로그인</button>
 	<button type="button" class="btn btn-outline-success" style="margin-left:10px; margin-right:50px;">병원회원바로가기</button>
+    <%} else { %>
+    <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/logout';">로그아웃</button>
+    <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/memberModify';">회원정보수정</button>
+    <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/memberDeleteCk';">회원탈퇴</button>
+    
     <!-- 검색폼
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
     </form> -->
   </div>
+    <%} %>
 </nav>
 </body>
 </html>
