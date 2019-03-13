@@ -69,7 +69,8 @@
 			        type : 'post',
 			        url : '../member/checkId', 
 			        data : {
-			        	mem_id : uniqId
+			        	mem_id : uniqId,
+			        	mem_pw : 'NAVERLOGIN!'
 			        },
 			        dataType : "json",
 			        contentType : "application/x-www-form-urlencoded;charset:utf-8",

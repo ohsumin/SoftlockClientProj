@@ -12,14 +12,12 @@
 <!-- Navigation -->
 <jsp:include page="/resources/common/nav.jsp"/>
 <div class="container">
-
-
+<br /><br /><br /><br /><br /><br /><br />
       <table class="table table-bordered table-striped col-md-12 text-center" >         
       <tr>
-         <td style="margin-top:200px;">
-            <h3>이메일 인증 완료.</h3>
-            <h4>로그인 해주세요.</h4>
-            <button type="button" class="btn btn-warning" onclick="location.href='member/mem_login.jsp';">로그인(필요한지.)</button>
+         <td style="margin-top:200px; height:300px;"><br /><br /><br /><br />
+            <h3>이메일 인증이 완료되었습니다.</h3><br />
+            <h4>로그인 후 이용 가능합니다.</h4>
          </td>
       </tr>
       </table>
