@@ -101,9 +101,7 @@ $(function() {
 </script>
 </head>
 <body style="background-color:#F5F6F9">
-<!-- Navigation -->
-<jsp:include page="/resources/common/nav.jsp"/>
-<div class="container"><br /><br /><br /><br />
+
    <div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
       <form action="../member/modifyAction" id="form" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;">
          <br /><br /><br />
@@ -176,7 +174,7 @@ $(function() {
                   <span style="margin-right:80px;">남성</span>
                  <input type="radio" class="form-check-input" name="mem_gender" id="mem_gender" value="w" checked="${dto.mem_gender }" disabled="disabled">
                     여성
-               </label>
+             </label>
          </div>
           <div id="genderMsg" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br /><br />
           <!-- <div class="form-group">
@@ -185,12 +183,12 @@ $(function() {
                약관을 모두 읽고 동의하였습니다.
               </label>
             </div> -->
-          <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block">회원정보수정</button><br /><br /><br />
+          <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block">회원정보수정</button>
+          <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block" onclick="location.href='../member/memberDeleteCk'">탈퇴하기</button><br /><br /><br />
       </form>
    </div>
-</div>
 <br /><br /><br /><br />
 <!-- bottom -->
-<jsp:include page="/resources/common/footer.jsp"/>
+
 </body>
 </html>

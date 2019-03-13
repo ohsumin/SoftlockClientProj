@@ -203,7 +203,7 @@ public class MemberController {
 	MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
 			.view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
 	model.addAttribute("dto", dto);
-		return "member/mem_modify";
+		return "member/mem_myPage";
 	}
 	
 	
