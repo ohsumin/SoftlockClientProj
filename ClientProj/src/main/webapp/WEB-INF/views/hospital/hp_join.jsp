@@ -61,14 +61,13 @@ $(function(){
 	      },
 	      dataType : "json",
 	      contentType : "text/html;charset:utf-8;",
-	      success:function(responseData){   
+	      success:function(d){   
 	         var strHTML = "";
 	         //json배열이므로 each메소드 사용         
-	         $.each(responseData, function(index, data){
+	         $.each(d, function(index, d){
 	            strHTML += "<tr>";
-	            strHTML += "  <div>"+data.listName+"</div>"; 
-	            strHTML += "  <div>"+data.listAdrs+"</div>"; 
-	             
+	            strHTML += "  <div>"+d.hosplist_name+"</div>"; 
+	            strHTML += "  <div>"+d.hosplist_adrs+"</div>"; 
 	            strHTML += "</tr>";
 	         });
 	         $('#ajaxTable').html(strHTML);
@@ -102,8 +101,16 @@ $(function(){
     <input type="password" class="form-control" id="hp_pwck" name="hp_pwck" style="font-size:0.8em;"><br /> 
     <div id="selectMSG">&nbsp;병원선택</div>
     <input type="text" class="form-control" id="hp_name" name="hp_name" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요"><br />
-    <table id="ajaxTable">
-    </table> 
+    <div class="row">
+		<table>
+		<thead>
+			<tr>
+				<td class="text-center">병원목록</td>
+			</tr>
+		</thead>
+		<tbody id="ajaxTable"></tbody>
+		</table>
+	</div>
     <div id="numMSG">&nbsp;요양기관번호(숫자 8자리)</div>
     <input type="text" class="form-control" id="hp_num" name="hp_num" style="font-size:0.8em;"><br />
     <div id="usernameMSG">&nbsp;담당자 이름</div>

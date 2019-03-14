@@ -1,9 +1,6 @@
 package com.softlock.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,22 +35,33 @@ public class HospitalController {
 	
     @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
-    public Map<String, Object> searchName(HttpServletRequest req){
+    public ArrayList<HospListDTO> searchName(HttpServletRequest req){
     	String searchStr = req.getParameter("searchStr");
+    	System.out.println(searchStr);
     	
-    	//JSON배열을 만들기 위한 선언
-        List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchHp(searchStr);
-        Map<String, Object> map = new HashMap<String, Object>();            
+    	HospListDTO hDto = new HospListDTO();
+    	hDto.setHosplist_name(searchStr);
+    	
+    	/*//JSON배열을 만들기 위한 선언
+        //List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchHp(searchStr);
+        List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchHp(hDto);
+      
+        Map<String, Object> map = new HashMap<String, Object>(); 
+        ArrayList<Object> searchList = new ArrayList<Object>();          
         
         ArrayList<String> listName = new ArrayList<String>();
         ArrayList<String> listAdrs = new ArrayList<String>();
         for(HospListDTO m : searchResult) {
-           listName.add(m.getHosplist_name());
-           listAdrs.add(m.getHosplist_adrs());
-        }
-        map.put("getHosplist_name", listName);
-        map.put("getHosplist_adrs", listAdrs);
-        return map;
+           map.put("resultName", m.getHosplist_name());
+           map.put("resultAddr", m.getHosplist_adrs());
+           
+           searchList.add(map);
+        }*/
+    	
+    	ArrayList<HospListDTO> searchList = (ArrayList<HospListDTO>) sqlSession.getMapper(HospitalImpl.class).searchHp(hDto);
+   /*     map.put("getHosplist_name", listName);
+        map.put("getHosplist_adrs", listAdrs);*/
+        return searchList;
     }
     
     // 회원가입

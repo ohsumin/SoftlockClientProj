@@ -4,54 +4,55 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softlock.model.HospitalImpl">
-	<select id="searchName" resultType="com.softlock.model.HospListDTO" parameterType="String">
-	     SELECT * FROM hosplist WHERE 1=1
-	     <choose>
-	        <when test="#{param1}.equals('ㄱ')">
-	            and (hosplist_name RLIKE '^(ㄱ|ㄲ)' OR ( hosplist_name <![CDATA[ > ]]>= '가' AND hosplist_name <![CDATA[ < ]]> '나' ))
-	        </when>
-	        <when test="#{param1}.equals('ㄴ')">
-	            and id!=? and (name RLIKE '^ㄴ' OR ( name <![CDATA[ > ]]>= '나' AND name <![CDATA[ < ]]> '다' ))
-	        </when>
-	        <when test="#{param1}.equals('ㄷ')">
-	            and id!=? and (name RLIKE '^(ㄷ|ㄸ)' OR ( name <![CDATA[ > ]]>= '다' AND name <![CDATA[ < ]]> '라' ))
-	        </when>
-	        <when test="#{param1}.equals('ㄹ')">
-	            and id!=? and (name RLIKE '^ㄹ' OR ( name <![CDATA[ > ]]>= '라' AND name <![CDATA[ < ]]> '마' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅁ')">
-	           WHERE and id!=? and (name RLIKE '^ㅁ' OR ( name <![CDATA[ > ]]>= '마' AND name <![CDATA[ < ]]> '바' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅂ')">
-	            and id!=? and (name RLIKE '^ㅂ' OR ( name <![CDATA[ > ]]>= '바' AND name <![CDATA[ < ]]> '사' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅅ')">
-	            and id!=? and (name RLIKE '^(ㅅ|ㅆ)' OR ( name <![CDATA[ > ]]>= '사' AND name <![CDATA[ < ]]> '아' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅇ')">
-	            and id!=? and (name RLIKE '^ㅇ' OR ( name <![CDATA[ > ]]>= '아' AND name <![CDATA[ < ]]> '자' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅈ')">
-	            and id!=? and (name RLIKE '^(ㅈ|ㅉ)' OR ( name <![CDATA[ > ]]>= '자' AND name <![CDATA[ < ]]> '차' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅊ')">
-	            and id!=? and (name RLIKE '^ㅊ' OR ( name <![CDATA[ > ]]>= '차' AND name <![CDATA[ < ]]> '카' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅋ')">
-	            and id!=? and (name RLIKE '^ㅋ' OR ( name <![CDATA[ > ]]>= '카' AND name <![CDATA[ < ]]> '타' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅌ')">
-	            and id!=? and (name RLIKE '^ㅌ' OR ( name <![CDATA[ > ]]>= '타' AND name <![CDATA[ < ]]> '파' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅍ')">
-	            and id!=? and (name RLIKE '^ㅍ' OR ( name <![CDATA[ > ]]>= '파' AND name <![CDATA[ < ]]> '하' ))
-	        </when>
-	        <when test="#{param1}.equals('ㅎ')">
-	            and id!=? and (name RLIKE '^ㅎ' OR ( name <![CDATA[ > ]]>= '하'))
-	        </when>
-	        <otherwise>
-	        and name LIKE ?
-	     </otherwise>
-	      </choose>          
+	<select id="searchHp" resultType="com.softlock.model.HospListDTO" parameterType="com.softlock.model.HospListDTO">
+	     SELECT * FROM hosplist WHERE 1=1 
+		 <choose>
+		     <when test='hosplist_name == "ㄱ"'>
+			    and (hosplist_name LIKE '^(ㄱ|ㄲ)' OR ( hosplist_name <![CDATA[ > ]]>= '가' AND hosplist_name <![CDATA[ < ]]> '나' ))
+			 </when>
+			 <when test='hosplist_name == "ㄴ"'>
+			    and (hosplist_name LIKE '^ㄴ' OR ( hosplist_name <![CDATA[ > ]]>= '나' AND hosplist_name <![CDATA[ < ]]> '다' ))
+			 </when>
+			 <when test='hosplist_name == "ㄷ"'>
+			    and (hosplist_name LIKE '^(ㄷ|ㄸ)' OR ( hosplist_name <![CDATA[ > ]]>= '다' AND hosplist_name <![CDATA[ < ]]> '라' ))
+			 </when>
+			 <when test='hosplist_name == "ㄹ"'>
+			    and (hosplist_name LIKE '^ㄹ' OR ( hosplist_name <![CDATA[ > ]]>= '라' AND hosplist_name <![CDATA[ < ]]> '마' ))
+			 </when>
+			 <when test='hosplist_name == "ㅁ"'>
+			    and (hosplist_name LIKE '^ㅁ' OR ( hosplist_name <![CDATA[ > ]]>= '마' AND hosplist_name <![CDATA[ < ]]> '바' ))
+			 </when>
+			 <when test='hosplist_name == "ㅂ"'>
+			    and (hosplist_name LIKE '^ㅂ' OR ( hosplist_name <![CDATA[ > ]]>= '바' AND hosplist_name <![CDATA[ < ]]> '사' ))
+			 </when>
+			 <when test='hosplist_name == "ㅅ"'>
+			    and (hosplist_name LIKE '^(ㅅ|ㅆ)' OR ( hosplist_name <![CDATA[ > ]]>= '사' AND hosplist_name <![CDATA[ < ]]> '아' ))
+			 </when>
+			 <when test='hosplist_name == "ㅇ"'>
+			     and (hosplist_name LIKE '^ㅇ' OR ( hosplist_name <![CDATA[ > ]]>= '아' AND hosplist_name <![CDATA[ < ]]> '자' ))
+			 </when>
+			 <when test='hosplist_name == "ㅈ"'>
+			    and (hosplist_name LIKE '^(ㅈ|ㅉ)' OR ( hosplist_name <![CDATA[ > ]]>= '자' AND hosplist_name <![CDATA[ < ]]> '차' ))
+			 </when>
+			 <when test='hosplist_name == "ㅊ"'>
+			    and (hosplist_name LIKE '^ㅊ' OR ( hosplist_name <![CDATA[ > ]]>= '차' AND hosplist_name <![CDATA[ < ]]> '카' ))
+			 </when>
+			 <when test='hosplist_name == "ㅋ"'>
+			    and (hosplist_name LIKE '^ㅋ' OR ( hosplist_name <![CDATA[ > ]]>= '카' AND hosplist_name <![CDATA[ < ]]> '타' ))
+			 </when>
+			 <when test='hosplist_name == "ㅌ"'>
+			     and (hosplist_name LIKE '^ㅌ' OR ( hosplist_name <![CDATA[ > ]]>= '타' AND hosplist_name <![CDATA[ < ]]> '파' ))
+			 </when>
+			 <when test='hosplist_name == "ㅍ"'>
+			    and (hosplist_name LIKE '^ㅍ' OR ( hosplist_name <![CDATA[ > ]]>= '파' AND hosplist_name <![CDATA[ < ]]> '하' ))
+			 </when>
+			 <when test='hosplist_name == "ㅎ"'>
+			    and (hosplist_name LIKE '^ㅎ' OR ( hosplist_name <![CDATA[ > ]]>= '하'))
+			 </when>
+			 <otherwise>
+		     	and hosplist_name LIKE '%'||#{hosplist_name}||'%'  
+			 </otherwise>
+		</choose>
+		ORDER BY hosplist_name ASC
 	</select>
 </mapper>
