@@ -17,7 +17,7 @@
 	background-color:#2D3D55;
 }
 #여기야여기{
-	추가했음;
+	추가했음;나도추가함;
 }
 </style>
 </head>
