@@ -57,7 +57,7 @@ $(function(){
 
 var realSearchOracleDB = function(){
    $.ajax({
-      url : "/hosplist/RealtimeSearch",
+      url : "/hospList/RealtimeSearch",
       type : "get",
       data : {
          searchName : $('#hp_name').val()

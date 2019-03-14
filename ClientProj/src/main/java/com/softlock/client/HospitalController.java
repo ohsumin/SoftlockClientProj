@@ -24,7 +24,13 @@ public class HospitalController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-    @RequestMapping("/hosplist/RealtimeSearch")
+	@RequestMapping("/hospital/home")
+	public String home() {
+		
+		return "/hospital/home";
+	}
+	
+    @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
     public Map<String, Object> searchName(String userName){
        System.out.println("dfdf");
