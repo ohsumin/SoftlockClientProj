@@ -169,7 +169,7 @@
    <div class="tab-pane fade" id="profile2">
     
     <!------------------------------>
-    <jsp:include page="../member/mem_modify.jsp"/>
+    <jsp:include page="./mem_modify.jsp"/>
     <!------------------------------>
     
   </div>  
@@ -180,3 +180,4 @@
 <jsp:include page="/resources/common/footer.jsp"/>
 </body>
 </html>
+
