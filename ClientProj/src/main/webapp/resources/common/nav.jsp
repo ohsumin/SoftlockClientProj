@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="navbarColor03">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" style="margin-left:100px;">
-        <a class="nav-link" href="#">병원찾기 <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="../member/searchHp">병원찾기 <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" style="margin-left:50px;">
         <a class="nav-link" href="#">건강정보</a>
