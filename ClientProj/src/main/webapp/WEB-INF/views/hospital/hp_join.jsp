@@ -86,7 +86,7 @@ var realSearchOracleDB = function(){
 </head>
 <body style="background-color:#F5F6F9">
 <!-- Navigation -->
-<%-- <%@include file="/resources/common/jquery/nav.jsp" %> --%>
+<jsp:include page="/resources/common/navHp.jsp"/>
 <div class="container"><br /><br /><br /><br />
    <div style="width:1000px; height:1030px; background-color:white; float:none; margin:0 auto;">
       <form action="../hospital/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;">
@@ -134,6 +134,6 @@ var realSearchOracleDB = function(){
 </div>
 <br /><br /><br /><br />
 <!-- bottom -->
-<%-- <%@include file="footer.jsp" %> --%>
+<jsp:include page="/resources/common/footer.jsp"/>
 </body>
 </html>
