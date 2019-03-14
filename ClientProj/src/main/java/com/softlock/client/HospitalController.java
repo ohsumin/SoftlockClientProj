@@ -38,23 +38,22 @@ public class HospitalController {
 	
     @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
-    public Map<String, Object> searchName(String userName){
-       System.out.println("dfdf");
-       //JSON배열을 만들기 위한 선언
-         List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchName(userName);
-         Map<String, Object> map = new HashMap<String, Object>();            
-         
-         
-         ArrayList<String> listName = new ArrayList<String>();
-         ArrayList<String> listAdrs = new ArrayList<String>();
-         for(HospListDTO m : searchResult) {
-            listName.add(m.getHosplist_name());
-            listAdrs.add(m.getHosplist_adrs());
-            
-         }
-         map.put("getHosplist_name", listName);
-         map.put("getHosplist_adrs", listAdrs);
-         return map;
+    public Map<String, Object> searchName(HttpServletRequest req){
+    	String searchStr = req.getParameter("searchStr");
+    	
+    	//JSON배열을 만들기 위한 선언
+        List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchHp(searchStr);
+        Map<String, Object> map = new HashMap<String, Object>();            
+        
+        ArrayList<String> listName = new ArrayList<String>();
+        ArrayList<String> listAdrs = new ArrayList<String>();
+        for(HospListDTO m : searchResult) {
+           listName.add(m.getHosplist_name());
+           listAdrs.add(m.getHosplist_adrs());
+        }
+        map.put("getHosplist_name", listName);
+        map.put("getHosplist_adrs", listAdrs);
+        return map;
     }
     
     // 회원가입

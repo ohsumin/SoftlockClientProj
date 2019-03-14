@@ -52,36 +52,33 @@
 </style>
 <script>
 $(function(){
-   
+	$('#hp_name').keyup(function() {
+		$.ajax({
+	      url : "../hospList/RealtimeSearch",
+	      type : "get",
+	      data : {
+	         searchStr : $('#hp_name').val()
+	      },
+	      dataType : "json",
+	      contentType : "text/html;charset:utf-8;",
+	      success:function(responseData){   
+	         var strHTML = "";
+	         //json배열이므로 each메소드 사용         
+	         $.each(responseData, function(index, data){
+	            strHTML += "<tr>";
+	            strHTML += "  <div>"+data.listName+"</div>"; 
+	            strHTML += "  <div>"+data.listAdrs+"</div>"; 
+	             
+	            strHTML += "</tr>";
+	         });
+	         $('#ajaxTable').html(strHTML);
+	      },
+	      error:function(errorData){
+	         alert("오류발생:"+errorData.status+":"+errorData.statusText);
+	      }
+	   });
+	});
 });
-
-var realSearchOracleDB = function(){
-   $.ajax({
-      url : "/hospList/RealtimeSearch",
-      type : "get",
-      data : {
-         searchName : $('#hp_name').val()
-      },
-      dataType : "json",
-      contentType : "text/html;charset:utf-8;",
-      success:function(responseData){   
-         var strHTML = "";
-         //json배열이므로 each메소드 사용         
-           $.each(responseData, function(index, data){
-              strHTML += "<tr>";
-              strHTML += "  <td>"+data.listName+"</td>"; 
-              strHTML += "  <td>"+data.listAdrs+"</td>"; 
-               
-              strHTML += "</tr>";
-           });
-           $('#ajaxTable').html(strHTML);
-      },
-      error:function(errorData){
-         alert("오류발생:"+errorData.status+":"+errorData.statusText);
-      }
-   });
-}
-
 </script>
 </head>
 <body style="background-color:#F5F6F9">
@@ -104,17 +101,8 @@ var realSearchOracleDB = function(){
     <div id="pwckMSG">&nbsp;비밀번호확인</div>
     <input type="password" class="form-control" id="hp_pwck" name="hp_pwck" style="font-size:0.8em;"><br /> 
     <div id="selectMSG">&nbsp;병원선택</div>
-    <input type="text" onkeyup="realSearchOracleDB;" class="form-control" id="hp_name" name="hp_name" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요"><br />
-    <table>
-       <thead>
-          <tr>
-             <td>
-                <div>병원이름</div>
-                <div>병원주소</div>
-             </td>
-          </tr>
-       </thead>
-       <tbody id="ajaxTable"></tbody>
+    <input type="text" class="form-control" id="hp_name" name="hp_name" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요"><br />
+    <table id="ajaxTable">
     </table> 
     <div id="numMSG">&nbsp;요양기관번호(숫자 8자리)</div>
     <input type="text" class="form-control" id="hp_num" name="hp_num" style="font-size:0.8em;"><br />
