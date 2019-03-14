@@ -30,6 +30,12 @@ public class HospitalController {
 		return "/hospital/home";
 	}
 	
+	@RequestMapping("/hospital/login")
+	public String hpLogin() {
+		
+		return "/hospital/hp_login";
+	}
+	
     @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
     public Map<String, Object> searchName(String userName){
@@ -52,6 +58,12 @@ public class HospitalController {
     }
     
     // 회원가입
+    @RequestMapping("/hospital/join")
+    public String hpJoin() {
+    	
+    	return "/hospital/hp_join";
+    }
+    
     @RequestMapping("/hospital/joinAction")
     @ResponseBody
     public String hpjoinAction(HttpServletRequest req, HttpSession session) {

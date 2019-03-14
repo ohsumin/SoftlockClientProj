@@ -30,7 +30,7 @@
       </li>
     </ul>
     
-	<button type="button" class="btn btn-outline-warning" style="margin-left:10px; margin-right:50px;">로그인</button>
+	<button type="button" class="btn btn-outline-warning" style="margin-left:10px; margin-right:50px;" onclick="location.href='../hospital/login';">로그인</button>
     <!-- 검색폼
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
