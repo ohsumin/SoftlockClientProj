@@ -16,6 +16,9 @@
 #div_bottom{
 	background-color:#2D3D55;
 }
+#여기야여기{
+	추가했음;
+}
 </style>
 </head>
 <body style="background-color:#F5F6F9">
