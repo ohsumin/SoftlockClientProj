@@ -47,9 +47,30 @@
    text-align:left;
    font-size:0.8em;
 }
-
-
 </style>
+<!-- 우편번호 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+function postOpen(){
+    new daum.Postcode({
+        oncomplete: function(data) {
+        	/* 
+        	다음우편번호 api에서 특정주소를 클릭하면 파라미터 data를 통해 주소관련정보를 사용자페이지로 반환한다.
+        	우리는 data객체에 저장된 내용을 입력해주면 된다.
+        	*/
+            var f = document.joinFrm;
+            // 우편번호와 기본주소 입력
+            f.comp_zipcode.value = data.zonecode;
+            f.comp_addr1.value = data.address;
+            // 시도, 구군을 입력
+            f.comp_sido.value = data.sido;
+            f.comp_gugun.value = data.sigungu;
+            // 상세주소로 포커스 이동
+            f.comp_addr2.focus();
+        }
+    }).open();
+}
+</script>
 <script>
 $(function(){
 	$('#hp_name').keyup(function() {
@@ -66,7 +87,6 @@ $(function(){
 	         //json배열이므로 each메소드 사용       
 	         strHTML += "<select multiple='' class='form-control' name='searchList' id='searchList'>";
 	         $.each(d, function(index, d){
-	            
 	            strHTML += "  <option value=''> "+d.hosplist_name+"</option>"; 
 	            
 	         });
@@ -85,8 +105,8 @@ $(function(){
 <!-- Navigation -->
 <jsp:include page="/resources/common/navHp.jsp"/>
 <div class="container"><br /><br /><br /><br />
-   <div style="width:1000px; height:1030px; background-color:white; float:none; margin:0 auto;">
-      <form action="../hospital/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;">
+   <div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
+      <form action="../hospital/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;" name="joinFrm">
       <br /><br /><br />
       <div class="logo">
          <h4>병원회원가입</h4>   
@@ -103,6 +123,19 @@ $(function(){
     <div id="selectMSG">&nbsp;병원선택</div>
     <input type="text" class="form-control" id="hp_name" name="hp_name" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요">
     <div id="ajaxTable"></div><br />
+
+	<div id="selectMSG">&nbsp;상세주소</div>
+	<input type="text" class="form-control" name="comp_addr1" id="comp_addr1" readonly 
+			style="width:275px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:5px;"/>
+	<button type="button" class="btn btn-warning" onclick="postOpen();" 
+		style="width:120px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:2px;">우편번호검색</button>
+	<input type="text" class="form-control" placeholder="상세주소를 입력하세요." 
+		name="comp_addr2" id="comp_addr2" style=" font-size:0.8em; height:37px;"/>
+	<input type="hidden" name="comp_zipcode" id="comp_zipcode"/>
+	<input type="hidden" name="comp_sido" id="comp_sido" />
+	<input type="hidden" name="comp_gugun" id="comp_gugun"/><br />
+	
+
     <div id="numMSG">&nbsp;요양기관번호(숫자 8자리)</div>
     <input type="text" class="form-control" id="hp_num" name="hp_num" style="font-size:0.8em;"><br />
     <div id="usernameMSG">&nbsp;담당자 이름</div>
@@ -115,7 +148,7 @@ $(function(){
     
 
 <br />
-    <button type="submit" class="btn btn-primary btn-lg btn-block" id="joinBtn" style="width:300px">병원가입 승인요청</button>
+    <button type="submit" class="btn btn-primary btn-lg btn-block" id="joinBtn">병원가입 승인요청</button><br /><br /><br />
 </form>
 </div>
 </div>
