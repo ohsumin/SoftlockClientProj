@@ -42,25 +42,7 @@ public class HospitalController {
     	HospListDTO hDto = new HospListDTO();
     	hDto.setHosplist_name(searchStr);
     	
-    	/*//JSON배열을 만들기 위한 선언
-        //List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchHp(searchStr);
-        List<HospListDTO> searchResult = sqlSession.getMapper(HospitalImpl.class).searchHp(hDto);
-      
-        Map<String, Object> map = new HashMap<String, Object>(); 
-        ArrayList<Object> searchList = new ArrayList<Object>();          
-        
-        ArrayList<String> listName = new ArrayList<String>();
-        ArrayList<String> listAdrs = new ArrayList<String>();
-        for(HospListDTO m : searchResult) {
-           map.put("resultName", m.getHosplist_name());
-           map.put("resultAddr", m.getHosplist_adrs());
-           
-           searchList.add(map);
-        }*/
-    	
     	ArrayList<HospListDTO> searchList = (ArrayList<HospListDTO>) sqlSession.getMapper(HospitalImpl.class).searchHp(hDto);
-   /*     map.put("getHosplist_name", listName);
-        map.put("getHosplist_adrs", listAdrs);*/
         return searchList;
     }
     

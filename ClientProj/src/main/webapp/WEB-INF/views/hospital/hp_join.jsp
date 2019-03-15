@@ -63,13 +63,14 @@ $(function(){
 	      contentType : "text/html;charset:utf-8;",
 	      success:function(d){   
 	         var strHTML = "";
-	         //json배열이므로 each메소드 사용         
+	         //json배열이므로 each메소드 사용       
+	         strHTML += "<select multiple='' class='form-control' name='searchList' id='searchList'>";
 	         $.each(d, function(index, d){
-	            strHTML += "<tr>";
-	            strHTML += "  <div>"+d.hosplist_name+"</div>"; 
-	            strHTML += "  <div>"+d.hosplist_adrs+"</div>"; 
-	            strHTML += "</tr>";
+	            
+	            strHTML += "  <option value=''> "+d.hosplist_name+"</option>"; 
+	            
 	         });
+	         strHTML += "</select>";
 	         $('#ajaxTable').html(strHTML);
 	      },
 	      error:function(errorData){
@@ -100,17 +101,8 @@ $(function(){
     <div id="pwckMSG">&nbsp;비밀번호확인</div>
     <input type="password" class="form-control" id="hp_pwck" name="hp_pwck" style="font-size:0.8em;"><br /> 
     <div id="selectMSG">&nbsp;병원선택</div>
-    <input type="text" class="form-control" id="hp_name" name="hp_name" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요"><br />
-    <div class="row">
-		<table>
-		<thead>
-			<tr>
-				<td class="text-center">병원목록</td>
-			</tr>
-		</thead>
-		<tbody id="ajaxTable"></tbody>
-		</table>
-	</div>
+    <input type="text" class="form-control" id="hp_name" name="hp_name" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요">
+    <div id="ajaxTable"></div><br />
     <div id="numMSG">&nbsp;요양기관번호(숫자 8자리)</div>
     <input type="text" class="form-control" id="hp_num" name="hp_num" style="font-size:0.8em;"><br />
     <div id="usernameMSG">&nbsp;담당자 이름</div>
