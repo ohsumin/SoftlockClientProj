@@ -29,8 +29,13 @@
         <a class="nav-link" href="#">서비스소개</a>
       </li>
     </ul>
-    
+    <%if(session.getAttribute("hpInfo")==null) {%>
 	<button type="button" class="btn btn-outline-warning" style="margin-left:10px; margin-right:50px;" onclick="location.href='../hospital/login';">로그인</button>
+    <%} else { %>
+    <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/logout';">로그아웃</button>&nbsp;    
+    <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/hpModify';">마이페이지</button>
+    
+    <%} %>
     <!-- 검색폼
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">

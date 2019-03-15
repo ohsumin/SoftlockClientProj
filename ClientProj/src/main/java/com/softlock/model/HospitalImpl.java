@@ -15,4 +15,19 @@ public interface HospitalImpl{
     
     // 회원아이디 중복여부 확인
     public int isUserId(String id);
+    
+    // 회원 존재여부 확인
+  	public int isUser(String id, String pw);
+     
+	//병원회원 로그인 추상메소드
+	public HospitalDTO login(String id, String pass);
+ 
+     //회원탈퇴 처리
+   	public int delete(String mem_id);
+   	
+   	//수정하기 폼 진입
+   	public HospitalDTO view(String hp_id);
+   	
+   	//수정하기 처리
+   	public int modifyAction(String hp_pw, String hp_phone, String hp_name, String hp_id);
 }
