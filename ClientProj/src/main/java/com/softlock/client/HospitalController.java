@@ -1,13 +1,19 @@
 package com.softlock.client;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,6 +38,117 @@ public class HospitalController {
 		
 		return "/hospital/hp_login";
 	}
+	
+	@RequestMapping("/hospital/loginAction")
+	@ResponseBody
+	public Map<String, Object> loginAction(HttpServletRequest req, HttpSession session) 
+	{
+		String id = req.getParameter("id");
+		String pass = req.getParameter("pass");
+		
+		System.out.println(id);
+		System.out.println(pass);
+		
+		// Mybatis 사용
+		// 회원정보 저장
+		HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).login(id, pass);
+		// 회원존재여부 판단
+		int user = sqlSession.getMapper(HospitalImpl.class).isUser(id, pass);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+				
+		//로그인 후 페이지 이동
+		/* 나중에처리
+		String backUrl = req.getParameter("backUrl");
+		if(backUrl==null || backUrl.equals("")) {
+			//돌아갈 url이 없다면 로그인 페이지로 다시 이동한다.
+			mv.setViewName("member/mem_login");
+		}
+		else {
+			mv.setViewName(backUrl);
+		}*/
+		
+		if(user == 1) {
+			map.put("success", 1);
+			map.put("hpInfo", vo);
+			session.setAttribute("hpInfo", vo);
+			//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
+		}
+		else {
+			map.put("success", 0);
+		}
+		
+		return map;
+	}
+	
+	//로그아웃 
+		@RequestMapping("/hospital/logout")
+		public String hpLogout(HttpSession session) {
+			session.setAttribute("hpInfo", null);
+			session.invalidate();
+			return "hospital/home";
+		}
+	
+		//회원탈퇴처리 비밀번호확인폼 진입
+		@RequestMapping("/hospital/hospitalDeleteCk")
+		public String hpDeleteck() {
+			return "hospital/hp_pwCk";
+		}
+		
+		//회원탈퇴처리
+		@RequestMapping("/hospital/hpDelteAction")
+		@ResponseBody
+		public Map<String, Object> hpDelteAction(HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			String id = req.getParameter("id");
+			String pass = req.getParameter("pass");
+			
+			int user = sqlSession.getMapper(HospitalImpl.class).isUser(id, pass);
+			
+			String retrunLoc="";
+		
+			if(user==1) {
+			
+				sqlSession.getMapper(HospitalImpl.class).delete(id);
+				map.put("success", "1");
+				session.invalidate();
+				map.put("returnLoc", "../hospital/home");
+			
+			} else {
+				map.put("success", "0");
+				map.put("msg", "아이디 및 비밀번호를 확인해주세요");
+				
+			}
+			return map;
+			
+		}
+		
+	////회원정보수정폼진입
+		@RequestMapping("/hospital/hpModify")
+		public String hpModify(Model model, HttpServletRequest req,
+				HttpSession session) {
+		
+			
+		HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
+				.view(((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+		model.addAttribute("dto", dto);
+			return "hospital/hp_myPage";
+		}
+		
+		
+		/////회원정보수정액션
+		@RequestMapping("/hospital/modifyAction")
+		public void modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+			System.out.println("아이디" +((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+			sqlSession.getMapper(HospitalImpl.class).modifyAction(
+					req.getParameter("hp_pw"), req.getParameter("hp_name"), req.getParameter("hp_phone"), ((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보수정이 완료되었습니다'); location.href='../hospital/home';</script>");
+			out.flush();
+		}
 	
     @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
