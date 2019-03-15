@@ -82,74 +82,80 @@ public class HospitalController {
 	}
 	
 	//로그아웃 
-		@RequestMapping("/hospital/logout")
-		public String hpLogout(HttpSession session) {
-			session.setAttribute("hpInfo", null);
+	@RequestMapping("/hospital/logout")
+	public String hpLogout(HttpSession session) {
+		session.setAttribute("hpInfo", null);
+		session.invalidate();
+		return "hospital/home";
+	}
+
+	//회원탈퇴처리 비밀번호확인폼 진입
+	@RequestMapping("/hospital/hospitalDeleteCk")
+	public String hpDeleteck() {
+		return "hospital/hp_pwCk";
+	}
+	
+	//회원탈퇴처리
+	@RequestMapping("/hospital/hpDelteAction")
+	@ResponseBody
+	public Map<String, Object> hpDelteAction(HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String id = req.getParameter("id");
+		String pass = req.getParameter("pass");
+		
+		int user = sqlSession.getMapper(HospitalImpl.class).isUser(id, pass);
+		
+		String retrunLoc="";
+	
+		if(user==1) {
+		
+			sqlSession.getMapper(HospitalImpl.class).delete(id);
+			map.put("success", "1");
 			session.invalidate();
-			return "hospital/home";
+			map.put("returnLoc", "../hospital/home");
+		
+		} else {
+			map.put("success", "0");
+			map.put("msg", "아이디 및 비밀번호를 확인해주세요");
+			
 		}
+		return map;
+		
+	}
+		
+    //회원정보수정폼진입
+	@RequestMapping("/hospital/hpModify")
+	public String hpModify(Model model, HttpServletRequest req,
+			HttpSession session) {
 	
-		//회원탈퇴처리 비밀번호확인폼 진입
-		@RequestMapping("/hospital/hospitalDeleteCk")
-		public String hpDeleteck() {
-			return "hospital/hp_pwCk";
-		}
 		
-		//회원탈퇴처리
-		@RequestMapping("/hospital/hpDelteAction")
-		@ResponseBody
-		public Map<String, Object> hpDelteAction(HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			String id = req.getParameter("id");
-			String pass = req.getParameter("pass");
-			
-			int user = sqlSession.getMapper(HospitalImpl.class).isUser(id, pass);
-			
-			String retrunLoc="";
-		
-			if(user==1) {
-			
-				sqlSession.getMapper(HospitalImpl.class).delete(id);
-				map.put("success", "1");
-				session.invalidate();
-				map.put("returnLoc", "../hospital/home");
-			
-			} else {
-				map.put("success", "0");
-				map.put("msg", "아이디 및 비밀번호를 확인해주세요");
-				
-			}
-			return map;
-			
-		}
-		
-	////회원정보수정폼진입
-		@RequestMapping("/hospital/hpModify")
-		public String hpModify(Model model, HttpServletRequest req,
-				HttpSession session) {
-		
-			
-		HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
-				.view(((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
-		model.addAttribute("dto", dto);
-			return "hospital/hp_myPage";
-		}
-		
-		
-		/////회원정보수정액션
-		@RequestMapping("/hospital/modifyAction")
-		public void modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
-			System.out.println("아이디" +((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
-			sqlSession.getMapper(HospitalImpl.class).modifyAction(
-					req.getParameter("hp_pw"), req.getParameter("hp_name"), req.getParameter("hp_phone"), ((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
-			
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('정보수정이 완료되었습니다'); location.href='../hospital/home';</script>");
-			out.flush();
-		}
+	HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
+			.view(((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+	model.addAttribute("dto", dto);
+		return "hospital/hp_myPage";
+	}
 	
+	
+	 /////회원정보수정액션
+    @RequestMapping("/hospital/modifyAction")
+    public void modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+       String dym = req.getParameter("dym");
+       
+       System.out.println("아이디" +((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+       sqlSession.getMapper(HospitalImpl.class).modifyAction(
+             req.getParameter("hp_hpphone"), req.getParameter("hp_night"), req.getParameter("hp_wkend"), req.getParameter("hp_intro"),
+             req.getParameter("hp_notice"), req.getParameter("hp_image"), ((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+        
+       sqlSession.getMapper(HospitalImpl.class).tmodifyAction(
+             req.getParameter("monOpt"), req.getParameter("monClt"), ((HospitalDTO)session.getAttribute("hpInfo")).getHp_idx(), dym );
+       
+       response.setContentType("text/html; charset=UTF-8");
+       PrintWriter out = response.getWriter();
+       out.println("<script>alert('정보수정이 완료되었습니다'); location.href='../hospital/home';</script>");
+       out.flush();
+    }
+
     @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
     public ArrayList<HospListDTO> searchName(HttpServletRequest req){

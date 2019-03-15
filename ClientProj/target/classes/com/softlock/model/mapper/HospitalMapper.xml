@@ -81,4 +81,14 @@
 	<update id="modifyAction">
 	UPDATE hospital SET hp_pw=#{param1}, hp_phone=#{param3}, hp_name=#{param2} WHERE hp_id=#{param4}
 	</update>
+	
+	<!-- 회원정보수정 -->
+   <update id="modifyAction">
+   UPDATE hospital(hp_hpphone, hp_night, hp_wkend, hp_intro, hp_notice, hp_image) 
+      SET hp_hpphone=#{param1}, hp_night=#{param2}, hp_wkend=#{param3}, hp_intro=#{param4}, hp_notice=#{param5},
+         hp_image=#{param6},  WHERE hp_id=#{param7}
+   </update>
+   <update id="tmodifyAction">
+   UPDATE treattime (treat_open, treat_close) SET , treat_open=#{param1}, treat_close=#{param2} WHERE hp_idx=#{param3} and treat_dy=#{param4}
+   </update>
 </mapper>

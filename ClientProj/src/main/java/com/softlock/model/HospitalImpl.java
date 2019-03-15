@@ -30,4 +30,8 @@ public interface HospitalImpl{
    	
    	//수정하기 처리
    	public int modifyAction(String hp_pw, String hp_phone, String hp_name, String hp_id);
+   	
+ 	//수정하기 처리
+    public int modifyAction(String hp_hpphone, String hp_night, String hp_wkend, String hp_intro, String hp_notice, String hp_image, String hp_id);
+    public int tmodifyAction(String oTime, String cTime, int hp_idx, String dy);
 }
