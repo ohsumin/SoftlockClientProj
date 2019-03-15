@@ -170,7 +170,7 @@ public class HospitalController {
     	return "/hospital/hp_join";
     }
     
-    @RequestMapping("/hospital/joinAction")
+    /*@RequestMapping("/hospital/joinAction")
     @ResponseBody
     public String hpjoinAction(HttpServletRequest req, HttpSession session) {
         
@@ -189,5 +189,5 @@ public class HospitalController {
              hp_phone, hp_address);
        
        return "hospital/hp_joinAction";
-    }
+    }*/
 }
