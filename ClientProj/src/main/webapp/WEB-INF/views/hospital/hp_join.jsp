@@ -84,6 +84,7 @@ $(function(){
 	         strHTML += "<select multiple='' class='form-control' name='searchList' id='searchList'>";
 	         $.each(d, function(index, d){
 	        	var adrs = d.hosplist_adrs;
+	        	alert(adrs);
 	            strHTML += "  <option onclick='alert(\""+d.hosplist_adrs+"\")' value='"+d.hosplist_idx+"'> "+d.hosplist_name+"</option>"; 
 	            strHTML += "	";
 	         });
