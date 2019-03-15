@@ -15,15 +15,12 @@
 </style>
 </head>
 <body style="background-color:#F5F6F9">
-<!-- Navigation -->
-<jsp:include page="/resources/common/navHp.jsp"/>
-<div class="container"><br /><br /><br /><br />
-   <div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
+<div class="container"><br />
+   <div style="width:985px; height:auto; background-color:white; float:none; margin:0 auto;">
       <form action="../hospital/modifyAction" style="float:none; margin:0 auto; text-align:center; width:760px;">
-      <br /><br /><br />
       <div class="logo">
          <h4>병원 상세정보기입</h4>   
-      </div><br /><br /><br />
+      </div><br />
         <div id="txt">&nbsp;병원전화번호</div>
         <input type="text" class="form-control" id="hp_phone" name="hp_phone"><br />
       <div id="txt">&nbsp;병원 OPEN/CLOSE 시간</div>
@@ -119,8 +116,6 @@
    </form>
 </div>
 </div>
-<br /><br /><br /><br />
-<!-- bottom -->
-<jsp:include page="/resources/common/footer.jsp"/>
+<br /><br />
 </body>
 </html>
