@@ -13,6 +13,31 @@
    font-size:0.8em;
 }
 </style>
+<script>
+$(function(){	
+	
+	 
+	
+	
+	
+	// 전화번호 폼값 체크
+	$('#hp_hpphone').change(function() {		
+		var phoneReg = /^[0-9]/g;
+		if( !phoneReg.test( $("input[name=hp_hpphone]").val())){
+            $('#phoneMSG').html("전화번호는 숫자만 입력하셔야 합니다.");
+            $('#phoneMSG').css("color", "red");
+            return;
+        } 
+	    else {
+	    	$('#phoneMSG').empty();
+       } 
+	 
+	
+	
+	});
+	
+});
+</script>
 </head>
 <body style="background-color:#F5F6F9">
 <div class="container"><br />
@@ -22,7 +47,8 @@
          <h4>병원 상세정보기입</h4>   
       </div><br />
         <div id="txt">&nbsp;병원전화번호</div>
-        <input type="text" class="form-control" id="hp_phone" name="hp_phone"><br />
+        <input type="text" class="form-control" id="hp_hpphone" name="hp_hpphone" placeholder="'-'없이 입력해주세요"><br />
+        <div id="phoneMSG" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br />
       <div id="txt">&nbsp;병원 OPEN/CLOSE 시간</div>
       <table class="table" style="float:none; margin:0 auto; text-align:center; border-bottom:1px solid #D8D8D8;">
          <tr class="table" style="text-align: center; background-color:#2E9AFE; color:white; font-size:1.1em;">

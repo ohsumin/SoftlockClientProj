@@ -216,8 +216,9 @@ $(function() {
 	
 	// 전화번호 폼값 체크
 	$('#mem_phone').change(function() {
-		if($('#mem_phone').val().length!=11) {
-			$('#phoneMsg').show();
+		var phoneReg = /^[0-9]/g;		
+		if(!phoneReg.test( $("input[name=mem_phone]").val()) || $('#mem_phone').val().length!=11) {
+			
             $('#phoneMsg').html("정확한 휴대폰번호를 입력해주세요.");
             $('#phoneMsg').css("color", "red");
         } 
