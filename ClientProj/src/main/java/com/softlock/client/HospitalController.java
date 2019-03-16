@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
-import com.softlock.model.MemberDTO;
-import com.softlock.model.MemberImpl;
 
 @Controller
 public class HospitalController {
@@ -42,25 +40,25 @@ public class HospitalController {
 	}
 	
 	// 아이디중복확인
-		@RequestMapping("/hospital/checkId")
-		@ResponseBody
-		public Map<String, Object> checkId(HttpServletRequest req, HttpSession session) 
-		{
-			String hp_id = req.getParameter("hp_id");
-			String hp_pw = req.getParameter("hp_pw");
-			int userId = sqlSession.getMapper(HospitalImpl.class).isUserId(hp_id);
+	@RequestMapping("/hospital/checkId")
+	@ResponseBody
+	public Map<String, Object> checkId(HttpServletRequest req, HttpSession session) 
+	{
+		String hp_id = req.getParameter("hp_id");
+		String hp_pw = req.getParameter("hp_pw");
+		int userId = sqlSession.getMapper(HospitalImpl.class).isUserId(hp_id);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(userId == 1) {
 			
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			if(userId == 1) {
-				
-				map.put("isUserId", 1);
-			}
-			else {
-				map.put("isUserId", 0);
-			}
-			return map;
+			map.put("isUserId", 1);
 		}
+		else {
+			map.put("isUserId", 0);
+		}
+		return map;
+	}
 	
 	
 	@RequestMapping("/hospital/loginAction")
@@ -75,7 +73,7 @@ public class HospitalController {
 		
 		// Mybatis 사용
 		// 회원정보 저장
-		HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).login(id, pass);
+		HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).loginHp(id, pass);
 		// 회원존재여부 판단
 		int user = sqlSession.getMapper(HospitalImpl.class).isUser(id, pass);
 		
@@ -94,8 +92,8 @@ public class HospitalController {
 		
 		if(user == 1) {
 			map.put("success", 1);
-			map.put("hpInfo", vo);
-			session.setAttribute("hpInfo", vo);
+			map.put("hospitalInfo", vo);
+			session.setAttribute("hospitalInfo", vo);
 			//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
 		}
 		else {
@@ -108,7 +106,7 @@ public class HospitalController {
 	//로그아웃 
 	@RequestMapping("/hospital/logout")
 	public String hpLogout(HttpSession session) {
-		session.setAttribute("hpInfo", null);
+		session.setAttribute("hospitalInfo", null);
 		session.invalidate();
 		return "hospital/home";
 	}
@@ -155,24 +153,24 @@ public class HospitalController {
 	
 		
 	HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
-			.view(((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+			.view(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_id());
 	model.addAttribute("dto", dto);
 		return "hospital/hp_myPage";
 	}
 	
 	
-	 /////회원정보수정액션
+	/////회원정보수정액션
     @RequestMapping("/hospital/modifyAction")
     public void modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
        String dym = req.getParameter("dym");
        
-       System.out.println("아이디" +((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+       System.out.println("아이디" +((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_id());
        sqlSession.getMapper(HospitalImpl.class).modifyAction(
              req.getParameter("hp_hpphone"), req.getParameter("hp_night"), req.getParameter("hp_wkend"), req.getParameter("hp_intro"),
-             req.getParameter("hp_notice"), req.getParameter("hp_image"), ((HospitalDTO)session.getAttribute("hpInfo")).getHp_id());
+             req.getParameter("hp_notice"), req.getParameter("hp_image"), ((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_id());
         
        sqlSession.getMapper(HospitalImpl.class).tmodifyAction(
-             req.getParameter("monOpt"), req.getParameter("monClt"), ((HospitalDTO)session.getAttribute("hpInfo")).getHp_idx(), dym );
+             req.getParameter("monOpt"), req.getParameter("monClt"), ((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx(), dym );
        
        response.setContentType("text/html; charset=UTF-8");
        PrintWriter out = response.getWriter();
@@ -201,7 +199,6 @@ public class HospitalController {
     }
     
     @RequestMapping("/hospital/joinAction")
-    @ResponseBody
     public String hpjoinAction(HttpServletRequest req, HttpSession session, HttpServletResponse resp) throws IOException {
         
        String hp_id = req.getParameter("hp_id");
@@ -214,14 +211,24 @@ public class HospitalController {
        String hp_address = req.getParameter("hp_address");
        String hp_address2 = req.getParameter("hp_address2");
        
+       System.out.println(hp_id);
+       System.out.println(hp_pw);
+       System.out.println(hp_name);
+       System.out.println(hp_num);
+       System.out.println(hp_username);
+       System.out.println(hp_email);
+       System.out.println(hp_phone);
+       System.out.println(hp_address);
+       System.out.println(hp_address2);
+       
        // Mybatis 사용
        // 회원정보 저장
        sqlSession.getMapper(HospitalImpl.class).hpJoinAction(
     		   	hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2);
        
-    /*   MemberDTO vo = sqlSession.getMapper(HospitalImpl.class).login(hp_id, hp_pw);
+       HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).loginHp(hp_id, hp_pw);
 	   session.setAttribute("hospitalInfo", vo);
-		*/
+	
        return "hospital/hp_joinActionSuccess";
     }
 }

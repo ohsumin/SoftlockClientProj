@@ -100,4 +100,9 @@
    		INSERT INTO hospital(hp_idx, hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2)
    			VALUES(seq_hospital.nextval , #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, #{param9})
    </insert>
+
+   <!-- 회원정보 가져오기 -->   
+   <select id="loginHp" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+      select * from hospital where hp_id=#{param1} and hp_pw=#{param2}
+   </select>
 </mapper>

@@ -68,109 +68,151 @@ function optClick(data) {
 	$('#searchList').hide();
 	var addrStr = data;
 	var addrArr = addrStr.split(',');
-	$('#hp_address1').val(addrArr[0]);
+	$('#hp_address').val(addrArr[0]);
 }
 </script>
 <script>
 $(function() {
-   // id중복여부 확인
-   $('#hp_id').change(function() {
-      var hp_id = $('#hp_id').val();
-      if(hp_id != ""){
-         $.ajax({
-              type : 'post',
-              url : '../hospital/checkId', 
-              data : {
-                 hp_id : hp_id
-              },
-              dataType : "json",
-              contentType : "application/x-www-form-urlencoded;charset:utf-8",
-              success : function(d) {
-                 
-                 
-                 var idReg = /^[A-za-z0-9]{5,15}/g;
-                 // 아이디 체크
-                 if( !idReg.test( $("input[name=hp_id]").val()) || $('#hp_id').val().length > 15) {
-                       $('#idMsg').html("아이디는 6~15자의 영문자 또는 숫자여야 합니다.");
-                         $('#idMsg').css("color", "red");
-                       return;
-                  } else {
-                     $('#idMsg').html(""); 
-                      $('#idMsg').css("color", "green");
-                  }            
-                 
-                 
-                 
-                  if (d.isUserId == 1) {
-                      $('#idMsg').html("이미 사용중인 아이디입니다.");
-                      $('#idMsg').css("color", "red");
-                  } else {
-                     $('#idMsg').html("사용가능한 아이디입니다."); 
-                      $('#idMsg').css("color", "green");
-                  } 
-              },
-              error : function(e) {
-               alert("실패" + e.status + " : " + e.statusText);
-            }
-          });
-      }
-   });
-   
-    // 비밀번호 폼값 체크
-   $('#hp_pw').change(function() {      
-      var pwReg = /^[A-za-z0-9]{5,15}/g;         
-      if( !pwReg.test( $("input[name=hp_pw]").val()) || $('#hp_pw').val().length > 15) {         
-            $('#pwMSG').html("비밀번호는 6~15자의 영문자 또는 숫자여야 합니다.");
-            $('#pwMSG').css("color", "red");   
-        } 
-      else{
-         $('#pwMSG').empty();
-      }   
-   }); 
-    
-   
-   
-   //요양기관번호 체크
-   $('#hp_num').change(function() {      
-      var hpReg = /^[0-9]/g;
-      if( !hpReg.test( $("input[name=hp_num]").val()) || $('#hp_num').val().length != 8 ) {
-            $('#numMsg').html("요양기관의 번호는 숫자 8자리로 입력하셔야 합니다.");
-            $('#numMsg').css("color", "red");
-            return;
-         }else {
-            $('#numMsg').empty();
-       } 
-   });
-   
-   // 전화번호 폼값 체크
-   $('#hp_phone').change(function() {      
-      var phoneReg = /^[0-9]/g;
-      if( !phoneReg.test( $("input[name=hp_phone]").val()) || $('#hp_phone').val().length != 11 ) {
-            $('#phoneMSG').html("휴대폰번호는 숫자 11자리로 입력하셔야 합니다..");
-            $('#phoneMSG').css("color", "red");
-            return;
-        } 
-       else {
-          $('#phoneMSG').empty();
-       } 
-   }); 
-   
-   // 비밀번호를 입력하면 비밀번호확인 값이 지워짐
-   $('#hp_pw').keyup(function() {
-      $('#hp_pwck').val('');
-   });
-   // 비밀번호확인
-   $('#hp_pwck').change(function() {      
-      if(($('#hp_pw').val()) != ($('#hp_pwck').val())){
-         $('#pwckMSG').html('비밀번호가 일치하지 않습니다.');
-         $('#pwckMSG').css("color", "red");
-      } 
-      else{
-         $('#pwckMSG').empty();
-      }
-   });
-   
-   // 회원가입 버튼을 눌렀을때
+	// id중복여부 확인
+	   $('#hp_id').change(function() {
+	      var hp_id = $('#hp_id').val();
+	      if(hp_id != ""){
+	         $.ajax({
+	              type : 'post',
+	              url : '../hospital/checkId', 
+	              data : {
+	                 hp_id : hp_id
+	              },
+	              dataType : "json",
+	              contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	              success : function(d) {
+	                 
+	                 
+	                 var idReg = /^[A-za-z0-9]{5,15}/g;
+	                 // 아이디 체크
+	                 if( !idReg.test( $("input[name=hp_id]").val()) || $('#hp_id').val().length > 15) {
+	                       $('#idMsg').html("아이디는 6~15자의 영문자 또는 숫자여야 합니다.");
+	                         $('#idMsg').css("color", "red");
+	                       return;
+	                  } else {
+	                     $('#idMsg').html(""); 
+	                      $('#idMsg').css("color", "green");
+	                  }            
+	                 
+	                 
+	                 
+	                  if (d.isUserId == 1) {
+	                      $('#idMsg').html("이미 사용중인 아이디입니다.");
+	                      $('#idMsg').css("color", "red");
+	                  } else {
+	                     $('#idMsg').html("사용가능한 아이디입니다."); 
+	                      $('#idMsg').css("color", "green");
+	                  } 
+	              },
+	              error : function(e) {
+	               alert("실패" + e.status + " : " + e.statusText);
+	            }
+	          });
+	      }
+	   });
+	   
+	    // 비밀번호 폼값 체크
+	   $('#hp_pw').change(function() {      
+	      var pwReg = /^[A-za-z0-9]{5,15}/g;         
+	      if( !pwReg.test( $("input[name=hp_pw]").val()) || $('#hp_pw').val().length > 15) {         
+	            $('#pwMSG').html("비밀번호는 6~15자의 영문자 또는 숫자여야 합니다.");
+	            $('#pwMSG').css("color", "red");   
+	        } 
+	      else{
+	         $('#pwMSG').empty();
+	      }   
+	   }); 
+	    
+	   
+	   
+	   //요양기관번호 체크
+	   $('#hp_num').change(function() {      
+	      var hpReg = /^[0-9]/g;
+	      if( !hpReg.test( $("input[name=hp_num]").val()) || $('#hp_num').val().length != 8 ) {
+	            $('#numMSG').html("요양기관의 번호는 숫자 8자리로 입력하셔야 합니다.");
+	            $('#numMSG').css("color", "red");
+	            return;
+	         }else {
+	            $('#numMSG').empty();
+	       } 
+	   });
+	   
+	   // 전화번호 폼값 체크
+	   $('#hp_phone').change(function() {      
+	      var phoneReg = /^[0-9]/g;
+	      if( !phoneReg.test( $("input[name=hp_phone]").val()) || $('#hp_phone').val().length != 11 ) {
+	            $('#phoneMSG').html("휴대폰번호는 숫자 11자리로 입력하셔야 합니다..");
+	            $('#phoneMSG').css("color", "red");
+	            return;
+	        } 
+	       else {
+	          $('#phoneMSG').empty();
+	       } 
+	   }); 
+	   
+	   // 비밀번호를 입력하면 비밀번호확인 값이 지워짐
+	   $('#hp_pw').keyup(function() {
+	      $('#hp_pwck').val('');
+	   });
+	   // 비밀번호확인
+	   $('#hp_pwck').change(function() {      
+	      if(($('#hp_pw').val()) != ($('#hp_pwck').val())){
+	         $('#pwckMSG').html('비밀번호가 일치하지 않습니다.');
+	         $('#pwckMSG').css("color", "red");
+	      } 
+	      else{
+	         $('#pwckMSG').empty();
+	      }
+	   });
+	   
+	   $('#hp_name').change(function() {      
+		   
+		      if( $('#hp_name').val() == "") {
+		         $('#hpnameMSG').html("");
+		      }else{
+		          $('#hpnameMSG').empty();
+		       } 
+		   }); 
+		   
+		   $('#hp_address2').change(function() {      
+		      
+		      if( $('#hp_address2').val() == "" ) {
+		         $('#ad2MSG').html("");
+		      }else{
+		          $('#ad2MSG').empty();
+		       } 
+		   }); 
+		   
+		   $('#hp_username').change(function() {      
+		      
+		      if( $('#hp_username').val() == "" ) {
+		         $('#nameMSG').html("");
+		      }else{
+		          $('#nameMSG').empty();
+		       } 
+		   }); 
+		   
+		   $('#hp_email').change(function() {      
+		      var regex=/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
+
+		      
+		      if(!regex.test($("input[name=hp_email]").val()))  {
+		          $('#emailMSG').html("이메일 주소를 정확히 입력해 주세요.");
+		            $('#emailMSG').css("color", "red");
+		         return;
+		        } 
+		       else {
+		          $('#emailMSG').empty();
+		         } 
+		          
+		   }); 
+	   
+// 회원가입 버튼을 눌렀을때
    $('#joinBtn').click(function() {
       
          // 폼값확인
@@ -185,56 +227,100 @@ $(function() {
          }
          
          if($('#hp_pw').val() == ""){
-            $('#pwMsg').show();
-            $('#pwMsg').html('비밀번호를 입력해주세요.');
-            $('#pwMsg').css("color", "red");
+            
+            $('#pwMSG').html('비밀번호를 입력해주세요.');
+            $('#pwMSG').css("color", "red");
             $('#hp_pw').focus();
             return false;
          }
          else{
-            $('#pwMsg').hide();
+            $('#pwMSG').hide();
          }
          if($('#hp_pwck').val() == ""){
-            $('#pwckMsg').show();
-            $('#pwckMsg').html('비밀번호 확인을 해주세요.');
-            $('#pwckMsg').css("color", "red");
+            
+            $('#pwckMSG').html('비밀번호 확인을 해주세요.');
+            $('#pwckMSG').css("color", "red");
             $('#hp_pwck').focus();
             return false;
          }
          else{
-            $('#pwckMsg').hide();
+            $('#pwckMSG').hide();
          }
-         if($('#hp_name').val() == ""){
-            $('#nameMsg').show();
-            $('#nameMsg').html('이름을 입력해주세요.');
-            $('#nameMsg').css("color", "red");
+         if($('#hp_name').val() == ""){            
+            $('#hpnameMSG').html('병원이름을 입력해주세요.');
+            $('#hpnameMSG').css("color", "red");
             $('#hp_name').focus();
             return false;
          }
          else{
-            $('#nameMsg').hide();
+            $('#hpnameMSG').hide();
          }
+         
+         if($('#hp_address').val() == ""){
+            
+            $('#ad1MSG').html('주소를 입력해주세요.');
+            $('#ad1MSG').css("color", "red");
+            $('#ad1MSG').focus();
+            return false;
+         }
+         else{
+            $('#ad1MSG').hide();
+         }
+         
+         if($('#hp_address2').val() == ""){            
+            $('#ad2MSG').html('상세주소를 입력해주세요.');
+            $('#ad2MSG').css("color", "red");
+            $('#ad2MSG').focus();
+            return false;
+         }
+         else{
+            $('#ad2MSG').hide();
+         }
+         
+         if($('#hp_num').val() == ""){
+            
+            $('#numMSG').html('요양기관번호를 입력해주세요.');
+            $('#numMSG').css("color", "red");
+            $('#numMSG').focus();
+            return false;
+         }
+         else{
+            $('#numMSG').hide();
+         }
+         
+         if($('#hp_username').val() == ""){
+            
+            $('#nameMSG').html('담당자 이름을 입력해주세요.');
+            $('#nameMSG').css("color", "red");
+            $('#nameMSG').focus();
+            return false;
+         }
+         else{
+            $('#nameMSG').hide();
+         }
+         
+         if($('#hp_email').val() == ""){
+            
+            $('#emailMSG').html('이메일을 입력해주세요.');
+            $('#emailMSG').css("color", "red");
+            $('#hp_email').focus();
+            return false;
+         }
+         else{
+            $('#emailMSG').hide();
+         }
+         
+         
          if($('#hp_phone').val() == ""){
-            $('#phoneMSG').show();
-            $('#phoneMSG').html('전화번호를 입력해주세요.');
+            
+            $('#phoneMSG').html('휴대폰번호를 입력해주세요.');
             $('#phoneMSG').css("color", "red");
             $('#hp_phone').focus();
             return false;
          }
          else{
-            $('#phoneMsg').hide();
+            $('#phoneMSG').hide();
          }
-         if($('#hp_email').val() == ""){
-            $('#emailMsg').show();
-            $('#emailMsg').html('이메일을 입력해주세요.');
-            $('#emailMsg').css("color", "red");
-            $('#hp_email').focus();
-            return false;
-         }
-         else{
-            $('#emailMsg').hide();
-         }
-      
       $('#form').submit();
    });
 });
@@ -255,36 +341,41 @@ $(function() {
       </div>
    <div id="pos">&nbsp;아이디</div>
     <input type="text" class="form-control" id="hp_id" name="hp_id" style="font-size:0.8em;">
-    <div id="idMsg" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br />
+    <div id="idMsg" style="text-align:left;  font-size:0.7em;"></div><br />
     <div id="pos">&nbsp;비밀번호</div>
     <input type="password" class="form-control" id="hp_pw" name="hp_pw" style="font-size:0.8em;">
-    <div id="pwMSG" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br />
+    <div id="pwMSG" style="text-align:left;  font-size:0.7em;"></div><br />
     <div id="pos">&nbsp;비밀번호확인</div>
     <input type="password" class="form-control" id="hp_pwck" name="hp_pwck" style="font-size:0.8em;">
-    <div id="pwckMSG" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br />
+    <div id="pwckMSG" style="text-align:left;  font-size:0.7em;"></div><br />
     <div id="pos">&nbsp;병원선택</div>
     <input type="text" class="form-control" id="hp_name" name="hp_name" autocomplete="off" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요">
+    <div id="hpnameMSG" style="text-align:left;  font-size:0.7em;"></div>
     <div id="ajaxTable"></div><br />
 
-   <div id="pos">&nbsp;상세주소 (입력된 주소와 다르면 우편번호검색을 해주세요)</div>
-   <input type="text" class="form-control" name="hp_address1" id="hp_address1" readonly 
-         style="width:275px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:5px;"/>
+   <div id="pos">&nbsp;주소 (입력된 주소와 다르면 우편번호검색을 해주세요)</div>
+   <input type="text" class="form-control" name="hp_address" id="hp_address" readonly 
+         style="width:275px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:5px;"/>   
    <button type="button" class="btn btn-warning" onclick="postOpen();" 
       style="width:120px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:2px;">우편번호검색</button>
-   <input type="text" class="form-control" placeholder="상세주소를 입력하세요." 
-      name="hp_address2" id="hp_address2" style=" font-size:0.8em; height:37px;"/><br />
    
+   
+   <input type="text" class="form-control" placeholder="상세주소를 입력하세요." 
+      name="hp_address2" id="hp_address2" style=" font-size:0.8em; height:37px;"/>
+   <div id="ad2MSG" style="text-align:left;  font-size:0.7em;"></div><br />
 
     <div id="pos">&nbsp;요양기관번호(숫자 8자리)</div>
     <input type="text" class="form-control" id="hp_num" name="hp_num" style="font-size:0.8em;">
-    <div id="numMsg" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br />
+    <div id="numMSG" style="text-align:left;  font-size:0.7em;"></div><br />
     <div id="pos">&nbsp;담당자 이름</div>
-    <input type="text" class="form-control" id="hp_username" name="hp_username" style="font-size:0.8em;"><br />
+    <input type="text" class="form-control" id="hp_username" name="hp_username" style="font-size:0.8em;">
+    <div id="nameMSG" style="text-align:left;  font-size:0.7em;"></div><br />
     <div id="pos">&nbsp;이메일</div>
-    <input type="email" class="form-control" id="hp_email" name="hp_email" style="font-size:0.8em;" >  <br />
+    <input type="email" class="form-control" id="hp_email" name="hp_email" style="font-size:0.8em;" >  
+    <div id="emailMSG" style="text-align:left;  font-size:0.7em;"></div><br />
     <div id="pos">&nbsp;휴대폰번호</div>
     <input type="text" class="form-control" id="hp_phone" name="hp_phone" style="font-size:0.8em;" placeholder="'-'없이 입력해주세요">
-    <div id="phoneMSG" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br /><br />
+    <div id="phoneMSG" style="text-align:left;  font-size:0.7em;"></div><br /><br />
     <button type="submit" class="btn btn-primary btn-lg btn-block" id="joinBtn">병원가입 승인요청</button><br /><br /><br />
 </form>
 </div>

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>UserLoginForm.jsp</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 #txt{
    text-align:left;
@@ -15,10 +16,17 @@
 </style>
 <script>
 $(function(){	
-	
-	 
-	
-	
+	var dyopen = ["#mon_open", "#tue_open", "#wed_open", "#thu_open", "#fri_open", "#sat_open", "#sun_open"];
+	var dyclose = ["#mon_close", "#tue_close", "#wed_close", "#thu_close", "#fri_close", "#sat_close", "#sun_close"];
+	var dybtn = ["#monBtn", "#tueBtn", "#wedBtn", "#thuBtn", "#friBtn", "#satBtn", "#sunBtn"];
+	// 처음에 오픈시간, 마감시간 선택 안되게
+	$('#mon_open').attr("disabled", "disabled"); $('#mon_close').attr("disabled", "disabled");
+	$('#tue_open').attr("disabled", "disabled"); $('#tue_close').attr("disabled", "disabled");
+	$('#wed_open').attr("disabled", "disabled"); $('#wed_close').attr("disabled", "disabled");
+	$('#thu_open').attr("disabled", "disabled"); $('#thu_close').attr("disabled", "disabled");
+	$('#fri_open').attr("disabled", "disabled"); $('#fri_close').attr("disabled", "disabled");
+	$('#sat_open').attr("disabled", "disabled"); $('#sat_close').attr("disabled", "disabled");
+	$('#sun_open').attr("disabled", "disabled"); $('#sun_close').attr("disabled", "disabled");
 	
 	// 전화번호 폼값 체크
 	$('#hp_hpphone').change(function() {		
@@ -31,11 +39,31 @@ $(function(){
 	    else {
 	    	$('#phoneMSG').empty();
        } 
-	 
-	
-	
 	});
 	
+	var toggle = false;
+	var btnAddClass = "btn-info";
+	var btnRemvClass = "btn-secondary";
+	for(var i=0; i<dyopen.length; i++){
+		$('#monBtn').click(function() {
+			$('#mon_open').attr("disabled", toggle);
+			$('#mon_close').attr("disabled", toggle);
+			if(toggle == false){
+				toggle = true;
+				$(this).addClass(btnAddClass);
+				$(this).removeClass(btnRemvClass);
+				btnAddClass = "btn-secondary";
+				btnRemvClass = "btn-info";
+			}
+			else{
+				toggle = false;
+				$(this).addClass(btnAddClass);
+				$(this).removeClass(btnRemvClass);
+				btnAddClass = "btn-info";
+				btnRemvClass = "btn-secondary";
+			}
+		});
+	}
 });
 </script>
 </head>
@@ -48,17 +76,17 @@ $(function(){
       </div><br />
         <div id="txt">&nbsp;병원전화번호</div>
         <input type="text" class="form-control" id="hp_hpphone" name="hp_hpphone" placeholder="'-'없이 입력해주세요"><br />
-        <div id="phoneMSG" style="text-align:left; margin-left:30px; font-size:0.7em;"></div><br />
+        <div id="phoneMSG" style="text-align:left; margin-left:30px; font-size:0.7em;"></div>
       <div id="txt">&nbsp;병원 OPEN/CLOSE 시간</div>
       <table class="table" style="float:none; margin:0 auto; text-align:center; border-bottom:1px solid #D8D8D8;">
-         <tr class="table" style="text-align: center; background-color:#2E9AFE; color:white; font-size:1.1em;">
-            <td style="font-weight:bold;">월</td>
-            <td style="font-weight:bold;">화</td>
-            <td style="font-weight:bold;">수</td>
-            <td style="font-weight:bold;">목</td>
-            <td style="font-weight:bold;">금</td>
-            <td style="font-weight:bold;">토</td>
-            <td style="font-weight:bold;">일</td>
+         <tr class="table" style="text-align: center;">
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">월</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">화</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">수</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">목</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">금</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">토</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">일</button></td>
          </tr>
          <tr style="text-align: center;">
             <%
@@ -73,7 +101,7 @@ $(function(){
                  <option value="">오픈시간</option>
                   <%
                   // 요일 배열
-                    String time = "";
+                  String time = "";
                   for(int i=9; i<=24; i++) {
                      for(int j=0; j<=1; j++) {
                         String hour = String.valueOf(i);

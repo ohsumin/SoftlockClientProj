@@ -21,7 +21,7 @@ public interface HospitalImpl{
   	public int isUser(String id, String pw);
      
 	//병원회원 로그인 추상메소드
-	public HospitalDTO login(String id, String pass);
+	public HospitalDTO loginHp(String id, String pass);
  
      //회원탈퇴 처리
    	public int delete(String mem_id);
