@@ -62,4 +62,40 @@
 	<update id="searchPassword" parameterType="Map">
 		update member set mem_pw = #{param3} where mem_id = #{param1} and mem_email = #{param2}
 	</update>
+	
+	<!-- 멤버의 접수현황 레코드 갯수  -->
+	<select id="reserMemCount" resultType="int">
+		select count(*) 
+		From reservation 
+		where resv_mem_idx=#{param1}
+	</select>
+	<!-- 멤버 idx && 진료 'c'인 레코드 갯수 -->
+	<select id="reserCount" resultType="int">
+		select count(*) 
+		From reservation res, member mem
+		where res.resv_mem_idx = mem.mem_idx and res.resv_mem_idx=#{0} and res.resv_perm='c'
+	</select>
+	<!-- 페이지 start end -->
+	<select id="reservationPage" resultType="com.softlock.model.ReservationDTO" >
+	SELECT * FROM(SELECT Tb.*, rownum rNum FROM  ( 
+            SELECT *
+              FROM reservation res, hospital hos
+              WHERE res.resv_hp_idx = hos.hp_idx and res.resv_mem_idx=#{param3}
+              ORDER BY resv_idx DESC
+          )Tb
+      )WHERE rNum BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="reserPage" resultType="com.softlock.model.ReservationDTO" >
+      	SELECT * FROM(SELECT Tb.*, rownum rNum FROM  ( 
+            SELECT *
+              FROM reservation res, hospital hos
+              WHERE res.resv_hp_idx = hos.hp_idx and res.resv_perm = 'c' and res.resv_mem_idx=#{param3}
+              ORDER BY resv_idx DESC
+          )Tb
+      )WHERE rNum BETWEEN #{param1} AND #{param2}
+	</select>
+	<!-- 예약 삭제 처리하기 -->
+	<delete id="reserdelete">
+		DELETE FROM reservation WHERE resv_idx=#{0}
+	</delete>
 </mapper>

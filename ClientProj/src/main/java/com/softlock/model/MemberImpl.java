@@ -1,5 +1,7 @@
 package com.softlock.model;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MemberImpl {
@@ -36,6 +38,16 @@ public interface MemberImpl {
 
 	public MemberDTO userInfo(String mem_id); // 유저 ID 찾기
 	int searchPassword(String mem_id, String mem_email, String key); // 회원 임시 비밀번호 변경 메서드
-	
+	/***************************** 일반회원 마이페이지 ******************************/
+	//멤버의 접수현황 레코드 갯수 카운트
+	public int reserMemCount(int resv_mem_idx);
+	public int reserCount(int resv_mem_idx);
+	//start와 end를 파라미터로 받아 게시물 가져오기
+	public ArrayList<ReservationDTO> reservationPage(int start, int end, int resv_idx);	
+	public ArrayList<ReservationDTO> reserPage(int start, int end, int resv_idx);	
+	//예약 삭제 처리하기
+	public void reserdelete(String resv_idx);
+	public ReservationDTO reservation(String resv_idx);
+	/***************************** 일반회원 마이페이지 ******************************/
 	
 }

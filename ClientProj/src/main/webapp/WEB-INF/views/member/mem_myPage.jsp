@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,13 +25,15 @@
 }
 .div{
       border:1px solid;
-   }
+}
 
 .nav{
        height:150px;
        width : 100%;
-   }
+}
 </style>
+
+
 </head>
 <body style="background-color:#F5F6F9">
 <!-- Navigation -->
@@ -38,21 +42,15 @@
 <input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
 <div style="width:1000px; height:100%; background-color:white; text-align:center; float:none; margin:0 auto;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
-   <ul class="social-network social-circle">
+   <!-- <ul class="social-network social-circle">
         <i class="fa fa-facebook"></i>
-    </ul>      
+    </ul>  -->     
   <a class="navbar-brand" href="#">소프트락님 <br />이메일연동</a>
-  
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
-      
-      
-      
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <a class="navbar-brand" href="#" >접수현황 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</a>
-      <a class="navbar-brand" href="#" >진료기록 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</a>
+  <div class="collapse navbar-collapse " id="navbarColor01">
+    <form class="form-inline my-2 my-lg-1 ">   
+      <a class="navbar-brand" href="#" >접수현황&진료내역 <br />&nbsp;&nbsp;${totalRecordCount }</a>
+      <!-- <a class="navbar-brand" href="#" >진료내역 <br />&nbsp;&nbsp;</a> -->
     </form>
   </div>
 </nav>
@@ -60,119 +58,154 @@
 <br /><br /><br /><br />
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#home">접수현황</a>
+    <a class="nav-link" data-toggle="tab1" href="./memberModify?tab=1">접수현황</a>
     <br />
   </li>
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#profile">진료내역</a>
+    <a class="nav-link" data-toggle="tab2" href="./memberModify?tab=2">진료내역</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#profile2">회원정보변경</a>
+    <a class="nav-link" data-toggle="tab3" href="./memberModify?tab=3">회원정보변경</a>
   </li> 
 </ul>
 <br />
 <div id="myTabContent" class="tab-content">
-  <div class="tab-pane fade" id="home">
-    <table id="mytable" name=resFrm class="table table-bordred table-striped">
-                   
-                   <thead>
-                   
-                   <tr>
-                   <th>No</th>
-                    <th>병원명</th>
-                     <th>내원날짜</th>
-                     <th>내원예약시간</th>
-                     <th>예약날짜</th>
-                      <th>예약변경</th>                      
-                       <th>예약취소</th>
-                    </tr>
-                   </thead>
+
+<c:set var="tab" value="${tab }" scope="page"/>
+<c:choose>
+    <c:when test="${tab eq '1'}">
+<!-- 접수현황 s.. -->
+  <div id="profile1">
+    <table id="mytable1" class="table table-bordred table-striped">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>병원명</th>
+				<th>내원날짜</th>
+				<th>내원예약시간</th>
+				<th>예약날짜/시간</th>
+				<th>예약변경</th>                      
+				<th>예약취소</th>
+			</tr>
+		</thead>
     <tbody>
-    
     <c:choose>
-       <c:when test="${empty lists }">
+    	
+       <c:when test="${empty reservationDTO }">
           <tr>
             <td colspan="7">
                예약기록이 없습니다.
             </td>
          </tr>
        </c:when>
+       
        <c:otherwise>
-         <c:forEach items="${lists }" var="row" varStatus="loop">
+         <c:forEach items="${reservationDTO }" var="row" varStatus="loop">
+         <%-- <c:if test="${mem_idx eq row.resv_mem_idx}"> --%>
             <tr>
-               <td class="text-left">
-                  ${map.totalCount - loop.index }
-               </td>
-               <td class="text-left">
-                  ${row.place }
-               </td>
-               <td class="text-left">${row.resdate }</td>
-               <td class="text-left">${row.restime }</td>
-               <td class="text-left">${row.postdate }</td>
-               <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" onclick="location.href='../13DataRoom/pro2/ReservationEdit.jsp?num=${row.num }'" data-title="Edit" data-toggle="modal" data-target="#edit"  ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" onclick="location.href='../13DataRoom/pro2/ResDeleteProc.jsp?num=${row.num }'" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+               <td class="text-center">${row.virtualNum } </td>
+               <td class="text-center">${row.hp_name }</td>
+               <td class="text-center">${row.resv_date }</td>
+               <td class="text-center">${row.resv_time }</td>
+               <td class="text-center">${row.resv_regidate }</td>
+               <c:if test="${row.resv_perm eq 'w' }">
+					<td><button type="button" onclick="" class="btn btn-warning">승인대기중</button></td>
+               </c:if>
+               <c:if test="${row.resv_perm eq 'y' }">
+               <td><button type="button" class="btn btn-success">승인</button></td>
+               </c:if>
+               <c:if test="${row.resv_perm eq 'c' }">
+               <td><button type="button" class="btn btn-primary">진료완료</button></td>    
+               </c:if>
+				<td><button type="button" onclick="location.href='reserdelete?resv_idx=${row.resv_idx}&hp_name=${row.hp_name }&resv_date=${row.resv_date }';" class="btn btn-danger">삭제</button></td>
             </tr>
+            <%-- </c:if> --%>
          </c:forEach>
       </c:otherwise>
+      
    </c:choose>       
     </tbody>   
-    
-        
    </table>
-  </div>
-  <div class="tab-pane fade active show" id="profile">
-    <table id="mytable" name=resFrm class="table table-bordred table-striped">
+<!-- 페이징처리 -->
+<br />
+<div class="row text-center">
+	<!-- 페이지번호 부분 -->
+   <ul class="pagination" style="margin-left: 45%">
+   	${pagingImg }   
+   </ul>   
+</div>
+
+</div>
+<!-- 접수현황 e.. -->
+
+    </c:when>
+    <c:when test="${tab eq '2'}">
+<!-- 진료내용 s.. -->
+  <div id="profile2">    
+    <table id="mytable2" class="table table-bordred table-striped">
                    
-                   <thead>
-                   
-                   <tr>
-                   <th>No</th>
-                    <th>병원명</th>
-                     <th>내원날짜</th>
-                     <th>내원예약시간</th>
-                     <th>예약날짜</th>
-                      <th>후기작성</th>                      
-                       
-                    </tr>
-                   </thead>
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>병원명</th>
+			<th>내원날짜</th>
+			<th>내원예약시간</th>
+			<th>예약날짜</th>
+			<th>후기작성</th>                      
+		</tr>
+	</thead>
     <tbody>
     
-    <c:choose>
-       <c:when test="${empty lists }">
-          <tr>
-            <td colspan="7">
-               예약기록이 없습니다.
-            </td>
-         </tr>
-       </c:when>
-       <c:otherwise>
-         <c:forEach items="${lists }" var="row" varStatus="loop">
-               <tr>
-                  <td class="text-left">
-                     ${map.totalCount - loop.index }
-                  </td>
-                  <td class="text-left">
-                     ${row.place }
-                  </td>
-                  <td class="text-left">${row.resdate }</td>
-                  <td class="text-left">${row.restime }</td>
-                  <td class="text-left">${row.postdate }</td>
-                  <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" onclick="location.href='../13DataRoom/pro2/ReservationEdit.jsp?num=${row.num }'" data-title="Edit" data-toggle="modal" data-target="#edit"  ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                   
-               </tr>
-            </c:forEach>
-            </c:otherwise>
-         </c:choose>       
+	<c:choose>
+		<c:when test="${empty reservationDTO }">
+		 <tr>
+		   <td colspan="7">
+		      예약기록이 없습니다.
+		   </td>
+		</tr>
+		</c:when>
+		
+		<c:otherwise>
+			<c:forEach items="${reservationDTO }" var="row" varStatus="loop">
+				<%-- <c:if test="${row.resv_perm eq 'y'}"> --%>
+					<tr>
+						<td class="text-center">${row.virtualNum }</td>
+						<td class="text-center">${row.hp_name }</td>
+						<td class="text-center">${row.resv_date }</td>
+						<td class="text-center">${row.resv_time }</td>
+						<td class="text-center">${row.resv_regidate }</td>
+						<td><button class=""></button></td>
+					</tr>
+				<%-- </c:if> --%>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>       
        </tbody>           
    </table>
+   <!-- 페이징처리 -->
+<br />
+<div class="row text-center">
+	<!-- 페이지번호 부분 -->
+   <ul class="pagination" style="margin-left: 43%">
+   	${pagingImg }   
+   </ul>   
+</div>
+   
+   
   </div>
-   <div class="tab-pane fade" id="profile2">
-    
-    <!--------------생년월일8자리여야함---------------->
+<!-- 진료내용 e.. -->
+    </c:when>
+    <c:otherwise>
+<!-- 회원정보 s.. -->
+   <div id="profile3">
+    <!------------------------------>
     <jsp:include page="./mem_modify.jsp"/>
     <!------------------------------>
-    
-  </div>  
+  </div> 
+<!-- 회원정보 e.. --> 
+    </c:otherwise>
+</c:choose>
+
 </div>
 </div>
 </div><br /><br /><br /><br /><br /><br /><br />
@@ -180,4 +213,3 @@
 <jsp:include page="/resources/common/footer.jsp"/>
 </body>
 </html>
-

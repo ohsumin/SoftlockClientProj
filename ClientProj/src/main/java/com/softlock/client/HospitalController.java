@@ -309,13 +309,13 @@ public class HospitalController {
     public String reservConf(HttpServletRequest req) {
        sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
        System.out.println("sdfdsf"+req.getParameter("resv_idx"));
-       return "리턴페이지";
+       return "hospital/hp_myPage";
     }
     //예약회원 예약거절
     @RequestMapping("/hospital/hp_resvRej")
     public String reservRej(HttpServletRequest req) {
        sqlSession.getMapper(HospitalImpl.class).reservRej(req.getParameter("resv_idx"));
-       return "리턴페이지";
+       return "hospital/hp_myPage";
     }
     
     
