@@ -14,7 +14,7 @@ public interface HospitalImpl{
           String hp_phone, String hp_address);
     
     // 회원아이디 중복여부 확인
-    public int isUserId(String id);
+    public int isUserId(String hp_id);
     
     // 회원 존재여부 확인
   	public int isUser(String id, String pw);

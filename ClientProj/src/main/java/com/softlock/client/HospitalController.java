@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
+import com.softlock.model.MemberDTO;
+import com.softlock.model.MemberImpl;
 
 @Controller
 public class HospitalController {
@@ -38,6 +40,28 @@ public class HospitalController {
 		
 		return "/hospital/hp_login";
 	}
+	
+	// 아이디중복확인
+		@RequestMapping("/hospital/checkId")
+		@ResponseBody
+		public Map<String, Object> checkId(HttpServletRequest req, HttpSession session) 
+		{
+			String hp_id = req.getParameter("hp_id");
+			String hp_pw = req.getParameter("hp_pw");
+			int userId = sqlSession.getMapper(HospitalImpl.class).isUserId(hp_id);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			if(userId == 1) {
+				
+				map.put("isUserId", 1);
+			}
+			else {
+				map.put("isUserId", 0);
+			}
+			return map;
+		}
+	
 	
 	@RequestMapping("/hospital/loginAction")
 	@ResponseBody

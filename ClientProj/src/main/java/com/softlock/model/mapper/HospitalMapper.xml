@@ -72,6 +72,11 @@
 		DELETE FROM hospital WHERE hp_id=#{param1}
 	</delete>
 	
+	<!-- 아이디중복 -->
+	<select id="isUserId" resultType="int" parameterType="String">
+		select count(*) from hospital
+			where hp_id=#{0}
+	</select>
 	
 	<!-- 회원정보 수정폼 진입 -->
 	<select id="view" resultType="com.softlock.model.HospitalDTO" >
