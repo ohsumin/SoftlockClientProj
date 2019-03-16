@@ -83,9 +83,7 @@ $(function(){
 	         //json배열이므로 each메소드 사용       
 	         strHTML += "<select multiple='' class='form-control' name='searchList' id='searchList'>";
 	         $.each(d, function(index, d){
-	        	var adrs = d.hosplist_adrs;
-	        	alert(adrs);
-	            strHTML += "  <option onclick='alert(\""+d.hosplist_adrs+"\")' value='"+d.hosplist_idx+"'> "+d.hosplist_name+"</option>"; 
+	            strHTML += "  <option style='font-size:0.8em; margin-bottom:10px;' onclick='optClick(\""+d.hosplist_adrs+"\")' value='"+d.hosplist_name+"'> "+d.hosplist_name+"</option>"; 
 	            strHTML += "	";
 	         });
 	         strHTML += "</select>";
@@ -99,7 +97,11 @@ $(function(){
 });
 
 function optClick(data) {
- 	alert(data.val());	
+	$('#hp_name').val($("#searchList option:selected").val());
+	$('#searchList').hide();
+	var addrStr = data;
+	var addrArr = addrStr.split(',');
+	$('#hp_address').val(addrArr[0]);
 }
 </script>
 </head>
@@ -121,18 +123,18 @@ function optClick(data) {
     <div id="pwMSG">&nbsp;비밀번호</div>
     <input type="password" class="form-control" id="hp_pw" name="hp_pw" style="font-size:0.8em;"><br />
     <div id="pwckMSG">&nbsp;비밀번호확인</div>
-    <input type="password" class="form-control" id="hp_pwck" name="hp_pwck" style="font-size:0.8em;"><br /> 
+    <input type="password" class="form-control" id="hp_pwck" style="font-size:0.8em;"><br /> 
     <div id="selectMSG">&nbsp;병원선택</div>
     <input type="text" class="form-control" id="hp_name" name="hp_name" autocomplete="off" style="font-size:0.8em;" placeholder="병원 이름을 입력하세요">
     <div id="ajaxTable"></div><br />
 
-	<div id="selectMSG">&nbsp;상세주소 (입력된 주소와 다르면 우편번호검색을 해주세요)</div>
-	<input type="text" class="form-control" name="addr1" id="addr1" readonly 
+	<div id="selectMSG">&nbsp;병원주소 (입력된 주소와 다르면 우편번호검색을 해주세요)</div>
+	<input type="text" class="form-control" name="hp_address" id="hp_address" readonly 
 			style="width:275px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:5px;"/>
 	<button type="button" class="btn btn-warning" onclick="postOpen();" 
 		style="width:120px; display:inline-block; font-size:0.8em; height:37px; margin-bottom:2px;">우편번호검색</button>
 	<input type="text" class="form-control" placeholder="상세주소를 입력하세요." 
-		name="addr2" id="addr2" style=" font-size:0.8em; height:37px;"/><br />
+		name="hp_address2" id="hp_address2" style=" font-size:0.8em; height:37px;"/><br />
 	
 
     <div id="numMSG">&nbsp;요양기관번호(숫자 8자리)</div>
@@ -143,9 +145,6 @@ function optClick(data) {
     <input type="email" class="form-control" id="hp_email" name="hp_email" style="font-size:0.8em;" >  <br />
     <div id="phoneMSG">&nbsp;휴대폰번호</div>
     <input type="text" class="form-control" id="hp_phone" name="hp_phone" style="font-size:0.8em;" placeholder="'-'없이 입력해주세요"><br />
-    
-    
-
 <br />
     <button type="submit" class="btn btn-primary btn-lg btn-block" id="joinBtn">병원가입 승인요청</button><br /><br /><br />
 </form>

@@ -1,6 +1,5 @@
 package com.softlock.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface HospitalImpl{
@@ -10,8 +9,10 @@ public interface HospitalImpl{
 	public List<HospListDTO> searchHp(HospListDTO hDto);
 	
 	// 병원회원 회원가입
-    public ArrayList<HospitalDTO> hpjoinAction(String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username, String hp_email, 
-          String hp_phone, String hp_address);
+    /*public ArrayList<HospitalDTO> hpjoinAction(String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username, String hp_email, 
+          String hp_phone, String hp_address);*/
+	public void hpJoinAction(String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username, String hp_email, 
+	          String hp_phone, String hp_address, String hp_address2);
     
     // 회원아이디 중복여부 확인
     public int isUserId(String id);

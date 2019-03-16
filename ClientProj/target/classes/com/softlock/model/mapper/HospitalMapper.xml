@@ -60,8 +60,6 @@
       select * from hospital where hp_id=#{0} and hp_pw=#{1}
     </select>
    
-   
-	
 	<select id="isUser" resultType="int" parameterType="String">
 		select count(*) from hospital
 			where hp_id=#{0} and hp_pw=#{1}
@@ -84,12 +82,17 @@
 	
 	<!-- 회원정보수정 -->
    <update id="modifyAction">
-   UPDATE hospital(hp_hpphone, hp_night, hp_wkend, hp_intro, hp_notice, hp_image) 
-      SET hp_hpphone=#{param1}, hp_night=#{param2}, hp_wkend=#{param3}, hp_intro=#{param4}, hp_notice=#{param5},
-         hp_image=#{param6},  WHERE hp_id=#{param7}
+	  	UPDATE hospital(hp_hpphone, hp_night, hp_wkend, hp_intro, hp_notice, hp_image) 
+	      SET hp_hpphone=#{param1}, hp_night=#{param2}, hp_wkend=#{param3}, hp_intro=#{param4}, hp_notice=#{param5},
+	         hp_image=#{param6},  WHERE hp_id=#{param7}
    </update>
    
    <update id="tmodifyAction">
-   UPDATE treattime (treat_open, treat_close) SET , treat_open=#{param1}, treat_close=#{param2} WHERE hp_idx=#{param3} and treat_dy=#{param4}
+   		UPDATE treattime (treat_open, treat_close) SET , treat_open=#{param1}, treat_close=#{param2} WHERE hp_idx=#{param3} and treat_dy=#{param4}
    </update>
+   
+   <insert id="hpJoinAction" parameterType="String">
+   		INSERT INTO hospital(hp_idx, hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2)
+   			VALUES(seq_hospital.nextval , #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, #{param9})
+   </insert>
 </mapper>

@@ -176,9 +176,9 @@ public class HospitalController {
     	return "/hospital/hp_join";
     }
     
-    /*@RequestMapping("/hospital/joinAction")
+    @RequestMapping("/hospital/joinAction")
     @ResponseBody
-    public String hpjoinAction(HttpServletRequest req, HttpSession session) {
+    public String hpjoinAction(HttpServletRequest req, HttpSession session, HttpServletResponse resp) throws IOException {
         
        String hp_id = req.getParameter("hp_id");
        String hp_pw = req.getParameter("hp_pw");
@@ -188,12 +188,16 @@ public class HospitalController {
        String hp_email = req.getParameter("hp_email");
        String hp_phone = req.getParameter("hp_phone");
        String hp_address = req.getParameter("hp_address");
+       String hp_address2 = req.getParameter("hp_address2");
        
        // Mybatis 사용
        // 회원정보 저장
-       ArrayList<HospitalDTO> vo = sqlSession.getMapper(HospitalImpl.class).hpjoinAction(hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, 
-             hp_phone, hp_address);
+       sqlSession.getMapper(HospitalImpl.class).hpJoinAction(
+    		   	hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2);
        
-       return "hospital/hp_joinAction";
-    }*/
+    /*   MemberDTO vo = sqlSession.getMapper(HospitalImpl.class).login(hp_id, hp_pw);
+	   session.setAttribute("hospitalInfo", vo);
+		*/
+       return "hospital/hp_joinActionSuccess";
+    }
 }

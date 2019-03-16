@@ -9,10 +9,11 @@ public class HospitalDTO {
    private String hp_pw;
    private String hp_name;
    private String hp_num;
-   private String hp_membername;
+   private String hp_username;
    private String hp_email;
    private String hp_phone;
    private String hp_address;
+   private String hp_address2;
    private String hp_night;
    private String hp_wkend;
    private String hp_intro;
@@ -24,19 +25,9 @@ public class HospitalDTO {
    
    public HospitalDTO() {}
 
-   public HospitalDTO(int hp_idx, String hp_id, String hp_pw, String hp_name, String hp_num, String hp_membername,
-         String hp_email, String hp_phone, String hp_address, String hp_night, String hp_wkend, String hp_intro,
+   public HospitalDTO(int hp_idx, String hp_night, String hp_wkend, String hp_intro,
          String hp_notice, String hp_image, String hp_perm, Date hp_regidate) {
-      
-      this.hp_idx = hp_idx;
-      this.hp_id = hp_id;
-      this.hp_pw = hp_pw;
-      this.hp_name = hp_name;
-      this.hp_num = hp_num;
-      this.hp_membername = hp_membername;
-      this.hp_email = hp_email;
-      this.hp_phone = hp_phone;
-      this.hp_address = hp_address;
+	  this.hp_idx = hp_idx;
       this.hp_night = hp_night;
       this.hp_wkend = hp_wkend;
       this.hp_intro = hp_intro;
@@ -44,24 +35,20 @@ public class HospitalDTO {
       this.hp_image = hp_image;
       this.hp_perm = hp_perm;
       this.hp_regidate = hp_regidate;
-      
    }
    
-   
-
-   public HospitalDTO(int hp_idx, String hp_id, String hp_pw, String hp_name, String hp_num, String hp_membername,
-         String hp_email, String hp_phone, String hp_address) {
-      super();
+   public HospitalDTO(int hp_idx, String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username,
+         String hp_email, String hp_phone, String hp_address, String hp_address2) {
       this.hp_idx = hp_idx;
       this.hp_id = hp_id;
       this.hp_pw = hp_pw;
       this.hp_name = hp_name;
       this.hp_num = hp_num;
-      this.hp_membername = hp_membername;
+      this.hp_username = hp_username;
       this.hp_email = hp_email;
       this.hp_phone = hp_phone;
       this.hp_address = hp_address;
-      
+      this.hp_address2 = hp_address2;
    }
 
    public int getHp_idx() {
@@ -104,12 +91,12 @@ public class HospitalDTO {
       this.hp_num = hp_num;
    }
 
-   public String getHp_membername() {
-      return hp_membername;
+   public String getHp_username() {
+      return hp_username;
    }
 
-   public void setHp_membername(String hp_membername) {
-      this.hp_membername = hp_membername;
+   public void setHp_username(String hp_username) {
+      this.hp_username = hp_username;
    }
 
    public String getHp_email() {
@@ -191,4 +178,14 @@ public class HospitalDTO {
    public void setHp_regidate(java.sql.Date hp_regidate) {
       this.hp_regidate = hp_regidate;
    }
+
+public String getHp_address2() {
+	return hp_address2;
+}
+
+public void setHp_address2(String hp_address2) {
+	this.hp_address2 = hp_address2;
+}
+   
+   
 }

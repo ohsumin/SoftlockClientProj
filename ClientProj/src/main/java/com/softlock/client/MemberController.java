@@ -302,6 +302,4 @@ public class MemberController {
 		return "member/mem_login";
 		
 	}
-	
-	
 }
