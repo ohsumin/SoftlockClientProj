@@ -41,7 +41,7 @@
    <ul class="social-network social-circle">
         <i class="fa fa-facebook"></i>
     </ul>      
-  <a class="navbar-brand" href="#">소프트락님 <br />이메일연동</a>
+  <a class="navbar-brand" href="#">예약회원을 관리하는 페이지입니다</a>
   
 
   <div class="collapse navbar-collapse" id="navbarColor01">
@@ -51,8 +51,8 @@
       
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <a class="navbar-brand" href="#" >접수현황 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</a>
-      <a class="navbar-brand" href="#" >진료기록 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</a>
+      <!-- <a class="navbar-brand" href="#" >접수현황 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</a> -->
+      <a class="navbar-brand" href="#" >일반회원예약현황 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${totalRecordCount }</a>
     </form>
   </div>
 </nav>
@@ -60,119 +60,80 @@
 <br /><br /><br /><br />
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#home">접수현황</a>
+    <a class="nav-link" data-toggle="tab1" href="../hospital/hpModify?tab=1">일반회원예약현황</a>
     <br />
   </li>
+  
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#profile">진료내역</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#profile2">회원정보변경</a>
+    <a class="nav-link" data-toggle="tab2" href="../hospital/hpModify?tab=2">회원정보변경</a>
   </li> 
 </ul>
 <br />
 <div id="myTabContent" class="tab-content">
-  <div class="tab-pane fade" id="home">
-    <table id="mytable" name=resFrm class="table table-bordred table-striped">
-                   
-                   <thead>
-                   
-                   <tr>
-                   <th>No</th>
-                    <th>병원명</th>
-                     <th>내원날짜</th>
-                     <th>내원예약시간</th>
-                     <th>예약날짜</th>
-                      <th>예약변경</th>                      
-                       <th>예약취소</th>
-                    </tr>
-                   </thead>
+<c:set var="tab" value="${tab}" scope="page"/>
+
+<c:choose>
+  <c:when test="${tab eq '1'}">
+  <div>
+    <table id="mytable" name="resFrm" class="table table-bordred table-striped">
+        <thead>
+        <tr>
+        <th>No</th>
+         <th>환자명</th>
+          <th>내원날짜</th>
+          <th>내원예약시간</th>
+          <th>예약날짜</th>
+           <th>예약확정(Y또는N)</th>                      
+         </tr>
+        </thead>
     <tbody>
-    
-    <c:choose>
-       <c:when test="${empty lists }">
-          <tr>
-            <td colspan="7">
-               예약기록이 없습니다.
+   <c:choose>
+      <c:when test="${empty lists }">
+         <tr>
+            <td colspan="7" class="text-center">
+               예약된 회원이 없습니다.
             </td>
          </tr>
-       </c:when>
-       <c:otherwise>
+      </c:when>
+      <c:otherwise>
          <c:forEach items="${lists }" var="row" varStatus="loop">
+            <!-- 리스트반복시작 -->
             <tr>
+               <td class="text-center">${row.virtualNum }</td>
                <td class="text-left">
-                  ${map.totalCount - loop.index }
+                  <a href="./hp_reservView?resv_idx=${row.resv_idx}
+                     &nowPage=${nowPage }">${row.mem_name}</a>
                </td>
-               <td class="text-left">
-                  ${row.place }
-               </td>
-               <td class="text-left">${row.resdate }</td>
-               <td class="text-left">${row.restime }</td>
-               <td class="text-left">${row.postdate }</td>
-               <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" onclick="location.href='../13DataRoom/pro2/ReservationEdit.jsp?num=${row.num }'" data-title="Edit" data-toggle="modal" data-target="#edit"  ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" onclick="location.href='../13DataRoom/pro2/ResDeleteProc.jsp?num=${row.num }'" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+               <td class="text-center">${row.resv_date }</td>
+               <td class="text-center">${row.resv_time }</td>
+               <td class="text-center">${row.resv_regidate }</td>
+               <td class="text-center">${row.resv_perm }</td>
             </tr>
+            <!-- 리스트반복끝 -->
          </c:forEach>
       </c:otherwise>
-   </c:choose>       
+      
+   </c:choose>
     </tbody>   
-    
-        
    </table>
+    <div class="row text-center" style="margin-left: 45%">
+   <!-- 페이지번호 부분 -->
+   <ul class="pagination">   
+      ${pagingImg }
+   </ul>   
+</div>   
   </div>
-  <div class="tab-pane fade active show" id="profile">
-    <table id="mytable" name=resFrm class="table table-bordred table-striped">
-                   
-                   <thead>
-                   
-                   <tr>
-                   <th>No</th>
-                    <th>병원명</th>
-                     <th>내원날짜</th>
-                     <th>내원예약시간</th>
-                     <th>예약날짜</th>
-                      <th>후기작성</th>                      
-                       
-                    </tr>
-                   </thead>
-    <tbody>
+    </c:when>
     
-    <c:choose>
-       <c:when test="${empty lists }">
-          <tr>
-            <td colspan="7">
-               예약기록이 없습니다.
-            </td>
-         </tr>
-       </c:when>
-       <c:otherwise>
-         <c:forEach items="${lists }" var="row" varStatus="loop">
-               <tr>
-                  <td class="text-left">
-                     ${map.totalCount - loop.index }
-                  </td>
-                  <td class="text-left">
-                     ${row.place }
-                  </td>
-                  <td class="text-left">${row.resdate }</td>
-                  <td class="text-left">${row.restime }</td>
-                  <td class="text-left">${row.postdate }</td>
-                  <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" onclick="location.href='../13DataRoom/pro2/ReservationEdit.jsp?num=${row.num }'" data-title="Edit" data-toggle="modal" data-target="#edit"  ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                   
-               </tr>
-            </c:forEach>
-            </c:otherwise>
-         </c:choose>       
-       </tbody>           
-   </table>
-  </div>
-   <div class="tab-pane fade" id="profile2">
-    
+   <c:otherwise>   
+   <div>
     <!------------------------------>
     <jsp:include page="./hp_modify.jsp"/>
     <!------------------------------>
-    
   </div>  
+  </c:otherwise>
+</c:choose>
+  
 </div>
 </div>
 </div><br /><br /><br /><br /><br /><br /><br />
@@ -180,4 +141,3 @@
 <jsp:include page="/resources/common/footer.jsp"/>
 </body>
 </html>
-
