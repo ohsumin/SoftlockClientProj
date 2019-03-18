@@ -155,7 +155,7 @@ $('.starRev span').click(function(){
 					<!-- 디폴트 -->
 					<div style="width:95%; margin:10px; padding-top:10px;">
 						<span class="badge badge-secondary">내과</span>
-						<span class="badge badge-secondary">내과</span>
+						<span class="badge badge-secondary">안과</span>
 						<span class="badge badge-secondary">치과</span>
 						<span class="badge badge-secondary">산부인과</span>
 						<span class="badge badge-secondary">이비인후과</span>

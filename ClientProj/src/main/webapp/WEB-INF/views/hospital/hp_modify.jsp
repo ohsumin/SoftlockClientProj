@@ -41,29 +41,142 @@ $(function(){
        } 
 	});
 	
-	var toggle = false;
-	var btnAddClass = "btn-info";
-	var btnRemvClass = "btn-secondary";
-	for(var i=0; i<dyopen.length; i++){
-		$('#monBtn').click(function() {
-			$('#mon_open').attr("disabled", toggle);
-			$('#mon_close').attr("disabled", toggle);
-			if(toggle == false){
-				toggle = true;
-				$(this).addClass(btnAddClass);
-				$(this).removeClass(btnRemvClass);
-				btnAddClass = "btn-secondary";
-				btnRemvClass = "btn-info";
-			}
-			else{
-				toggle = false;
-				$(this).addClass(btnAddClass);
-				$(this).removeClass(btnRemvClass);
-				btnAddClass = "btn-info";
-				btnRemvClass = "btn-secondary";
-			}
-		});
-	}
+	var toggle = [false, false, false, false, false, false, false];
+	var btnAddClass = ["btn-info","btn-info","btn-info","btn-info","btn-info","btn-info","btn-info"];
+	var btnRemvClass = ["btn-secondary","btn-secondary","btn-secondary","btn-secondary","btn-secondary","btn-secondary","btn-secondary"];
+	// 월요일클릭시
+	$(dybtn[0]).click(function() {
+		$(dyopen[0]).attr("disabled", toggle[0]);
+		$(dyclose[0]).attr("disabled", toggle[0]);
+		if(toggle[0] == false){
+			toggle[0] = true;
+			$(dybtn[0]).addClass(btnAddClass[0]);
+			$(dybtn[0]).removeClass(btnRemvClass[0]);
+			btnAddClass[0] = "btn-secondary";
+			btnRemvClass[0] = "btn-info";
+		}
+		else{
+			toggle[0] = false;
+			$(dybtn[0]).addClass(btnAddClass[0]);
+			$(dybtn[0]).removeClass(btnRemvClass[0]);
+			btnAddClass[0] = "btn-info";
+			btnRemvClass[0] = "btn-secondary";
+		}
+	});
+	// 화요일클릭시
+	$(dybtn[1]).click(function() {
+		$(dyopen[1]).attr("disabled", toggle[1]);
+		$(dyclose[1]).attr("disabled", toggle[1]);
+		if(toggle[1] == false){
+			toggle[1] = true;
+			$(dybtn[1]).addClass(btnAddClass[1]);
+			$(dybtn[1]).removeClass(btnRemvClass[1]);
+			btnAddClass[1] = "btn-secondary";
+			btnRemvClass[1] = "btn-info";
+		}
+		else{
+			toggle[1] = false;
+			$(dybtn[1]).addClass(btnAddClass[1]);
+			$(dybtn[1]).removeClass(btnRemvClass[1]);
+			btnAddClass[1] = "btn-info";
+			btnRemvClass[1] = "btn-secondary";
+		}
+	});
+	// 수요일클릭시
+	$(dybtn[2]).click(function() {
+		$(dyopen[2]).attr("disabled", toggle[2]);
+		$(dyclose[2]).attr("disabled", toggle[2]);
+		if(toggle[2] == false){
+			toggle[2] = true;
+			$(dybtn[2]).addClass(btnAddClass[2]);
+			$(dybtn[2]).removeClass(btnRemvClass[2]);
+			btnAddClass[2] = "btn-secondary";
+			btnRemvClass[2] = "btn-info";
+		}
+		else{
+			toggle[2] = false;
+			$(dybtn[2]).addClass(btnAddClass[2]);
+			$(dybtn[2]).removeClass(btnRemvClass[2]);
+			btnAddClass[2] = "btn-info";
+			btnRemvClass[2] = "btn-secondary";
+		}
+	});
+	// 목요일클릭시
+	$(dybtn[3]).click(function() {
+		$(dyopen[3]).attr("disabled", toggle[3]);
+		$(dyclose[3]).attr("disabled", toggle[3]);
+		if(toggle[3] == false){
+			toggle[3] = true;
+			$(dybtn[3]).addClass(btnAddClass[3]);
+			$(dybtn[3]).removeClass(btnRemvClass[3]);
+			btnAddClass[3] = "btn-secondary";
+			btnRemvClass[3] = "btn-info";
+		}
+		else{
+			toggle[3] = false;
+			$(dybtn[3]).addClass(btnAddClass[3]);
+			$(dybtn[3]).removeClass(btnRemvClass[3]);
+			btnAddClass[3] = "btn-info";
+			btnRemvClass[3] = "btn-secondary";
+		}
+	});
+	// 금요일클릭시
+	$(dybtn[4]).click(function() {
+		$(dyopen[4]).attr("disabled", toggle[4]);
+		$(dyclose[4]).attr("disabled", toggle[4]);
+		if(toggle[4] == false){
+			toggle[4] = true;
+			$(dybtn[4]).addClass(btnAddClass[4]);
+			$(dybtn[4]).removeClass(btnRemvClass[4]);
+			btnAddClass[4] = "btn-secondary";
+			btnRemvClass[4] = "btn-info";
+		}
+		else{
+			toggle[4] = false;
+			$(dybtn[4]).addClass(btnAddClass[4]);
+			$(dybtn[4]).removeClass(btnRemvClass[4]);
+			btnAddClass[4] = "btn-info";
+			btnRemvClass[4] = "btn-secondary";
+		}
+	});
+	// 토요일클릭시
+	$(dybtn[5]).click(function() {
+		$(dyopen[5]).attr("disabled", toggle[5]);
+		$(dyclose[5]).attr("disabled", toggle[5]);
+		if(toggle[5] == false){
+			toggle[5] = true;
+			$(dybtn[5]).addClass(btnAddClass[5]);
+			$(dybtn[5]).removeClass(btnRemvClass[5]);
+			btnAddClass[5] = "btn-secondary";
+			btnRemvClass[5] = "btn-info";
+		}
+		else{
+			toggle[5] = false;
+			$(dybtn[5]).addClass(btnAddClass[5]);
+			$(dybtn[5]).removeClass(btnRemvClass[5]);
+			btnAddClass[5] = "btn-info";
+			btnRemvClass[5] = "btn-secondary";
+		}
+	});
+	// 일요일클릭시
+	$(dybtn[6]).click(function() {
+		$(dyopen[6]).attr("disabled", toggle[6]);
+		$(dyclose[6]).attr("disabled", toggle[6]);
+		if(toggle[6] == false){
+			toggle[6] = true;
+			$(dybtn[6]).addClass(btnAddClass[6]);
+			$(dybtn[6]).removeClass(btnRemvClass[6]);
+			btnAddClass[6] = "btn-secondary";
+			btnRemvClass[6] = "btn-info";
+		}
+		else{
+			toggle[6] = false;
+			$(dybtn[6]).addClass(btnAddClass[6]);
+			$(dybtn[6]).removeClass(btnRemvClass[6]);
+			btnAddClass[6] = "btn-info";
+			btnRemvClass[6] = "btn-secondary";
+		}
+	});
 });
 </script>
 </head>
@@ -81,12 +194,12 @@ $(function(){
       <table class="table" style="float:none; margin:0 auto; text-align:center; border-bottom:1px solid #D8D8D8;">
          <tr class="table" style="text-align: center;">
             <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">월</button></td>
-            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">화</button></td>
-            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">수</button></td>
-            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">목</button></td>
-            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">금</button></td>
-            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">토</button></td>
-            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="monBtn" name="monBtn" style="font-size:1.1em;">일</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="tueBtn" name="tueBtn" style="font-size:1.1em;">화</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="wedBtn" name="wedBtn" style="font-size:1.1em;">수</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="thuBtn" name="thuBtn" style="font-size:1.1em;">목</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="friBtn" name="friBtn" style="font-size:1.1em;">금</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="satBtn" name="satBtn" style="font-size:1.1em;">토</button></td>
+            <td style="font-weight:bold;"><button type="button" class="btn btn-secondary" id="sunBtn" name="sunBtn" style="font-size:1.1em;">일</button></td>
          </tr>
          <tr style="text-align: center;">
             <%

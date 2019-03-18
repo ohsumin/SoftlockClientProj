@@ -27,9 +27,9 @@ function postOpen(){
         	*/
             var f = document.joinFrm;
             // 우편번호와 기본주소 입력
-            f.addr1.value = data.address;
+            f.hp_address.value = data.address;
             // 상세주소로 포커스 이동
-            f.comp_addr2.focus();
+            f.hp_address2.focus();
         }
     }).open();
 }
@@ -170,47 +170,7 @@ $(function() {
 	      }
 	   });
 	   
-	   $('#hp_name').change(function() {      
-		   
-		      if( $('#hp_name').val() == "") {
-		         $('#hpnameMSG').html("");
-		      }else{
-		          $('#hpnameMSG').empty();
-		       } 
-		   }); 
-		   
-		   $('#hp_address2').change(function() {      
-		      
-		      if( $('#hp_address2').val() == "" ) {
-		         $('#ad2MSG').html("");
-		      }else{
-		          $('#ad2MSG').empty();
-		       } 
-		   }); 
-		   
-		   $('#hp_username').change(function() {      
-		      
-		      if( $('#hp_username').val() == "" ) {
-		         $('#nameMSG').html("");
-		      }else{
-		          $('#nameMSG').empty();
-		       } 
-		   }); 
-		   
-		   $('#hp_email').change(function() {      
-		      var regex=/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
-
-		      
-		      if(!regex.test($("input[name=hp_email]").val()))  {
-		          $('#emailMSG').html("이메일 주소를 정확히 입력해 주세요.");
-		            $('#emailMSG').css("color", "red");
-		         return;
-		        } 
-		       else {
-		          $('#emailMSG').empty();
-		         } 
-		          
-		   }); 
+	   
 	   
 // 회원가입 버튼을 눌렀을때
    $('#joinBtn').click(function() {
