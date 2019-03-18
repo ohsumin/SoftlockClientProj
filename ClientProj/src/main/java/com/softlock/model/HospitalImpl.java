@@ -1,5 +1,6 @@
 package com.softlock.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface HospitalImpl{
@@ -35,4 +36,11 @@ public interface HospitalImpl{
  	//수정하기 처리
     public int modifyAction(String hp_hpphone, String hp_night, String hp_wkend, String hp_intro, String hp_notice, String hp_image, String hp_id);
     public int tmodifyAction(String oTime, String cTime, int hp_idx, String dy);
+    
+  //게시물카운트
+    public int getTotalCount(int resv_hp_idx);
+    public ArrayList<ReservationDTO> listPage(int s, int e, int hp_idx);   
+    public ReservationDTO reservView(String resv_idx);
+    public int reservConf(String resv_idx);
+    public int reservRej(String resv_idx);
 }

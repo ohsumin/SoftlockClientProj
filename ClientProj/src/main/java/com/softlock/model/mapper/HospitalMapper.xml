@@ -105,4 +105,34 @@
    <select id="loginHp" resultType="com.softlock.model.HospitalDTO" parameterType="String">
       select * from hospital where hp_id=#{param1} and hp_pw=#{param2}
    </select>
+   
+   <!-- 예약회원리스트를 위한 전체게시물 가져오기 -->
+      <select id="getTotalCount" resultType="int">
+      SELECT COUNT(*) FROM reservation where resv_hp_idx=#{param1}
+   </select>
+   <!-- 예약회원 리스트출력 -->
+    <select id="listPage" resultType="com.softlock.model.ReservationDTO">
+      SELECT * FROM(SELECT Tb.*, rownum rNum FROM  ( 
+            SELECT resv_idx, mem_name, resv_date, resv_time, resv_regidate, resv_perm
+              FROM member M, reservation R WHERE M.mem_idx = R.resv_mem_idx and resv_hp_idx = #{param3}
+                     ORDER BY R.resv_idx DESC
+          )Tb
+      )WHERE rNum BETWEEN #{param1} AND #{param2}
+   </select> 
+   <!-- 예약회원 상세보기 -->
+   <select id="reservView" resultType="com.softlock.model.ReservationDTO">
+      SELECT * FROM ( 
+          SELECT resv_idx, mem_name, resv_date, resv_time, mem_birth, mem_gender,mem_phone, resv_perm, resv_symp, resv_req
+                FROM member M, reservation R WHERE M.mem_idx = R.resv_mem_idx 
+      )WHERE resv_idx=#{param1}
+   </select>
+   <!-- 예약회원 승인 -->
+   <update id="reservConf">
+      update reservation set resv_perm='y' where resv_idx=#{param1}
+   </update>
+   <!-- 예약회원 거절 -->
+   <update id="reservRej">
+      update reservation set resv_perm='n' where resv_idx=#{param1}
+   </update>
+   
 </mapper>

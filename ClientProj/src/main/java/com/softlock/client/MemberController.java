@@ -2,6 +2,7 @@ package com.softlock.client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.softlock.model.MemberDTO;
 import com.softlock.model.MemberImpl;
+import com.softlock.model.ReservationDTO;
 import com.softlock.model.UserMailSendService;
 import com.softlock.model.UserSearchService;
 
@@ -198,14 +200,92 @@ public class MemberController {
 	@RequestMapping("/member/memberModify")
 	public String memberModify(Model model, HttpServletRequest req,
 			HttpSession session) {
-	
+		String tab = req.getParameter("tab");
+		System.out.println("tab="+tab);
 		
+	//회원정보 가져오기
 	MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
 			.view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
 	model.addAttribute("dto", dto);
-		return "member/mem_myPage";
+	
+	
+	/*********페이지처리>접수현황**********/
+	//멤버의 접수현황 레코드 갯수
+	String addQueryString = "";
+	int totalRecordCount = 0;
+	if(tab==null) tab = "0";
+	int temp = Integer.parseInt(tab);
+	if(temp==2) {totalRecordCount = sqlSession.getMapper(MemberImpl.class).reserCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());}
+	else{totalRecordCount = sqlSession.getMapper(MemberImpl.class).reserMemCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());}
+	System.out.println("totalRecordCount="+totalRecordCount);
+	int mem_idx = ((MemberDTO)session.getAttribute("memberInfo")).getMem_idx();
+	
+	int pageSize = 5;
+	int blockPage = 5;
+	
+	//전체페이지수계산하기
+	int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
+	System.out.println("totalPage="+totalPage);
+	//시작 및 끝 rownum 구하기
+	int nowPage = req.getParameter("nowPage")==null ? 1 :
+		Integer.parseInt(req.getParameter("nowPage"));
+	int start = (nowPage-1) * pageSize + 1;
+	int end = nowPage * pageSize;
+	System.out.println("start="+start);
+	System.out.println("end="+end);
+
+	//접수현황 가져오기
+	System.out.println("tab="+tab);
+	ArrayList<ReservationDTO> reservationDTO = null;
+	if(temp==2) {reservationDTO = sqlSession.getMapper(MemberImpl.class).reserPage(start, end, mem_idx);}
+	else {reservationDTO = sqlSession.getMapper(MemberImpl.class).reservationPage(start, end, mem_idx);}
+	//ArrayList<ReservationDTO> reservationDTO = sqlSession.getMapper(MemberImpl.class).reservationPage(start, end, mem_idx);
+    int virtualNum = 0;
+    int countNum = 0;
+	for(ReservationDTO reserDTO : reservationDTO) {
+		
+		reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
+		reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
+		
+		virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+        reserDTO.setVirtualNum(virtualNum);
+	}
+	//페이지 처리를 위한 처리부분
+		String pagingImg = com.softlock.model.utilMem.PagingUtil.pagingImg(totalRecordCount,
+		pageSize, blockPage, nowPage, 
+		req.getContextPath()+"/member/memberModify?"+addQueryString, tab);
+	
+	model.addAttribute("tab", tab);
+	model.addAttribute("virtualNum", virtualNum);
+	model.addAttribute("pagingImg", pagingImg);
+	model.addAttribute("totalRecordCount", totalRecordCount);
+	model.addAttribute("reservationDTO", reservationDTO);
+	model.addAttribute("mem_idx", mem_idx);
+	return "member/mem_myPage";
 	}
 	
+	//예약 삭제 처리
+	@RequestMapping("/member/reserdelete")
+	public void reserdelete(HttpServletRequest req,HttpServletResponse response) throws IOException {
+		
+		String resv_idx = req.getParameter("resv_idx");
+		String hp_name = req.getParameter("hp_name");
+		String resv_date = req.getParameter("resv_date");
+		
+		System.out.println("resv_idx="+resv_idx);
+		System.out.println("hp_name="+hp_name);
+		System.out.println("resv_date="+resv_date);
+		
+		//ReservationDTO rDTO = sqlSession.getMapper(MemberImpl.class).reservation(resv_idx);
+		sqlSession.getMapper(MemberImpl.class).reserdelete(resv_idx);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('삭제되었습니다.'); location.href='memberModify?tab=1';</script>");
+		//out.println("<script>var ans = confirm('예약 병원명 : '+hp_name+' 예약시간 : '+resv_date+'정말로 삭제하시겠습니까?');location.href='memberModify?tab=1';</script>");
+		out.flush();
+
+	}
 	
 	/////회원정보수정액션
 	@RequestMapping("/member/modifyAction")
