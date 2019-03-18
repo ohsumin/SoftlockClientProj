@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.softlock.model.SearchHpImpl">
+
+	<select id="searchHpType" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		select * from hospital where hp_type=#{param1}
+	</select>
+	
+	<select id="searchHpName" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		select * from hospital where hp_name LIKE '%'||#{param1}||'%'  
+	</select>
+	
+	<select id="searchHpNight" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		select * from hospital where hp_night='Y'
+	</select>
+	
+	<select id="searchHpWeekend" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		select * from hospital where hp_wkend='Y'
+	</select>
+	
+</mapper> 

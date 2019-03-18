@@ -20,7 +20,7 @@ public class HospitalDTO {
    private String hp_notice;
    private String hp_image;
    private String hp_perm;
-   private java.sql.Date hp_regidate;   
+   private java.sql.Date hp_regidate;  
    
    
    public HospitalDTO() {}
