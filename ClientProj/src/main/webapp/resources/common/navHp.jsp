@@ -30,6 +30,7 @@
       </li>
     </ul>
     <%if(session.getAttribute("hospitalInfo")==null) {%>
+    <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/login';">로그인</button>
 	<button type="button" class="btn btn-outline-warning" style="margin-left:10px; margin-right:50px;" onclick="location.href='../hospital/login';">로그인</button>
     <%} else { %>
     <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/logout';">로그아웃</button>&nbsp;    

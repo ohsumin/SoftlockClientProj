@@ -41,7 +41,8 @@
     dto = (MemberDTO)session.getAttribute("memberInfo");
     if(!dto.getMem_pw().equals("NAVERLOGIN!")){
     %>
-    <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/memberModify';">마이페이지</button>
+	<button type="button" class="btn btn-outline-warning" style="margin-left:10px;" onclick="location.href='../member/memberModify';">마이페이지</button>
+    <button type="button" class="btn btn-outline-warning" style="margin-left:10px; margin-right:50px;" onclick="location.href='../member/memberClip?tab=4';">스크랩한병원</button> 
     <%} %>
     <!-- <button type="button" class="btn btn-outline-primary" onclick="location.href='../member/memberDeleteCk';">회원탈퇴</button> -->
     

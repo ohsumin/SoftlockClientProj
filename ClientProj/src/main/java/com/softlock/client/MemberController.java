@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.softlock.model.HospitalDTO;
 import com.softlock.model.MemberDTO;
 import com.softlock.model.MemberImpl;
 import com.softlock.model.ReservationDTO;
@@ -382,4 +383,140 @@ public class MemberController {
 		return "member/mem_login";
 		
 	}
+	
+	//스크랩(1.병원상세보기)
+		@RequestMapping("/member/memHpView")
+		public String memHpView(HttpServletRequest req) {
+			return "member/mem_hpView";	
+		}
+		
+		//스크랩(2.체크하기)
+		@RequestMapping("/member/ClipCheck")
+		@ResponseBody
+		public Map<String, Object> ClipCheck(HttpServletRequest req){
+			String clip_mem_idx = req.getParameter("clip_mem_idx");
+			String clip_hp_idx = req.getParameter("clip_hp_idx");
+			System.out.println("clip_mem_idx="+clip_mem_idx);
+			System.out.println("clip_hp_idx="+clip_hp_idx);
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			int isClip = sqlSession.getMapper(MemberImpl.class).ClipCheck(clip_mem_idx, clip_hp_idx);
+			boolean isCheck;
+			if(isClip == 0)
+				isCheck = false;
+			else
+				isCheck = true;
+			System.out.println("isCheck="+isCheck);
+			if(isCheck == true)
+				map.put("result", 1);
+			else
+				map.put("result", 0);
+			System.out.println("map="+map.get("result"));
+			return map;
+		}
+		
+		//스크랩(3.추가하기)
+		@RequestMapping("/member/ClipAdd")
+		@ResponseBody
+		public Map<String, Object> ClipAdd(HttpServletRequest req){
+			String clip_mem_idx = req.getParameter("clip_mem_idx");
+			String clip_hp_idx = req.getParameter("clip_hp_idx");
+			System.out.println("clip_mem_idx="+clip_mem_idx);
+			System.out.println("clip_hp_idx="+clip_hp_idx);
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			sqlSession.getMapper(MemberImpl.class).instClip(clip_mem_idx, clip_hp_idx);
+			map.put("result", 1);
+			
+			return map;
+		}
+		//스크랩(4.삭제하기)
+		@RequestMapping("/member/ClipDelete")
+		@ResponseBody
+		public Map<String, Object> ClipDelete(HttpServletRequest req){
+			String clip_mem_idx = req.getParameter("clip_mem_idx");
+			String clip_hp_idx = req.getParameter("clip_hp_idx");
+			System.out.println("clip_mem_idx="+clip_mem_idx);
+			System.out.println("clip_hp_idx="+clip_hp_idx);
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			sqlSession.getMapper(MemberImpl.class).ClipDelete(clip_mem_idx, clip_hp_idx);
+			map.put("result", 1);
+				
+			return map;
+		}
+		
+		////스크랩 페이지
+		@RequestMapping("/member/memberClip")
+		public String memberClip(Model model, HttpServletRequest req,
+				HttpSession session) {
+			String tab = req.getParameter("tab");
+			System.out.println("tab="+tab);
+		
+		/*********페이지처리>접수현황**********/
+		//스크랩 레코드 갯수
+		String addQueryString = "";
+		int totalRecordCount = sqlSession.getMapper(MemberImpl.class).clipRecordCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());
+		System.out.println("totalRecordCount="+totalRecordCount);
+		
+		int mem_idx = ((MemberDTO)session.getAttribute("memberInfo")).getMem_idx();
+		
+		int pageSize = 5;
+		int blockPage = 5;
+		
+		//전체페이지수계산하기
+		int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
+		System.out.println("totalPage="+totalPage);
+		//시작 및 끝 rownum 구하기
+		int nowPage = req.getParameter("nowPage")==null ? 1 :
+			Integer.parseInt(req.getParameter("nowPage"));
+		int start = (nowPage-1) * pageSize + 1;
+		int end = nowPage * pageSize;
+		System.out.println("start="+start);
+		System.out.println("end="+end);
+
+		//접수현황 가져오기
+		System.out.println("tab="+tab);
+		ArrayList<HospitalDTO> HospitalDTO = sqlSession.getMapper(MemberImpl.class).clipRecordPage(start, end, mem_idx);
+		
+	    int virtualNum = 0;
+	    int countNum = 0;
+		for(HospitalDTO HosDTO : HospitalDTO) {
+			
+			/*reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
+			reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);*/
+			virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+			HosDTO.setVirtualNum(virtualNum);
+		}
+		//페이지 처리를 위한 처리부분
+			String pagingImg = com.softlock.model.utilMem.PagingUtil.pagingImg(totalRecordCount,
+			pageSize, blockPage, nowPage, 
+			req.getContextPath()+"/member/memberClip?"+addQueryString, tab);
+		
+		model.addAttribute("tab", tab);
+		model.addAttribute("virtualNum", virtualNum);
+		model.addAttribute("pagingImg", pagingImg);
+		model.addAttribute("totalRecordCount", totalRecordCount);
+		/*model.addAttribute("reservationDTO", reservationDTO);*/
+		model.addAttribute("HospitalDTO", HospitalDTO);
+		model.addAttribute("mem_idx", mem_idx);
+		return "member/mem_clip";
+		}
+		
+		//스크랩(4.삭제하기)
+		@RequestMapping("/member/memClipDelete")
+		public void memClipDelete(HttpServletRequest req, HttpServletResponse response) throws IOException{
+			String clip_mem_idx = req.getParameter("clip_mem_idx");
+			String clip_hp_idx = req.getParameter("hp_idx");
+			System.out.println("clip_mem_idx="+clip_mem_idx);
+			System.out.println("clip_hp_idx="+clip_hp_idx);
+
+			sqlSession.getMapper(MemberImpl.class).memClipDelete(clip_mem_idx, clip_hp_idx);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('삭제되었습니다.'); location.href='memberClip?tab=4';</script>");
+			//out.println("<script>var ans = confirm('예약 병원명 : '+hp_name+' 예약시간 : '+resv_date+'정말로 삭제하시겠습니까?');location.href='memberModify?tab=1';</script>");
+			out.flush();
+			
+		}
 }
