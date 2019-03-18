@@ -73,18 +73,9 @@ $(window).load(function(){
 	});
 });
 
-/* 병원 진료과로 검색 */
-/*
-<span class="badge badge-primary">Primary</span>
-<span class="badge badge-secondary">Secondary</span>
-<span class="badge badge-success">Success</span>
-<span class="badge badge-danger">Danger</span>
-<span class="badge badge-warning">Warning</span>
-<span class="badge badge-info">Info</span>
-<span class="badge badge-light">Light</span>
-<span class="badge badge-dark">Dark</span>
- */
 $(function() {	
+	var className = "";
+
 	// 산부인과 클래스토글추가(badge-primary토글이 안먹어서 산부인과만 추가함)
 	var toggle = true;
 	// 주소-좌표 변환 객체를 생성합니다
@@ -473,8 +464,6 @@ $(function() {
 	        success : function(d) {
 	        	var strHTML = "";
 	        	$.each(d, function(index, d){
-	        		var className = "";
-	        		alert(d.hp_type);
 	        		if(d.hp_type=="내과") className="badge-success";
 	        		if(d.hp_type=="안과") className="badge-warning";
 	        		if(d.hp_type=="치과") className="badge-info";
@@ -520,7 +509,7 @@ $(function() {
 	var toggleNight = true;
 	var toggleWeekend = true;
 	
-	
+	// 야간진료병원
 	$('#night').click(function() {
 		if(toggleNight == true){
 			$('#night').addClass('badge-warning');
@@ -530,17 +519,21 @@ $(function() {
 			$.ajax({
 		        type : 'post',
 		        url : '../member/searchHpNight', 
-		        data : {
-		        	searchStr : searchStr
-		        },
 		        dataType : "json",
 		        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 		        success : function(d) {
 		        	var strHTML = "";
 		        	$.each(d, function(index, d){
+		        		if(d.hp_type=="내과") className="badge-success";
+			        	if(d.hp_type=="안과") className="badge-warning";
+			        	if(d.hp_type=="치과") className="badge-info";
+			        	if(d.hp_type=="산부인과") className="badge-primary";
+			        	if(d.hp_type=="이비인후과") className="badge-dark";
+			        	if(d.hp_type=="피부과") className="badge-warning";
+			        	
 		        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
 		        		strHTML += "	<div style='margin-bottom:5px;'>";
-						strHTML += "		<span class='badge badge-danger'>&nbsp;"+d.hp_type+"</span>";
+						strHTML += "		<span class='badge "+className+"'>&nbsp;"+d.hp_type+"</span>";
 						strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
 						strHTML += "	</div>";
 						strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
@@ -571,7 +564,7 @@ $(function() {
 		        error : function(e) {
 					alert("실패" + e.status + " : " + e.statusText);
 				}
-		    });
+		    }); 
 		}
 		else{
 			$('#night').addClass('badge-secondary');

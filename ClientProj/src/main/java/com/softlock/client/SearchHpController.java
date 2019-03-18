@@ -51,7 +51,7 @@ public class SearchHpController {
 	@RequestMapping("/member/searchHpNight")
 	@ResponseBody
 	public ArrayList<HospitalDTO> searchHpNight(HttpServletRequest req, HttpSession session){
-		
+
 		ArrayList<HospitalDTO> searchList = (ArrayList<HospitalDTO>) sqlSession.getMapper(SearchHpImpl.class).searchHpNight();
 		
 		return searchList;

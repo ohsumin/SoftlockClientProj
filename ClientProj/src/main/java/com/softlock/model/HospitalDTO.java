@@ -11,23 +11,27 @@ public class HospitalDTO {
    private String hp_num;
    private String hp_username;
    private String hp_email;
-   private String hp_phone;
    private String hp_address;
-   private String hp_address2;
    private String hp_night;
    private String hp_wkend;
    private String hp_intro;
    private String hp_notice;
-   private String hp_image;
+   private String hp_ori_filename;
    private String hp_perm;
-   private java.sql.Date hp_regidate;   
-   private int virtualNum;//가상번호컬럼 추가
+   private java.sql.Date hp_regidate;  
+   private String hp_phone;
+   private String hp_address2;
+   private String hp_type; // 진료과 추가
+   private String hp_stored_filename;
+   private int virtualNum; // 가상번호컬럼 추가
    
    public HospitalDTO() {}
 
-	public HospitalDTO(int hp_idx, String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username,
-			String hp_email, String hp_phone, String hp_address, String hp_address2, String hp_night, String hp_wkend,
-			String hp_intro, String hp_notice, String hp_image, String hp_perm, Date hp_regidate, int virtualNum) {
+   public HospitalDTO(int hp_idx, String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username,
+			String hp_email, String hp_address, String hp_night, String hp_wkend, String hp_intro, String hp_notice,
+			String hp_ori_filename, String hp_perm, Date hp_regidate, String hp_phone, String hp_address2, String hp_type,
+			String hp_stored_filename, int virtualNum) {
+		super();
 		this.hp_idx = hp_idx;
 		this.hp_id = hp_id;
 		this.hp_pw = hp_pw;
@@ -35,19 +39,31 @@ public class HospitalDTO {
 		this.hp_num = hp_num;
 		this.hp_username = hp_username;
 		this.hp_email = hp_email;
-		this.hp_phone = hp_phone;
 		this.hp_address = hp_address;
-		this.hp_address2 = hp_address2;
 		this.hp_night = hp_night;
 		this.hp_wkend = hp_wkend;
 		this.hp_intro = hp_intro;
 		this.hp_notice = hp_notice;
-		this.hp_image = hp_image;
+		this.hp_ori_filename = hp_ori_filename;
 		this.hp_perm = hp_perm;
 		this.hp_regidate = hp_regidate;
+		this.hp_phone = hp_phone;
+		this.hp_address2 = hp_address2;
+		this.hp_type = hp_type;
+		this.hp_stored_filename = hp_stored_filename;
 		this.virtualNum = virtualNum;
 	}
-	
+
+
+
+	public String getHp_type() {
+		return hp_type;
+	}
+
+	public void setHp_type(String hp_type) {
+		this.hp_type = hp_type;
+	}
+
 	public int getHp_idx() {
 		return hp_idx;
 	}
@@ -102,10 +118,6 @@ public class HospitalDTO {
 	
 	public String getHp_notice() {
 		return hp_notice;
-	}
-	
-	public String getHp_image() {
-		return hp_image;
 	}
 	
 	public String getHp_perm() {
@@ -176,10 +188,6 @@ public class HospitalDTO {
 		this.hp_notice = hp_notice;
 	}
 	
-	public void setHp_image(String hp_image) {
-		this.hp_image = hp_image;
-	}
-	
 	public void setHp_perm(String hp_perm) {
 		this.hp_perm = hp_perm;
 	}
@@ -192,6 +200,22 @@ public class HospitalDTO {
 		this.virtualNum = virtualNum;
 	}
 
-   
+	public String getHp_ori_filename() {
+		return hp_ori_filename;
+	}
+
+	public void setHp_ori_filename(String hp_ori_filename) {
+		this.hp_ori_filename = hp_ori_filename;
+	}
+
+	public String getHp_stored_filename() {
+		return hp_stored_filename;
+	}
+
+	public void setHp_stored_filename(String hp_stored_filename) {
+		this.hp_stored_filename = hp_stored_filename;
+	}
+
+    
    
 }
