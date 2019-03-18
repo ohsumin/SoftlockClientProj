@@ -265,13 +265,12 @@ $(function(){
          </tr>
       </table><br />
          
-      <div id="txt">&nbsp;그외 특이사항</div>
-       <input type="text" class="form-control" id="hp_etc" name="hp_etc" 
-          style="font-size:0.8em;" placeholder="Ex)예약전 미리연락, 공지사항, 휴무여부 등"><br />
-       
-      
-      <div id="txt">&nbsp;병원소개</div>
-         <textarea class="form-control" id="hp_detailInfo" name="hp_detailInfo" rows="3"></textarea><br />
+       <div id="txt">&nbsp;병원소개</div>
+       <textarea class="form-control" id="hp_detailInfo" name="hp_detailInfo" rows="3"></textarea><br />
+         
+       <div id="txt">&nbsp;그외 특이사항</div>
+       <textarea class="form-control" id="hp_etc" name="hp_etc" 
+          style="font-size:0.8em;" rows="5" placeholder="Ex)예약전 미리연락, 공지사항, 휴무여부 등"></textarea><br />
        
        <div id="txt">&nbsp;병원사진</div><br />
        <input type="file" class="form-control-file" id="hp_img" name="hp_img" style="font-size:0.8em;">
@@ -279,7 +278,7 @@ $(function(){
        <div class="rounded" style="width:240px; height:200px; background-color:#F2F2F2; display:inline-block;"> </div> -->
        <br /><br />
        <button type="submit" class="btn btn-primary btn-lg btn-block">확인</button>
-       <br /><br /><br />
+       <br /><br />
    </form>
 </div>
 </div>
