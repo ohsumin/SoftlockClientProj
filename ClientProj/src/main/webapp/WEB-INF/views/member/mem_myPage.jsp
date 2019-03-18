@@ -1,3 +1,4 @@
+<%@page import="com.softlock.model.MemberDTO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -32,8 +33,9 @@
        width : 100%;
 }
 </style>
+<script>
 
-
+</script>
 </head>
 <body style="background-color:#F5F6F9">
 <!-- Navigation -->
@@ -174,7 +176,8 @@
 						<td class="text-center">${row.resv_date }</td>
 						<td class="text-center">${row.resv_time }</td>
 						<td class="text-center">${row.resv_regidate }</td>
-						<td><button class=""></button></td>
+<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+	data-id="${row.resv_hp_idx}">후기작성</button></td>
 					</tr>
 				<%-- </c:if> --%>
 			</c:forEach>
@@ -190,8 +193,6 @@
    	${pagingImg }   
    </ul>   
 </div>
-   
-   
   </div>
 <!-- 진료내용 e.. -->
     </c:when>
@@ -205,7 +206,9 @@
 <!-- 회원정보 e.. --> 
     </c:otherwise>
 </c:choose>
-
+<!-- 후기남기기모달창s -->
+<jsp:include page="/WEB-INF/views/member/modal/mem_reviewModal.jsp"/>
+<!-- 후기남기기모달창e -->
 </div>
 </div>
 </div><br /><br /><br /><br /><br /><br /><br />
