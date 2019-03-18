@@ -49,5 +49,13 @@ public interface MemberImpl {
 	public void reserdelete(String resv_idx);
 	public ReservationDTO reservation(String resv_idx);
 	/***************************** 일반회원 마이페이지 ******************************/
-	
+
+	/** 스크랩 **/
+	public int ClipCheck(String clip_mem_idx,String clip_hp_idx);
+	public void instClip(String clip_mem_idx,String clip_hp_idx);
+	public void ClipDelete(String clip_mem_idx,String clip_hp_idx);
+	public int clipRecordCount(int clip_mem_idx);
+	public ArrayList<HospitalDTO> clipRecordPage(int start, int end, int clip_mem_idx);
+	public void memClipDelete(String clip_mem_idx,String clip_hp_idx);
+	/** 스크랩 **/
 }

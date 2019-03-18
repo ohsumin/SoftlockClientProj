@@ -98,4 +98,33 @@
 	<delete id="reserdelete">
 		DELETE FROM reservation WHERE resv_idx=#{0}
 	</delete>
+	
+	
+	<!-- 스크랩 -->
+	<select id="ClipCheck" resultType="int" parameterType="String">
+	   select count(*) from clip where clip_mem_idx=#{0} and clip_hp_idx=#{1}
+	</select>
+	<insert id ="instClip" parameterType="String">
+		insert into clip (clip_idx,clip_mem_idx,clip_hp_idx)	values (seq_clip.nextval,#{param1},#{param2})
+	</insert>
+	<delete id="ClipDelete">
+		delete from clip WHERE clip_mem_idx = #{param1} and clip_hp_idx = #{param2}
+	</delete>
+	
+	<select id="clipRecordCount" resultType="int" >
+      	select COUNT(*) from clip where clip_mem_idx=#{param1}
+	</select>
+	<select id="clipRecordPage" resultType="com.softlock.model.HospitalDTO" >
+		select *
+		 	 from(select tb.*, rownum rnum from  ( 
+		       select *
+		         from clip cli, hospital hos
+		         where cli.clip_hp_idx = hos.hp_idx and cli.clip_mem_idx=${param3}
+		         order by clip_idx desc
+		     )tb
+		 )where rnum between ${param1} and ${param2}
+	</select>
+	<delete id="memClipDelete">
+		delete from clip WHERE clip_mem_idx = #{param1} and clip_hp_idx = #{param2}
+	</delete>
 </mapper>

@@ -171,7 +171,8 @@ $('.starRev span').click(function(){
 					<div style="width:95%; margin:10px; padding-top:10px;">
 						<div style="margin-bottom:5px;">
 							<span class="badge badge-info">&nbsp;치과</span>
-							<span style="font-size:1.1em; font-weight:bold;">서울웃는얼굴치과의원</span><br />
+							<!-- <span style="font-size:1.1em; font-weight:bold;">서울웃는얼굴치과의원</span><br /> -->
+							<a style="font-size:1.1em; font-weight:bold; color:black;" href="../member/memHpView?clip_mem_idx=${memberInfo.mem_idx}&clip_hp_idx=1">서울웃는얼굴치과의원</a><br />
 						</div>
 						<span style="font-size:0.9em;">서울특별시 구로구 구로동 212-13</span><br />
 						<div class="starRev" style="margin-top:10px;">
