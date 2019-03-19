@@ -12,13 +12,31 @@
 	<select id="searchHpName" resultType="com.softlock.model.HospitalDTO" parameterType="String">
 		select * from hospital where hp_name LIKE '%'||#{param1}||'%'  
 	</select>
-	
-	<select id="searchHpNight" resultType="com.softlock.model.HospitalDTO" parameterType="String">
-		select * from hospital where hp_night='Y'
+
+	<select id="searchHpNW" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		<choose>
+			<when test='param2.equals("true") and param3.equals("true")'>
+				select * from hospital where hp_night='Y' and hp_wkend='Y' and hp_type=#{param1}
+			</when>
+			<when test='param2.equals("true") and param3.equals("false")'>
+				select * from hospital where hp_night='Y' and hp_type=#{param1}
+			</when>
+			<when test='param2.equals("false") and param3.equals("false")'>
+				select * from hospital where hp_type=#{param1}
+			</when>
+			<when test='param2.equals("false") and param3.equals("true")'>
+				select * from hospital where hp_wkend='Y' and hp_type=#{param1}
+			</when>
+		</choose>
 	</select>
 	
 	<select id="searchHpWeekend" resultType="com.softlock.model.HospitalDTO" parameterType="String">
-		select * from hospital where hp_wkend='Y'
+		<if test='param2.equals("true")'>
+			select * from hospital where hp_wkend='Y' and hp_type=#{param1}
+		</if>
+		<if test='param2.equals("false")'>
+			select * from hospital where hp_type=#{param1}
+		</if>
 	</select>
 	
 </mapper> 
