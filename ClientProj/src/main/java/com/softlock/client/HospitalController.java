@@ -159,11 +159,13 @@ public class HospitalController {
    @RequestMapping("/hospital/hpModify")
    public String hpModify(Model model, HttpServletRequest req,
          HttpSession session) {
-   
+  
    //병원회원상세보기 읽기 및 수정 동시에 진행함   
    HospitalDTO hospitalInfo = (HospitalDTO)session.getAttribute("hospitalInfo");
+   System.out.println("세션확인" +  hospitalInfo.getHp_idx());
    int hp_idx = hospitalInfo.getHp_idx();
-    //병원상세정보 읽어오기 일반정보  
+    
+   //병원상세정보 읽어오기 일반정보  
    HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
          .viewModify(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
   
@@ -448,13 +450,23 @@ public class HospitalController {
     public String reservConf(HttpServletRequest req) {
        sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
        System.out.println("sdfdsf"+req.getParameter("resv_idx"));
-       return "hospital/hp_myPage";
+     
+       
+      return "redirect:hpModify?tab=1";
     }
     //예약회원 예약거절
     @RequestMapping("/hospital/hp_resvRej")
     public String reservRej(HttpServletRequest req) {
+    	System.out.println("reservRej" + req.getParameter("resv_idx"));
        sqlSession.getMapper(HospitalImpl.class).reservRej(req.getParameter("resv_idx"));
-       return "hospital/hp_myPage";
+       return "redirect:hpModify?tab=1";
+    }
+    //예약확정된 회원중 예약확정이 y인 회원들은 진료완료 버튼이 나오게 한다. 그 버튼이 c로 바꿈
+    @RequestMapping("hospital/hp_resvDone")
+    public String hp_resvDone(HttpServletRequest req) {
+    	System.out.println("hp_resvDone" + req.getParameter("resv_idx"));
+    	sqlSession.getMapper(HospitalImpl.class).hp_resvDone(req.getParameter("resv_idx"));
+    	return "redirect:hpModify?tab=1";
     }
     
     

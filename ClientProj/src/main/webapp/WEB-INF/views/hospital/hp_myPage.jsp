@@ -83,7 +83,8 @@
           <th>내원날짜</th>
           <th>내원예약시간</th>
           <th>예약날짜</th>
-           <th>예약확정(Y또는N)</th>                      
+           <th>예약 및 진료 여부</th>
+           <th>진료완료여부</th>                      
          </tr>
         </thead>
     <tbody>
@@ -108,10 +109,20 @@
                <td class="text-center">${row.resv_time }</td>
                <td class="text-center">${row.resv_regidate }</td>
                <td class="text-center">${row.resv_perm }</td>
+           
+               <c:choose>
+               		<c:when test="${row.resv_perm eq '진료완료' }">
+               		    <td class="text-center"><button type="button" class="btn btn-secondary" onclick="location.href='./hp_resvDone?resv_idx=${row.resv_idx}';">진료완료</button></td>
+               		</c:when>
+               		<c:otherwise>
+               			 <td class="text-center"><button type="button" class="btn btn-success" onclick="location.href='./hp_resvDone?resv_idx=${row.resv_idx}';">진료완료</button></td>
+               		</c:otherwise>
+               </c:choose>
+               
             </tr>
             <!-- 리스트반복끝 -->
          </c:forEach>
-      </c:otherwise>
+      </c:otherwise> 
       
    </c:choose>
     </tbody>   

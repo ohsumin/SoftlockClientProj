@@ -47,4 +47,5 @@ public interface HospitalImpl{
     public ReservationDTO reservView(String resv_idx);
     public int reservConf(String resv_idx);
     public int reservRej(String resv_idx);
+    public int hp_resvDone(String resv_idx);
 }
