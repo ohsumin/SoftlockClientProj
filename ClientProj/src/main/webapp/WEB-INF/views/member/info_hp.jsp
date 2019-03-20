@@ -37,9 +37,9 @@
 					    	</a>
 						</td>
 						<td style="width:80px; border-right:1px solid #E6E6E6">
-					    	<a href="#">
+					    	<a href="../member/resv">
 						    	<i class="fas fa-calendar-alt" style="font-size:2em;margin-bottom:3px;"></i><br />
-						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;" onclick="location.href='../member/resv';">예약</span>
+						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">예약</span>
 					    	</a>
 						</td>
 						<td style="width:80px;">
