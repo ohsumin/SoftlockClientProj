@@ -102,7 +102,7 @@
 		             treat_close=#{param4}
 		where treat_hp_idx=#{param1} and treat_dy=#{param2}
    </update>
-   
+    
    <!-- 회원정보 수정시 treattime테이블에 월~금 레코드 추가 -->
    <insert id="addTreatTime">
    		insert into treattime values(SEQ_TREATTIME.nextval, #{param1}, #{param2}, #{param3}, #{param4})

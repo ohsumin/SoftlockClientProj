@@ -63,29 +63,531 @@
 .starR.on{background-position:0 0;}
   </style>
 
-  <script type="text/javascript">
-    $(window).load(function(){
-      
-$('.starRev span').click(function(){
-  $(this).parent().children('span').removeClass('on');
-  $(this).addClass('on').prevAll('span').addClass('on');
-  return false;
+<script type="text/javascript">
+/* 별점 */
+$(window).load(function(){
+	$('.starRev span').click(function(){
+	  $(this).parent().children('span').removeClass('on');
+	  $(this).addClass('on').prevAll('span').addClass('on');
+	  return false;
+	});
 });
 
-    });
-</script>
-<!-- <script>
-    // tell the embed parent frame the height of the content
-    if (window.parent && window.parent.parent){
-      window.parent.parent.postMessage(["resultsFrame", {
-        height: document.body.getBoundingClientRect().height,
-        slug: "r9x0rpcg"
-      }], "*")
-    }
+$(function() {	
+	var className = "";
 
-    // always overwrite window.name, in case users try to set it manually
-    window.name = "result"
-  </script> -->
+	// 산부인과 클래스토글추가(badge-primary토글이 안먹어서 산부인과만 추가함)
+	var toggle = true;
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new daum.maps.services.Geocoder();
+	// 내과를 클릭할때
+	$('#type1').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		$('#type1').toggleClass('badge-success');
+		$('#type2').removeClass(); $('#type2').addClass('badge badge-secondary');
+		$('#type3').removeClass(); $('#type3').addClass('badge badge-secondary');
+		$('#type4').removeClass(); $('#type4').addClass('badge badge-secondary');
+		$('#type5').removeClass(); $('#type5').addClass('badge badge-secondary');
+		$('#type6').removeClass(); $('#type6').addClass('badge badge-secondary');
+		toggle = true;
+
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpType', 
+	        data : {
+	        	hp_type : "내과"
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge badge-success'>&nbsp;내과</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					/**************주소로 장소표시********************/
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	// 안과
+	$('#type2').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		$('#type2').toggleClass('badge-warning');
+		$('#type1').removeClass(); $('#type1').addClass('badge badge-secondary');
+		$('#type3').removeClass(); $('#type3').addClass('badge badge-secondary');
+		$('#type4').removeClass(); $('#type4').addClass('badge badge-secondary');
+		$('#type5').removeClass(); $('#type5').addClass('badge badge-secondary');
+		$('#type6').removeClass(); $('#type6').addClass('badge badge-secondary');
+		toggle = true;
+		
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpType', 
+	        data : {
+	        	hp_type : "안과"
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge badge-warning'>&nbsp;안과</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	// 치과
+	$('#type3').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		$('#type3').toggleClass('badge-info');
+		$('#type1').removeClass(); $('#type1').addClass('badge badge-secondary');
+		$('#type2').removeClass(); $('#type2').addClass('badge badge-secondary');
+		$('#type4').removeClass(); $('#type4').addClass('badge badge-secondary');
+		$('#type5').removeClass(); $('#type5').addClass('badge badge-secondary');
+		$('#type6').removeClass(); $('#type6').addClass('badge badge-secondary');
+		toggle = true;
+		
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpType', 
+	        data : {
+	        	hp_type : "치과"
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge badge-info'>&nbsp;치과</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	// 산부인과
+	$('#type4').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		if(toggle == true){
+			$('#type4').addClass('badge-primary');
+			$('#type4').removeClass('badge-secondary');
+			toggle = false;
+		}
+		else{
+			$('#type4').addClass('badge-secondary');
+			$('#type4').removeClass('badge-primary');
+			toggle = true;
+		}
+		//$('#type4').toggleClass('badge-primary');
+		$('#type1').removeClass(); $('#type1').addClass('badge badge-secondary');
+		$('#type3').removeClass(); $('#type3').addClass('badge badge-secondary');
+		$('#type2').removeClass(); $('#type2').addClass('badge badge-secondary');
+		$('#type5').removeClass(); $('#type5').addClass('badge badge-secondary');
+		$('#type6').removeClass(); $('#type6').addClass('badge badge-secondary');
+		
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpType', 
+	        data : {
+	        	hp_type : "산부인과"
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge badge-primary'>&nbsp;산부인과</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	// 이비인후과
+	$('#type5').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		$('#type5').toggleClass('badge-dark');
+		$('#type1').removeClass(); $('#type1').addClass('badge badge-secondary');
+		$('#type3').removeClass(); $('#type3').addClass('badge badge-secondary');
+		$('#type4').removeClass(); $('#type4').addClass('badge badge-secondary');
+		$('#type6').removeClass(); $('#type6').addClass('badge badge-secondary');
+		$('#type2').removeClass(); $('#type2').addClass('badge badge-secondary');
+		toggle = true;
+		
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpType', 
+	        data : {
+	        	hp_type : "이비인후과"
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge badge-dark'>&nbsp;이비인후과</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	// 피부과
+	$('#type6').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		$('#type6').toggleClass('badge-danger');
+		$('#type1').removeClass(); $('#type1').addClass('badge badge-secondary');
+		$('#type3').removeClass(); $('#type3').addClass('badge badge-secondary');
+		$('#type4').removeClass(); $('#type4').addClass('badge badge-secondary');
+		$('#type5').removeClass(); $('#type5').addClass('badge badge-secondary');
+		$('#type2').removeClass(); $('#type2').addClass('badge badge-secondary');
+		toggle = true;
+		
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpType', 
+	        data : {
+	        	hp_type : "피부과"
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge badge-danger'>&nbsp;피부과</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	
+	// 이름으로 검색하기
+	$('#searchHpName').click(function() {
+		// 마커지우기
+		hideMarkers();
+		
+		// 검색어
+		var searchStr = $('#searchStr').val();
+		$.ajax({
+	        type : 'post',
+	        url : '../member/searchHpName', 
+	        data : {
+	        	searchStr : searchStr
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	var strHTML = "";
+	        	$.each(d, function(index, d){
+	        		if(d.hp_type=="내과") className="badge-success";
+	        		if(d.hp_type=="안과") className="badge-warning";
+	        		if(d.hp_type=="치과") className="badge-info";
+	        		if(d.hp_type=="산부인과") className="badge-primary";
+	        		if(d.hp_type=="이비인후과") className="badge-dark";
+	        		if(d.hp_type=="피부과") className="badge-warning";
+	        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+	        		strHTML += "	<div style='margin-bottom:5px;'>";
+					strHTML += "		<span class='badge "+className+"'>&nbsp;"+d.hp_type+"</span>";
+					strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+					strHTML += "	</div>";
+					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+					strHTML += "		 <span class='starR on'>별1</span>";
+					strHTML += "		 <span class='starR on'>별2</span>";
+					strHTML += "		 <span class='starR '>별3</span>";
+					strHTML += "		 <span class='starR '>별4</span>";
+					strHTML += "		 <span class='starR '>별5</span>";
+					strHTML += "	</div>";
+					strHTML += "</div><hr/>";
+					
+					geocoder.addressSearch(d.hp_address , function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === daum.maps.services.Status.OK) {
+
+					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        addMarker(coords);
+					    }
+					});
+		        });
+	        	$('#searchList').html(strHTML);
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+	});
+	
+	var toggleNight = true;
+	var toggleWeekend = true;
+	
+	// 야간진료병원
+	$('#night').click(function() {
+		if(toggleNight == true){
+			$('#night').addClass('badge-warning');
+			$('#night').removeClass('badge-secondary');
+			toggleNight = false;
+			
+			$.ajax({
+		        type : 'post',
+		        url : '../member/searchHpNight', 
+		        dataType : "json",
+		        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+		        success : function(d) {
+		        	var strHTML = "";
+		        	$.each(d, function(index, d){
+		        		if(d.hp_type=="내과") className="badge-success";
+			        	if(d.hp_type=="안과") className="badge-warning";
+			        	if(d.hp_type=="치과") className="badge-info";
+			        	if(d.hp_type=="산부인과") className="badge-primary";
+			        	if(d.hp_type=="이비인후과") className="badge-dark";
+			        	if(d.hp_type=="피부과") className="badge-warning";
+			        	
+		        		strHTML += "<div style='width:95%; margin:10px; padding-top:10px;'>";
+		        		strHTML += "	<div style='margin-bottom:5px;'>";
+						strHTML += "		<span class='badge "+className+"'>&nbsp;"+d.hp_type+"</span>";
+						strHTML += "		<span style='font-size:1.1em; font-weight:bold;'>"+d.hp_name+"</span><br />";
+						strHTML += "	</div>";
+						strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
+						strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
+						strHTML += "	<div class='starRev' style='margin-top:10px;'>";
+						strHTML += "		 <span class='starR on'>별1</span>";
+						strHTML += "		 <span class='starR on'>별2</span>";
+						strHTML += "		 <span class='starR '>별3</span>";
+						strHTML += "		 <span class='starR '>별4</span>";
+						strHTML += "		 <span class='starR '>별5</span>";
+						strHTML += "	</div>";
+						strHTML += "</div><hr/>";
+						
+						geocoder.addressSearch(d.hp_address , function(result, status) {
+
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === daum.maps.services.Status.OK) {
+
+						        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+						        // 결과값으로 받은 위치를 마커로 표시합니다
+						        addMarker(coords);
+						    }
+						});
+			        });
+		        	$('#searchList').html(strHTML);
+		        },
+		        error : function(e) {
+					alert("실패" + e.status + " : " + e.statusText);
+				}
+		    }); 
+		}
+		else{
+			$('#night').addClass('badge-secondary');
+			$('#night').removeClass('badge-warning');
+			toggleNight = true;
+		}
+	});
+
+	$('#weekend').click(function() {
+		if(toggleWeekend == true){
+			$('#weekend').addClass('badge-warning');
+			$('#weekend').removeClass('badge-secondary');
+			toggleWeekend = false;
+		}
+		else{
+			$('#weekend').addClass('badge-secondary');
+			$('#weekend').removeClass('badge-warning');
+			toggleWeekend = true;
+		}
+	});
+});
+
+</script>
 </head>
 <body>
 <!-- Navigation -->
@@ -95,9 +597,9 @@ $('.starRev span').click(function(){
 		<tr height="7%" style="background-color:#E6E7E9;">
 			<td width="25%">
 				<form class="form-inline my-2 my-lg-0">
-			      <input class="form-control mr-sm-2" type="text" placeholder="병원이름"
+			      <input class="form-control mr-sm-2" type="text" placeholder="병원이름" id="searchStr" name="searchStr"
 			      	style="font-size:0.9em; width:310px; margin-left:10px;">
-			      <button class="btn btn-info my-2 my-sm-0" type="submit"
+			      <button class="btn btn-info my-2 my-sm-0" type="button" id="searchHpName" name="searchHpName"
 			      	style="font-size:0.9em;">SEARCH</button>
 			    </form>
 			</td>
@@ -131,21 +633,18 @@ $('.starRev span').click(function(){
 						    </div>
 						</div>
 					</div>
-				<!-- </div> -->
 			</td>
 			<td width="25%">
 				
 			</td>
 			<td width="22%">
-			<div style="text-align:right; margin-right:50px;">
-				<div class="form-control" style="height:39px; padding:5px; padding-left:15px; padding-right:15px; 
-					display:inline; font-size:0.9em; border-radius:30px;">
-					야간진료병원
-				</div>
-				<div class="form-control" style="height:39px; padding:5px; padding-left:15px; padding-right:15px; display:inline; 
-					margin-left:10px; font-size:0.9em; border-radius:30px;">
-					일요일진료병원
-				</div>
+				<div style="text-align:right; margin-right:50px;">
+					<!-- <div class="form-control" style="height:39px; padding:5px; padding-left:15px; padding-right:15px; 
+						display:inline; font-size:0.9em; border-radius:30px;">
+						야간진료병원
+					</div> -->
+					<span class="badge badge-pill badge-secondary" style="font-size:0.9em; margin-right:10px;" id="night">야간진료병원</span>
+					<span class="badge badge-pill badge-secondary" style="font-size:0.9em; margin-right:10px;" id="weekend">주말진료병원</span>
 				</div>
 			</td>
 		</tr>
@@ -154,54 +653,18 @@ $('.starRev span').click(function(){
 				<div style="overflow-x:hidden; overflow-y:scroll; width:100%; height:100%;">
 					<!-- 디폴트 -->
 					<div style="width:95%; margin:10px; padding-top:10px;">
-						<span class="badge badge-secondary">내과</span>
-						<span class="badge badge-secondary">안과</span>
-						<span class="badge badge-secondary">치과</span>
-						<span class="badge badge-secondary">산부인과</span>
-						<span class="badge badge-secondary">이비인후과</span>
-						<span class="badge badge-secondary">피부과</span>
+						<span class="badge badge-secondary" id="type1">내과</span>
+						<span class="badge badge-secondary" id="type2">안과</span>
+						<span class="badge badge-secondary" id="type3">치과</span>
+						<span class="badge badge-secondary" id="type4">산부인과</span>
+						<span class="badge badge-secondary" id="type5">이비인후과</span>
+						<span class="badge badge-secondary" id="type6">피부과</span>
 					</div>
 					<hr />
-					<!-- 선택됐을때 아래 색으로 바뀜
-					<span class="badge badge-primary">내과</span>
-					<span class="badge badge-success">치과</span>
-					<span class="badge badge-danger">산부인과</span>
-					<span class="badge badge-warning">이비인후과</span>
-					<span class="badge badge-info">피부과</span> -->
-					<div style="width:95%; margin:10px; padding-top:10px;">
-						<div style="margin-bottom:5px;">
-							<span class="badge badge-info">&nbsp;치과</span>
-							<span style="font-size:1.1em; font-weight:bold;">서울웃는얼굴치과의원</span><br />
-						</div>
-						<span style="font-size:0.9em;">서울특별시 구로구 구로동 212-13</span><br />
-						<div class="starRev" style="margin-top:10px;">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR">별3</span>
-						  <span class="starR">별4</span>
-						  <span class="starR">별5</span>
-						</div>
-					</div>
-					<hr />
-					<div style="width:95%; margin:10px; padding-top:10px;">
-						<div style="margin-bottom:5px;">
-							<span class="badge badge-success">&nbsp;내과</span>
-							<span style="font-size:1.1em; font-weight:bold;">가산기대찬의원</span><br />
-						</div>
-						<span style="font-size:0.9em;">서울특별시 금천구 벚꽃로 286 삼성리더스타워 1층</span><br />
-						<div class="starRev" style="margin-top:10px;">
-						  <span class="starR on">별1</span>
-						  <span class="starR on">별2</span>
-						  <span class="starR on">별3</span>
-						  <span class="starR">별4</span>
-						  <span class="starR">별5</span>
-						</div>
-					</div>
+					<div id="searchList"></div>
 				</div>
 			</td>
-			<td colspan="3">
-				<!-- <div id="map" style="width:100%;height:100%;"></div> -->
-				
+			<td colspan="3">				
 				<div class="map_wrap">
 				    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 				    <ul id="category"> 
@@ -214,6 +677,34 @@ $('.starRev span').click(function(){
 				
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b8a5136efd7191a8e464e69e30257a2e&libraries=services"></script>
 				<script>
+				// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+				function setMarkers(map) {
+				    for (var i = 0; i < markers.length; i++) {
+				        markers[i].setMap(map);
+				    }            
+				}
+				function showMarkers() {
+				    setMarkers(map)    
+				}
+				function hideMarkers() {
+				    setMarkers(null);    
+				}
+				// 마커를 생성하고 지도위에 표시하는 함수입니다
+				function addMarker(position) {
+				    
+				    // 마커를 생성합니다
+				    var marker = new daum.maps.Marker({
+				        position: position
+				    });
+
+				    // 마커가 지도 위에 표시되도록 설정합니다
+				    marker.setMap(map);
+				    
+				    // 생성된 마커를 배열에 추가합니다
+				    markers.push(marker);
+				}
+
+				
 				if (navigator.geolocation) {
 				    
 				    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -350,7 +841,7 @@ $('.starRev span').click(function(){
 				    for ( var i=0; i<places.length; i++ ) {
 				
 				            // 마커를 생성하고 지도에 표시합니다
-				            var marker = addMarker(new daum.maps.LatLng(places[i].y, places[i].x), order);
+				            var marker = addMarkerCategory(new daum.maps.LatLng(places[i].y, places[i].x), order);
 				
 				            // 마커와 검색결과 항목을 클릭 했을 때
 				            // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
@@ -363,7 +854,7 @@ $('.starRev span').click(function(){
 				}
 				
 				// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-				function addMarker(position, order) {
+				function addMarkerCategory(position, order) {
 				    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
 				        imageSize = new daum.maps.Size(27, 28),  // 마커 이미지의 크기
 				        imgOptions =  {
