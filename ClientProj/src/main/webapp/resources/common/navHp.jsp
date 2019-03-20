@@ -17,7 +17,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor03">
+  <div class="collapse navbar-collapse" id="navbarColor03"  >
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" style="margin-left:100px;">
         <a class="nav-link" href="#">병원찾기 <span class="sr-only">(current)</span></a>
