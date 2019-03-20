@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softlock.model.InfoHpImpl">
+
+	<select id="getHpInfo" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		select * from hospital where hp_idx=#{param1}
+	</select>
+	<select id="getHpTimeInfo" resultType="com.softlock.model.TreattimeDTO" parameterType="String">
+			select * from treattime where treat_hp_idx=#{param1} and treat_dy=#{param2}
+	</select>
+	
+</mapper>

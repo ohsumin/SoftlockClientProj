@@ -145,7 +145,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -214,7 +214,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -283,7 +283,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -352,7 +352,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -421,7 +421,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -490,7 +490,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -558,7 +558,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -634,7 +634,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -707,7 +707,7 @@ $(function() {
 					        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
 					     	// onclick이벤트 달아주기
-					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
+					     	$("#"+d.hp_idx+"").attr("onclick", "displayPlaceInfoHp(\""+d.hp_idx+"\",\""+d.hp_name+"\",\""+d.hp_address+"\",\""+d.hp_address2+"\",\""+d.hp_hpphone+"\",\""+result[0].y+"\",\""+result[0].x+"\")");
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        addMarker(coords);
 					    }
@@ -831,8 +831,8 @@ $(function() {
 				<script>
 				// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
 				function setMarkers(map) {
-				    for (var i = 0; i < markers.length; i++) {
-				        markers[i].setMap(map);
+				    for (var i = 0; i < markersHp.length; i++) {
+				        markersHp[i].setMap(map);
 				    }            
 				}
 				function showMarkers() {
@@ -851,16 +851,16 @@ $(function() {
 				function addMarker(position) {
 				    
 				    // 마커를 생성합니다
-				    var marker = new daum.maps.Marker({
+				    var markerHp = new daum.maps.Marker({
 				        position: position,
 				        image : markerImage
 				    });
 
 				    // 마커가 지도 위에 표시되도록 설정합니다
-				    marker.setMap(map);
+				    markerHp.setMap(map);
 				    
 				    // 생성된 마커를 배열에 추가합니다
-				    markers.push(marker);
+				    markersHp.push(markerHp);
 				}
 
 				
@@ -912,7 +912,7 @@ $(function() {
 				    // 지도 중심좌표를 접속위치로 변경합니다
 				    map.setCenter(locPosition);      
 				}
-				
+				var markersHp=[];
 				
 				// 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
 				var placeOverlay = new daum.maps.CustomOverlay({zIndex:1}), 
@@ -968,7 +968,7 @@ $(function() {
 				    placeOverlay.setMap(null);
 				
 				    // 지도에 표시되고 있는 마커를 제거합니다
-				    removeMarker();
+				    //removeMarker();
 				    
 				    ps.categorySearch(currCategory, placesSearchCB, {useMapBounds:true}); 
 				}
@@ -1012,7 +1012,7 @@ $(function() {
 				    }
 				}
 				
-				// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+				// 카테고리마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 				function addMarkerCategory(position, order) {
 				    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
 				        imageSize = new daum.maps.Size(27, 28),  // 마커 이미지의 크기
@@ -1039,7 +1039,7 @@ $(function() {
 				        markers[i].setMap(null);
 				    }   
 				    markers = [];
-				}
+				} 
 				
 				// 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
 				function displayPlaceInfo (place) {
@@ -1107,9 +1107,9 @@ $(function() {
 				} 
 				
 				// 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
-				function displayPlaceInfoHp (hp_name, hp_address, hp_address2, hp_hpphone, y, x) {
+				function displayPlaceInfoHp (hp_idx,hp_name, hp_address, hp_address2, hp_hpphone, y, x) {
 				    var content = '<div class="placeinfo">' +
-				                    '   <a class="title" href="' +  + '" target="_blank" title="' + hp_name + '">' + hp_name + '</a>';   
+				                    '   <a class="title" href="../member/infoHp?hp_idx='+hp_idx+'" target="_blank" title="' + hp_name + '">' + hp_name + '</a>';   
 				
 				   
 			        content += '    <span title="' + hp_name + '">' + hp_address + '</span>' +
