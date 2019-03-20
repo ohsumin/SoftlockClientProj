@@ -17,7 +17,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor03"  >
+  <div class="collapse navbar-collapse" id="navbarColor03">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" style="margin-left:100px;">
         <a class="nav-link" href="#">병원찾기 <span class="sr-only">(current)</span></a>
@@ -31,6 +31,7 @@
     </ul>
     <%if(session.getAttribute("hospitalInfo")==null) {%>
     <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/login';">로그인</button>
+	<button type="button" class="btn btn-outline-warning" style="margin-left:10px; margin-right:50px;" onclick="location.href='../member/home';">일반회원바로가기</button>
     <%} else { %>
     <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/logout';">로그아웃</button>&nbsp;    
     <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/hpModify';">마이페이지</button>
