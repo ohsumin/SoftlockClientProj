@@ -161,10 +161,13 @@ public class HospitalController {
    public String hpModify(Model model, HttpServletRequest req,
          HttpSession session) {
    
-	//병원회원상세보기 읽기 및 수정 동시에 진행함   
+
+   //병원회원상세보기 읽기 및 수정 동시에 진행함   
    HospitalDTO hospitalInfo = (HospitalDTO)session.getAttribute("hospitalInfo");
+   System.out.println("세션확인" +  hospitalInfo.getHp_idx());
    int hp_idx = hospitalInfo.getHp_idx();
-    //병원상세정보 읽어오기 일반정보  
+    
+   //병원상세정보 읽어오기 일반정보  
    HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
          .viewModify(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
   
@@ -449,6 +452,8 @@ public class HospitalController {
     public String reservConf(HttpServletRequest req) {
        sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
        System.out.println("sdfdsf"+req.getParameter("resv_idx"));
+     
+       
       return "redirect:hpModify?tab=1";
     }
     //예약회원 예약거절
