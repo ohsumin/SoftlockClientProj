@@ -222,7 +222,7 @@ $(function(){
 		
 		return false;
 	}
-	
+	 
 	//야간진료여부 체크박스 값 가져오기
 	var hp_nightHd = $('#hp_nightHd').val(); 
 	if(hp_nightHd=='y'){
