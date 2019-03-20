@@ -151,6 +151,7 @@ public class MemberController {
 			MemberDTO vo = sqlSession.getMapper(MemberImpl.class).login(mem_id, mem_pw);
 			session.setAttribute("memberInfo", vo);
 			sqlSession.getMapper(MemberImpl.class).alter_naverKey(mem_id);
+			resp.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = resp.getWriter();
 			out.println("<script>alert('회원가입이 완료되었습니다.');</script>");
 			out.flush();

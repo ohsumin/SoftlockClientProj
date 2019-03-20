@@ -576,6 +576,7 @@ $(function() {
 	
 	// 야간진료병원
 	$('#night').click(function() {
+		hideMarkers();
 		if(type_search == ""){
 			alert("진료과를 먼저 선택해주세요.");
 			return false;
@@ -590,7 +591,6 @@ $(function() {
 			$('#night').removeClass('badge-warning');
 			toggleNight = false;
 		}
-		alert(toggleNight+","+toggleWeekend);
 		$.ajax({
 	        type : 'post',
 	        url : '../member/searchHpNW', 
@@ -649,6 +649,7 @@ $(function() {
 	});
 
 	$('#weekend').click(function() {
+		hideMarkers();
 		if(type_search == ""){
 			alert("진료과를 먼저 선택해주세요.");
 			return false;
@@ -663,7 +664,6 @@ $(function() {
 			$('#weekend').removeClass('badge-warning');
 			toggleWeekend = false;
 		}
-		alert(toggleNight+","+toggleWeekend);
 		$.ajax({
 	        type : 'post',
 	        url : '../member/searchHpNW', 
@@ -852,8 +852,7 @@ $(function() {
 				    
 				    // 마커를 생성합니다
 				    var markerHp = new daum.maps.Marker({
-				        position: position,
-				        image : markerImage
+				        position: position
 				    });
 
 				    // 마커가 지도 위에 표시되도록 설정합니다
@@ -862,8 +861,7 @@ $(function() {
 				    // 생성된 마커를 배열에 추가합니다
 				    markersHp.push(markerHp);
 				}
-
-				
+								
 				if (navigator.geolocation) {
 				    
 				    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -890,11 +888,17 @@ $(function() {
 				
 				// 지도에 마커와 인포윈도우를 표시하는 함수입니다
 				function displayMarker(locPosition, message) {
-				
+					// 마커이미지
+					var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+					// 마커이미지 크기
+					var imageSize = new daum.maps.Size(24, 35); 
+					// 마커이미지 생성
+					var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
 				    // 마커를 생성합니다
 				    var marker = new daum.maps.Marker({  
 				        map: map, 
-				        position: locPosition
+				        position: locPosition,
+				        image : markerImage
 				    }); 
 				    
 				    var iwContent = message, // 인포윈도우에 표시할 내용
@@ -1041,7 +1045,7 @@ $(function() {
 				    markers = [];
 				} 
 				
-				// 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
+				/* // 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
 				function displayPlaceInfo (place) {
 				    var content = '<div class="placeinfo">' +
 				                    '   <a class="title" href="' + place.place_url + '" target="_blank" title="' + place.place_name + '">' + place.place_name + '</a>';   
@@ -1060,7 +1064,7 @@ $(function() {
 				    contentNode.innerHTML = content;
 				    placeOverlay.setPosition(new daum.maps.LatLng(place.y, place.x));
 				    placeOverlay.setMap(map);  
-				}
+				} */
 				
 				
 				// 각 카테고리에 클릭 이벤트를 등록합니다
@@ -1108,9 +1112,9 @@ $(function() {
 				
 				// 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
 				function displayPlaceInfoHp (hp_idx,hp_name, hp_address, hp_address2, hp_hpphone, y, x) {
-				    var content = '<div class="placeinfo">' +
-				                    '   <a class="title" href="../member/infoHp?hp_idx='+hp_idx+'" target="_blank" title="' + hp_name + '">' + hp_name + '</a>';   
-				
+					
+				    var content = '<div class="placeinfo">' +   
+				                    '   <a class="title" href="../member/infoHp?hp_idx='+hp_idx+'&lat='+y+'&lon='+x+'" target="_blank" title="' + hp_name + '">' + hp_name + '</a>';
 				   
 			        content += '    <span title="' + hp_name + '">' + hp_address + '</span>' +
 			                    '  <span class="jibun" title="' + hp_address + '">' + hp_address2 + '</span>';
@@ -1122,7 +1126,11 @@ $(function() {
 				
 				    contentNode.innerHTML = content;
 				    placeOverlay.setPosition(new daum.maps.LatLng(y, x));
-				    placeOverlay.setMap(map);   
+				    placeOverlay.setMap(map);  
+				    
+				    var locPosition = new daum.maps.LatLng(y, x)
+				    
+				    map.setCenter(locPosition, "");   
 				}
 				</script>
 			</td>

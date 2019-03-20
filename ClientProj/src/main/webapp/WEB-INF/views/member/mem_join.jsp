@@ -53,7 +53,7 @@
 				$("input[name='mem_pwck']").attr("readonly",true);
 				$("input[name='mem_name']").attr("readonly",true);
 				$("input[name='mem_email']").attr("readonly",true);
-				$('#mem_birth_month').attr("disabled", "disabled");
+				$('#mem_birth_month').attr("disabled", "false");
 				$('#mem_birth_day').attr("disabled", "disabled");
 				$('#mem_gender_m').attr("disabled", "disabled");
 				$('#mem_gender_w').attr("disabled", "disabled");
@@ -83,14 +83,15 @@
 						alert("실패" + e.status + " : " + e.statusText);
 					}
 			    });
-				
 				// 생일을 담을 변수
 				var month;
 				var day;
 				// 생일을 배열에 한글자씩 저장하기
-				var array_birth = birthday.split(""); 
+				var array_birth = birthday.split("-"); 
+				month = array_birth[0];
+				day = array_birth[1];
 				// month구하기 (만약 생일이 07월이면 month값은 7)
-				if(array_birth[0] == '0')
+				/* if(array_birth[0] == '0')
 					month = array_birth[1];
 				else
 					month = array_birth[0] + array_birth[1];
@@ -98,8 +99,7 @@
 				if(array_birth[3] == '0')
 					day = array_birth[4];
 				else
-					day = array_birth[3] + array_birth[4];			
-				
+					day = array_birth[3] + array_birth[4]; 		 */
 				// 회원정보 input박스에 값 넣어주기
 				$('#mem_name').val(name);
 				$("#mem_email").val(email);
@@ -174,7 +174,8 @@ $(function() {
 		        type : 'post',
 		        url : '../member/checkId', 
 		        data : {
-		        	mem_id : mem_id
+		        	mem_id : mem_id,
+		        	mem_pw : ""
 		        },
 		        dataType : "json",
 		        contentType : "application/x-www-form-urlencoded;charset:utf-8",

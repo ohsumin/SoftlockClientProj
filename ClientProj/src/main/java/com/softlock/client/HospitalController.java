@@ -160,7 +160,7 @@ public class HospitalController {
    public String hpModify(Model model, HttpServletRequest req,
          HttpSession session) {
    
-	//병원회원상세보기 읽기 및 수정 동시에 진행함   
+   //병원회원상세보기 읽기 및 수정 동시에 진행함   
    HospitalDTO hospitalInfo = (HospitalDTO)session.getAttribute("hospitalInfo");
    int hp_idx = hospitalInfo.getHp_idx();
     //병원상세정보 읽어오기 일반정보  
