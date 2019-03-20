@@ -1,10 +1,14 @@
 package com.softlock.client;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +20,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
 import com.softlock.model.PagingUtil;
 import com.softlock.model.ReservationDTO;
+import com.softlock.model.TreattimeDTO;
 
 @Controller
 public class HospitalController {
@@ -148,22 +155,27 @@ public class HospitalController {
 		
 	}
 		
-    //마이페이지 진입
+   //마이페이지 진입
    @RequestMapping("/hospital/hpModify")
    public String hpModify(Model model, HttpServletRequest req,
          HttpSession session) {
    
+	//병원회원상세보기 읽기 및 수정 동시에 진행함   
    HospitalDTO hospitalInfo = (HospitalDTO)session.getAttribute("hospitalInfo");
    int hp_idx = hospitalInfo.getHp_idx();
+    //병원상세정보 읽어오기 일반정보  
+   HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
+         .viewModify(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
+  
+    //병원상세정보 읽어오기 진료시간
+   ArrayList<TreattimeDTO> treatDTOs = sqlSession.getMapper(HospitalImpl.class).viewModifytime(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
+   System.out.println("개수개수" + treatDTOs.size());
+   System.out.println(treatDTOs.get(0).getTreat_open());
+  
+   model.addAttribute("dto", dto);
+   model.addAttribute("treatDTOs",treatDTOs);
    
    String tab = req.getParameter("tab");
-    System.out.println("tab="+tab);
-      
-   HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
-         .view(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_id());
-   model.addAttribute("dto", dto);
-
-   
    //회원리스트보기
    int totalRecordCount = sqlSession
          .getMapper(HospitalImpl.class)
@@ -189,14 +201,14 @@ public class HospitalController {
 
    int virtualNum = 0;
    int countNum = 0;
-    for(ReservationDTO reserDTO : lists) {
+   for(ReservationDTO reserDTO : lists) {
       reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
       reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
       
       //가상번호
-       virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
-       reserDTO.setVirtualNum(virtualNum);
-      }
+      virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+      reserDTO.setVirtualNum(virtualNum);
+   }
    
 
 
@@ -219,24 +231,153 @@ public class HospitalController {
    
 	
 	
-	/////회원정보수정액션
+	/////병원정보수정액션
     @RequestMapping("/hospital/modifyAction")
-    public void modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
-       String dym = req.getParameter("dym");
-       
-       System.out.println("아이디" +((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_id());
-       sqlSession.getMapper(HospitalImpl.class).modifyAction(
-             req.getParameter("hp_hpphone"), req.getParameter("hp_night"), req.getParameter("hp_wkend"), req.getParameter("hp_intro"),
-             req.getParameter("hp_notice"), req.getParameter("hp_image"), ((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_id());
+    public String modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
+    	
+    	
+    	/*파일업로드*/
+		//upload폴더의 물리적경로 얻어오기
+		String path = req.getSession().getServletContext().getRealPath("/resources/upload");
+		String originalName="";
+		String saveFileName="";
+	
+		try
+		{
+			/*
+			파일업로드를 위한 객체생성. 객체 생성과 동시에 파일업로드는
+			완료되고 나머지 폼값은 Multipart객체가 통째로 받아서 
+			처리한다. 
+			 */
+			MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
+			
+			//업로드폼의 file속성 필드의 이름을 모두 읽음			
+			Iterator itr = mhsr.getFileNames();
+			
+			//파일처리를 위한 변수 생성
+			MultipartFile mfile = null;			
+			String fileName = "";		
+				
+			/*
+			파일 하나의 정보를 저장하기 위한 List계열의 컬렉션을 
+			생성한다. (원본파일명과 실제저장된파일명)
+			 */
+			List resultList = new ArrayList();
+				
+			String title = mhsr.getParameter("title");
+				
+			//업로드할 디렉토리가 없는지 확인후 디렉토리 생성
+			File directory = new File(path);
+			if(!directory.isDirectory()){		
+				directory.mkdirs();
+			}
+		
+						 
+			
+			//업로드폼의 file속성의 필드갯수만큼 반복함
+			while(itr.hasNext())
+			{		
+				//input태그의 속성값을 읽어온다.(userfile1,2)
+				fileName = (String)itr.next();
+				
+				//서버로 업로드된 임시파일명을 가져온다. 
+				mfile = mhsr.getFile(fileName);
+				System.out.println("mfile[임시파일명]="+ mfile);
+				
+				//한글깨짐방지처리후 업로드된 파일명을 가져온다.
+				originalName = new String(mfile.getOriginalFilename()
+					.getBytes(),"UTF-8");
+				
+				//만약 파일명이 공백이라면 while문의 처음으로 돌아간다.
+				if("".equals(originalName)){
+					continue;
+				}
+				
+				/*
+				파일명에서 확장자를 가져온다. 파일명에서 확장자는 마지막
+				.(점) 이후에 있기때문에 lastIndexOf()를 사용한다. 				
+				 */
+				String ext = originalName.substring(
+						originalName.lastIndexOf('.'));		
+				
+				//uuid로 생성한 문자열과 확장자를 합친다.
+				saveFileName = getUuid() + ext;	
+				
+				//설정한 경로명 조립
+				File serverFullName = new File(path + File.separator 
+						+ saveFileName);
+				
+				//업로드한 파일을 지정경로에 저장한다. 
+				mfile.transferTo(serverFullName);
+				System.out.println("경로"+serverFullName);
+			
+			}
+			
+		}		 
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int idx = ((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx();
+		System.out.println(idx);
+		
+		
+		
+	
+		String hp_night = req.getParameter("hp_night");
+		if(hp_night==null) {
+			hp_night="n";
+		}else {
+			hp_night="y";	
+		}
+
+		//hospital 수정 영업시간제외 입력
+		int sucOrFail = sqlSession.getMapper(HospitalImpl.class).modifyAction(idx, req.getParameter("hp_hpphone"), hp_night, req.getParameter("hp_detailInfo"),
+    			req.getParameter("hp_etc"), originalName, saveFileName);
+	
+		
+
+		
+		//hospital 영업시간입력
+		String[] treat_dy = {"월","화","수","목","금","토","일"};  
+        String[] dyopen = {"mon_open", "tue_open", "wed_open", "thu_open", "fri_open", "sat_open", "sun_open"};
+        String[] dyclose = {"mon_close", "tue_close", "wed_close", "thu_close", "fri_close", "sat_close", "sun_close"};
         
-       sqlSession.getMapper(HospitalImpl.class).tmodifyAction(
-             req.getParameter("monOpt"), req.getParameter("monClt"), ((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx(), dym );
+        for(int i = 0; i<dyopen.length; i++) {
+        	System.out.println("dyopen"+req.getParameter(dyopen[i]));
+        	System.out.println("dyclose"+req.getParameter(dyclose[i]));
+        	if(req.getParameter(dyopen[i])!=null) {
+        		sqlSession.getMapper(HospitalImpl.class).treatmodifyAction(idx,
+    					treat_dy[i], req.getParameter(dyopen[i]), req.getParameter(dyclose[i]));
+        	}
+		}
        
+        
        response.setContentType("text/html; charset=UTF-8");
        PrintWriter out = response.getWriter();
-       out.println("<script>alert('정보수정이 완료되었습니다'); location.href='../hospital/home';</script>");
+       out.println("<script>alert('병원정보수정이 완료되었습니다'); location.href='../hospital/home';</script>");
        out.flush();
+        
+        return "/hospital/hp_modify";
     }
+    
+	/*
+	UUID를 이용한 랜덤한 문자열 생성
+		: Universally unique identifier 즉 범용 고유 식별자라고 한다.
+	 */
+	public static String getUuid(){
+		String uuid = UUID.randomUUID().toString();
+		System.out.println("uuid1="+uuid);
+		
+		uuid = uuid.replaceAll("-", "");
+		System.out.println("uuid2="+uuid);		
+		
+		return uuid;
+	}
+    
 
     @RequestMapping("/hospList/RealtimeSearch")
     @ResponseBody
@@ -271,25 +412,23 @@ public class HospitalController {
        String hp_address = req.getParameter("hp_address");
        String hp_address2 = req.getParameter("hp_address2");
        
-       System.out.println(hp_id);
-       System.out.println(hp_pw);
-       System.out.println(hp_name);
-       System.out.println(hp_num);
-       System.out.println(hp_username);
-       System.out.println(hp_email);
-       System.out.println(hp_phone);
-       System.out.println(hp_address);
-       System.out.println(hp_address2);
-       
-       // Mybatis 사용
        // 회원정보 저장
        sqlSession.getMapper(HospitalImpl.class).hpJoinAction(
     		   	hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2);
        
        HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).loginHp(hp_id, hp_pw);
 	   session.setAttribute("hospitalInfo", vo);
-	
-       return "hospital/hp_joinActionSuccess";
+	   
+	   
+	   //회원가입시 treattime 테이블에 월~금 레코드 추가
+	   String[] treat_dy = {"월","화","수","목","금","토","일"};  
+	   String treat_open="오픈시간";
+	   String treat_close="마감시간";
+	   for(int i = 0; i<treat_dy.length;i++) {
+		   sqlSession.getMapper(HospitalImpl.class).addTreatTime(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx(), treat_dy[i], treat_open, treat_close);	
+	   }
+	  
+       return "hospital/hp_joinActionSuccess";  
     }
     
     //예약회원 상세보기
