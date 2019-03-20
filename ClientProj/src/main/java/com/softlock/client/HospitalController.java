@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.UrlPathHelper;
 
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
@@ -448,13 +449,21 @@ public class HospitalController {
     public String reservConf(HttpServletRequest req) {
        sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
        System.out.println("sdfdsf"+req.getParameter("resv_idx"));
-       return "hospital/hp_myPage";
+      return "redirect:hpModify?tab=1";
     }
     //예약회원 예약거절
     @RequestMapping("/hospital/hp_resvRej")
     public String reservRej(HttpServletRequest req) {
+    	System.out.println("reservRej" + req.getParameter("resv_idx"));
        sqlSession.getMapper(HospitalImpl.class).reservRej(req.getParameter("resv_idx"));
-       return "hospital/hp_myPage";
+       return "redirect:hpModify?tab=1";
+    }
+    //예약확정된 회원중 예약확정이 y인 회원들은 진료완료 버튼이 나오게 한다. 그 버튼이 c로 바꿈
+    @RequestMapping("hospital/hp_resvDone")
+    public String hp_resvDone(HttpServletRequest req) {
+    	System.out.println("hp_resvDone" + req.getParameter("resv_idx"));
+    	sqlSession.getMapper(HospitalImpl.class).hp_resvDone(req.getParameter("resv_idx"));
+    	return "redirect:hpModify?tab=1";
     }
     
     

@@ -142,11 +142,16 @@
    </select>
    <!-- 예약회원 승인 -->
    <update id="reservConf">
-      update reservation set resv_perm='y' where resv_idx=#{param1}
+      update reservation set resv_perm='예약확정' where resv_idx=#{param1}
    </update>
    <!-- 예약회원 거절 -->
    <update id="reservRej">
-      update reservation set resv_perm='n' where resv_idx=#{param1}
+      update reservation set resv_perm='예약거절' where resv_idx=#{param1}
    </update>
+   <!-- 예약회원 진료완료 -->
+   <update id="hp_resvDone">
+      update reservation set resv_perm='진료완료' where resv_idx=#{param1}
+   </update>
+   
    
 </mapper>
