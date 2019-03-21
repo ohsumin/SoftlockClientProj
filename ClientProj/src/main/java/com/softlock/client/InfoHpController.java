@@ -3,6 +3,7 @@ package com.softlock.client;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sound.midi.MidiDevice.Info;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.InfoHpImpl;
+import com.softlock.model.ReservationDTO;
+import com.softlock.model.ReviewDTO;
 import com.softlock.model.TreattimeDTO;
 
 @Controller
@@ -36,12 +39,33 @@ public class InfoHpController {
 		}
 		model.addAttribute("tDTO", tDTO);
 		
+		//후기리스트 가져오기
+		ArrayList<ReviewDTO> rDTO = sqlSession.getMapper(InfoHpImpl.class).getHpReview(hp_idx);
+		//날짜만 가져오기
+		for(ReviewDTO rDTODate : rDTO) {
+			rDTODate.setRvw_regidate(rDTODate.getRvw_regidate().split(" ")[0]);
+		}
+		
+		
+		model.addAttribute("rDTO", rDTO);
+		
+		//후기전체 개수 가져오기
+		String rvwCount = sqlSession.getMapper(InfoHpImpl.class).getRvwCount(hp_idx);
+		model.addAttribute("rvwCount", rvwCount);
+		
+		//후기 평균점수가져오기
+		String rvwAvg = sqlSession.getMapper(InfoHpImpl.class).getRvwAvg(hp_idx);
+		model.addAttribute("rvwAvg", rvwAvg);
+		
 		return "member/info_hp";
 	}
 	
-	/*@RequestMapping("/member/infoHpAction")
-	public HospitalDTO infoHpAction(HttpServletRequest req, Model model) {
+	/*@RequestMapping("/member/infoHpReview")
+	public String infoHpReview(HttpServletRequest req, Model model) {
+		String hp_idx = req.getParameter("hp_idx");
 		
+		
+		return "member/info_hp";
 		
 	}*/
 }
