@@ -1,64 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>예약</title> 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
-
+<head><script src='https://static.codepen.io/assets/editor/live/console_runner-1df7d3399bdc1f40995a35209755dcfd8c7547da127f6469fd81e5fba982f6af.js'></script><script src='https://static.codepen.io/assets/editor/live/css_reload-5619dc0905a68b2e6298901de54f73cefe4e079f65a75406858d92924b4938bf.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/dbellotti/pen/ZYgwYW/" />
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto"/>
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
-<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-
-<style>
-div{
-border:1px solid;
-}
-</style>
-
-<body>
-
-<!-- 네이게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="#" style="margin-left:50px; font-weight:bold;">
-		<img src="../images/hospital-64.png" style="width:30px; margin-right:10px;"/>Navbar
- 	</a>
- 	<button class="navbar-toggler" aria-expanded="false" aria-controls="navbarColor03" aria-label="Toggle navigation" type="button" data-target="#navbarColor03" data-toggle="collapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-
-  <div class="collapse navbar-collapse" id="navbarColor03">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active" style="margin-left:100px;">
-        <a class="nav-link" href="#">병원찾기 <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" style="margin-left:50px;">
-        <a class="nav-link" href="#">건강정보</a>
-      </li>
-      <li class="nav-item" style="margin-left:50px;">
-        <a class="nav-link" href="#">서비스소개</a>
-      </li>
-    </ul>
-    
-    <button type="button" class="btn btn-outline-secondary">로그인</button>
-	<button type="button" class="btn btn-outline-success" style="margin-left:10px; margin-right:50px;">병원회원바로가기</button>
-    <!-- 검색폼
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
-  </div>
-</nav>
-
-<div class="container"><!-- 컨테이너 s.. -->
-	<table border="1" style="margin-left: auto; margin-right: auto;width: 80%; text-align: center;" ><!-- 전체테이블시작 보더 1 -->
-		<tr> 
-			<td style="width: 50%;"><!-- 중앙나누기 왼쪽화면 -->
-				<!-- 데이트피커 s.. --> 
-				
-<script src='https://static.codepen.io/assets/editor/live/console_runner-1df7d3399bdc1f40995a35209755dcfd8c7547da127f6469fd81e5fba982f6af.js'></script><script src='https://static.codepen.io/assets/editor/live/css_reload-5619dc0905a68b2e6298901de54f73cefe4e079f65a75406858d92924b4938bf.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/dbellotti/pen/ZYgwYW/" />
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'><link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+<script src="../resources/common/jquery/jquery-3.3.1.js"></script>
 <style class="cp-pen-styles">.ui-datepicker,
 .ui-datepicker-material-header {
   font-family: 'Roboto';
@@ -175,151 +125,134 @@ border:1px solid;
 .ui-datepicker-buttonpane .ui-datepicker-current:hover {
   background: #b4cbe5;
 }
-</style>       
-<div align="center"><span class="badge badge-pill badge-secondary" style="font-size:1.2em;">날짜</span><input type="text" data-type="date" id="date-input" style="width:200px;" class="form-control"  placeholder="날짜 선택" /></div>                
-
-<div id="material-header-holder" style="display:none">
-  <div class="ui-datepicker-material-header">
-    <div class="ui-datepicker-material-day">
-    </div>
-    <div class="ui-datepicker-material-date">
-      <div class="ui-datepicker-material-month">
-      </div>
-      <div class="ui-datepicker-material-day-num">
-      </div>
-      <div class="ui-datepicker-material-year">
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src='https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
-<script >var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
-
-var changeMaterialHeader = function (header, date) {
-  var year = date.format('YYYY');
-  var month = date.format('MMM');
-  var dayNum = date.format('D');
-  var isoDay = date.isoWeekday();
-
-  var weekday = new Array(7);
-  weekday[1] = "Monday";
-  weekday[2] = "Tuesday";
-  weekday[3] = "Wednesday";
-  weekday[4] = "Thursday";
-  weekday[5] = "Friday";
-  weekday[6] = "Saturday";
-  weekday[7] = "Sunday";
-
-  $('.ui-datepicker-material-day', header).text(weekday[isoDay]);
-  $('.ui-datepicker-material-year', header).text(year);
-  $('.ui-datepicker-material-month', header).text(month);
-  $('.ui-datepicker-material-day-num', header).text(dayNum);
-};
-
-$.datepicker._selectDateOverload = $.datepicker._selectDate;
-$.datepicker._selectDate = function (id, dateStr) {
-  var target = $(id);
-  var inst = this._getInst(target[0]);
-  inst.inline = true;
-  $.datepicker._selectDateOverload(id, dateStr);
-  inst.inline = false;
-  this._updateDatepicker(inst);
-
-  headerHtml.remove();
-  $(".ui-datepicker").prepend(headerHtml);
-};
-
-$("input[data-type='date']").on("focus", function () {
-  //var date;
-  //if (this.value == "") {
-  //  date = moment();
-  //} else {
-  //  date = moment(this.value, 'MM/DD/YYYY');
-  //}
-
-  $(".ui-datepicker").prepend(headerHtml);
-  //$(this).datepicker._selectDate(this, date);
+</style>
+<script>
+$(function () {
+	$('#date-input').focus(function() {
+		var dateStr = $('#date-input').val();
+		var date = dateStr.split("/");
+		var year = date[2];
+		var month = date[0];
+		var day = date[1];
+		dateStr = year + '/' + month + '/' + day;
+		$('#date-input').val(dateStr);
+	});
 });
+</script>
+</head>
+<body style="background-color:#F5F6F9">
 
-$("input[data-type='date']").datepicker({
-  showButtonPanel: true,
-  closeText: 'OK',
-  onSelect: function (date, inst) {
-    changeMaterialHeader(headerHtml, moment(date, 'MM/DD/YYYY'));
-  } });
-
-
-changeMaterialHeader(headerHtml, moment());
-$('input').datepicker('show');
-//# sourceURL=pen.js    
-</script>  
-<div align="center"><span class="badge badge-pill badge-secondary" style="font-size:1.2em;">시간</span><input type="text" data-type="date" id="date-input" style="width:200px;" class="form-control"  placeholder="시간 선택" /></div>
-				<!-- 데이트피커 e.. -->   
-				<div style="margin: 2px;"><button class="btn btn-warning">9:00</button>&nbsp;<button class="btn btn-warning">9:30</button>&nbsp;<button class="btn btn-warning">10:00</button>&nbsp;<button class="btn btn-warning">10:30</button></div>
-				<div style="margin: 2px;"><button class="btn btn-warning">11:00</button>&nbsp;<button class="btn btn-warning">11:30</button>&nbsp;<button class="btn btn-warning">12:00</button>&nbsp;<button class="btn btn-warning">12:30</button></div>
-				<div style="margin: 2px;"><button class="btn btn-warning">13:00</button>&nbsp;<button class="btn btn-warning">13:30</button>&nbsp;<button class="btn btn-warning">14:00</button>&nbsp;<button class="btn btn-warning">14:30</button></div>
-				<div style="margin: 2px;"><button class="btn btn-warning">13:00</button>&nbsp;<button class="btn btn-warning">13:30</button>&nbsp;<button class="btn btn-warning">14:00</button>&nbsp;<button class="btn btn-warning">14:30</button></div>
-				<div style="margin: 2px;"><button class="btn btn-warning">13:00</button>&nbsp;<button class="btn btn-warning">13:30</button>&nbsp;<button class="btn btn-warning">14:00</button>&nbsp;<button class="btn btn-warning">14:30</button></div>
-				<div style="margin: 2px;"><button class="btn btn-warning">13:00</button>&nbsp;<button class="btn btn-warning">13:30</button>&nbsp;<button class="btn btn-warning">14:00</button>&nbsp;<button class="btn btn-warning">14:30</button></div>
-				<div style="margin: 2px;"><button class="btn btn-warning">13:00</button>&nbsp;<button class="btn btn-warning">13:30</button>&nbsp;<button class="btn btn-warning">14:00</button>&nbsp;<button class="btn btn-warning">14:30</button></div>
-			</td><!-- 데이트피커 td태그 끝 -->
-		
-					
-	
+<!-- Navigation -->
+<jsp:include page="/resources/common/nav.jsp"/><br /><br /><br />
+<div style="width:800px; height:800px; background-color:white; text-align:center; float:none; margin:0 auto;">
+<div style="background-color:#314c75; width:100%; height:30px; position:relative; color:white; font-size:0.9em; 
+	padding-top:3px; text-align:left; padding-left:10px;">서울웃는얼굴치과의원 예약하기</div>
+<table border="1">
+	<tr>
+		<td style="padding:50px;">
+			<div style="display:inline-block;"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;날짜&nbsp;&nbsp;&nbsp;</div>
+			<div style="display:inline-block;">
+				<input type="text" data-type="date" id="date-input" class="form-control" placeholder="날짜 선택" style="font-size:0.9em;"/></div><br /><br />
+			<div style="display:inline-block;"><i class='far fa-clock'></i>&nbsp;&nbsp;&nbsp;시간&nbsp;&nbsp;&nbsp;</div>
+			<div style="display:inline-block;">
+				<input type="text" id="" class="form-control" placeholder="시간 선택" style="font-size:0.9em;"/></div>
+			<script src='https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
+			<script >var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
+			
+			var changeMaterialHeader = function (header, date) {
+			  var year = date.format('YYYY');
+			  var month = date.format('MMM');
+			  var dayNum = date.format('D');
+			  var isoDay = date.isoWeekday();
+			
+			  var weekday = new Array(7);
+			  weekday[1] = "Monday";
+			  weekday[2] = "Tuesday";
+			  weekday[3] = "Wednesday";
+			  weekday[4] = "Thursday";
+			  weekday[5] = "Friday";
+			  weekday[6] = "Saturday";
+			  weekday[7] = "Sunday";
+			
+			  $('.ui-datepicker-material-day', header).text(weekday[isoDay]);
+			  $('.ui-datepicker-material-year', header).text(year);
+			  $('.ui-datepicker-material-month', header).text(month);
+			  $('.ui-datepicker-material-day-num', header).text(dayNum);
+			};
+			
+			$.datepicker._selectDateOverload = $.datepicker._selectDate;
+			$.datepicker._selectDate = function (id, dateStr) {
+			  var target = $(id);
+			  var inst = this._getInst(target[0]);
+			  inst.inline = true;
+			  $.datepicker._selectDateOverload(id, dateStr);
+			  inst.inline = false;
+			  this._updateDatepicker(inst);
+			
+			  headerHtml.remove();
+			  $(".ui-datepicker").prepend(headerHtml);
+			};
+			
+			$("input[data-type='date']").on("focus", function () {
+			  //var date;
+			  //if (this.value == "") {
+			  //  date = moment();
+			  //} else {
+			  //  date = moment(this.value, 'MM/DD/YYYY');
+			  //}
+			
+			  $(".ui-datepicker").prepend(headerHtml);
+			  //$(this).datepicker._selectDate(this, date);
+			});
+			
+			$("input[data-type='date']").datepicker({
+			  showButtonPanel: true,
+			  closeText: 'OK',
+			  onSelect: function (date, inst) {
+			    changeMaterialHeader(headerHtml, moment(date, 'YYYY/DD/MM'));
+			  } });
 			
 			
-			<td style="width: 50%;"><!-- 중앙나누기 오른쪽화면 -->
-				<form>
-					<div class="form-group">
-						<label for="Textarea1">진료증상 입력</label>
-						<textarea class="form-control" id="Textarea1" rows="5" placeholder="진료증상 입력"></textarea>
-					</div>
-					<div class="form-group">
-						<label for="Textarea2">요청사항 입력(선택)</label>
-						<textarea class="form-control" id="Textarea2" rows="5" placeholder="요청사항 입력(선택)"></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">완료버튼</button>
-				</form>
-				
-				<table class="table table-hover" border="1" >
-				<thead>
+			changeMaterialHeader(headerHtml, moment());
+			$('input').datepicker('show');
+			//# sourceURL=pen.js
+			</script>
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+</table>
+
+<div style="margin-left:31px;">
+				<table>
 					<tr>
-						<td colspan="4">
-							병원 또는 예약 공지사항
+						<td>
+						<%String [] treat_dy ={"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"}; 
+						for(int a=0; a<treat_dy.length; a++){
+						%>
+						<%=treat_dy[a] %>&nbsp;&nbsp;<span style="color:gray;">|</span>&nbsp;&nbsp;<br />
+						<%} %>
+						</td>
+						<td>
+						<c:forEach items="${tDTO}" var="row">
+							<c:if test="${row.treat_open eq '오픈시간'}">
+								휴무 <br />
+							</c:if> 
+							<c:if test="${row.treat_open ne '오픈시간'}">
+								${row.treat_open } ~ ${row.treat_close } <br />
+							</c:if>
+							
+						</c:forEach>
 						</td>
 					</tr>
-					<tr>
-						<th scope="col">예약번호</th>
-						<th scope="col">진료과</th>
-						<th scope="col">예약내용</th>
-						<th scope="col">예약시간</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th scope="row">1</th>
-						<td>치과</td>
-						<td>스케일링</td>
-						<td>15:00</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>치과</td>
-						<td>스케일링</td>
-						<td>15:00</td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>치과</td>
-						<td>스케일링</td>
-						<td>15:00</td>
-					</tr>
-				</tbody>
-				</table> 
-			</td>
-		</tr>
-	</table><!-- 전체테이블끝 -->
-</div><!-- 컨테이너 e.. -->
+				</table>
+				</div>
+</div>
+<br /><br /><br />
+<jsp:include page="/resources/common/footer.jsp"/>
 </body>
 </html>
