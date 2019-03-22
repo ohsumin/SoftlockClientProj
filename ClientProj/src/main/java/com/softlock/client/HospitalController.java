@@ -451,7 +451,7 @@ public class HospitalController {
        sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
        System.out.println("sdfdsf"+req.getParameter("resv_idx"));
      
-       
+      
       return "redirect:hpModify?tab=1";
     }
     //예약회원 예약거절

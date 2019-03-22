@@ -126,7 +126,17 @@
   background: #b4cbe5;
 }
 </style>
+<%
+String hp_idx = request.getParameter("hp_idx");
+%>
 <script>
+var open;
+var openArr;
+var openHour0; // 한자리일때 앞에 0이 붙어있음
+var openHour; // 한자리일때 앞에 0이 안붙음
+var closeArr;
+var closeHour0;
+var closeHour;
 $(function () {
 	$('#date-input').focus(function() {
 		var dateStr = $('#date-input').val();
@@ -135,38 +145,200 @@ $(function () {
 		var month = date[0];
 		var day = date[1];
 		dateStr = year + '/' + month + '/' + day;
-		$('#date-input').val(dateStr);
+		if(typeof year != "undefined")
+			$('#date-input').val(dateStr);
 	});
+	
+	
+	$('#time').click(function() {
+		if($('#date-input').val() == ""){
+			alert("날짜를 먼저 선택해주세요.");
+			$('#date-input').focus();
+			false;
+		}
+		// 9:00부터 24:00시까지 option 선택안되게
+		for(var i=0; i<17; i++){
+			$("#time option:eq("+i+")").prop('disabled', true);
+		}
+		// 오픈시간 마감시간 가져오기
+		$.ajax({
+	        type : 'post',
+	        url : '../member/getTime', 
+	        data : {
+	        	dy : isoDay,
+	        	hp_idx : $('#hp_idx').val()
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	open = d.open;
+	        	openArr = d.open.split(":");
+	    		openHour0 = openArr[0];
+	    		if(openHour0.charAt(0) == 0)
+	    			openHour = openHour0.charAt(1);
+	    		else
+	    			openHour = openHour0;
+	    		closeArr = d.close.split(":");
+	    		closeHour0 = closeArr[0];
+	    		if(closeHour0.charAt(0) == 0)
+	    			closeHour = closeHour0.charAt(1);
+	    		else
+	    			closeHour = closeHour0;
+	    		openHour = parseInt(openHour);
+	    		closeHour = parseInt(closeHour);
+	    		// 오픈시간과 마감시간 사이의 시간만 선택가능하도록
+				for(var i=openHour; i<=closeHour; i++){
+					//alert(i);
+					if(i == 9)
+						$("select option[value='09:00']").prop('disabled',false);
+					else
+	    				$("select option[value='"+i+":00']").prop('disabled',false);
+				}
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    }); 
+		// 예약되어있는시간 가져오기
+		$.ajax({
+	        type : 'post',
+	        url : '../member/getResv', 
+	        data : {
+	        	hp_idx : $('#hp_idx').val(),
+	        	date : $('#date-input').val()
+	        },
+	        dataType : "json",
+	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	        success : function(d) {
+	        	$.each(d, function(index, d) {
+	        		$("select option[value='"+d.resv_time+"']").prop('disabled',true);
+				});
+	        	
+	        	/* open = d.open;
+	        	openArr = d.open.split(":");
+	    		openHour0 = openArr[0];
+	    		if(openHour0.charAt(0) == 0)
+	    			openHour = openHour0.charAt(1);
+	    		else
+	    			openHour = openHour0;
+	    		closeArr = d.close.split(":");
+	    		closeHour0 = closeArr[0];
+	    		if(closeHour0.charAt(0) == 0)
+	    			closeHour = closeHour0.charAt(1);
+	    		else
+	    			closeHour = closeHour0;
+	    		openHour = parseInt(openHour);
+	    		closeHour = parseInt(closeHour);
+	    		// 오픈시간과 마감시간 사이의 시간만 선택가능하도록
+				for(var i=openHour; i<=closeHour; i++){
+					//alert(i);
+					if(i == 9)
+						$("select option[value='09:00']").prop('disabled',false);
+					else
+	    				$("select option[value='"+i+":00']").prop('disabled',false);
+				} */
+	        },
+	        error : function(e) {
+				alert("실패" + e.status + " : " + e.statusText);
+			}
+	    });
+		
+		var timetable = [];
+		
+		// open = 09:00 close = 18:00
+		//for(;;){
+			
+		//} 
+		
+		//$("select option[value='09:00']").prop('disabled',true);
+		
+	});
+	
+	
 });
 </script>
 </head>
 <body style="background-color:#F5F6F9">
+<form action="../member/resvAction">
+<input type="hidden" id="hp_idx" name="hp_idx" value="<%=hp_idx%>"/>
 
 <!-- Navigation -->
 <jsp:include page="/resources/common/nav.jsp"/><br /><br /><br />
-<div style="width:800px; height:800px; background-color:white; text-align:center; float:none; margin:0 auto;">
+<div style="width:800px; height:850px; background-color:white; text-align:center; float:none; margin:0 auto;">
 <div style="background-color:#314c75; width:100%; height:30px; position:relative; color:white; font-size:0.9em; 
-	padding-top:3px; text-align:left; padding-left:10px;">서울웃는얼굴치과의원 예약하기</div>
-<table border="1">
-	<tr>
-		<td style="padding:50px;">
-			<div style="display:inline-block;"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;날짜&nbsp;&nbsp;&nbsp;</div>
-			<div style="display:inline-block;">
-				<input type="text" data-type="date" id="date-input" class="form-control" placeholder="날짜 선택" style="font-size:0.9em;"/></div><br /><br />
-			<div style="display:inline-block;"><i class='far fa-clock'></i>&nbsp;&nbsp;&nbsp;시간&nbsp;&nbsp;&nbsp;</div>
-			<div style="display:inline-block;">
-				<input type="text" id="" class="form-control" placeholder="시간 선택" style="font-size:0.9em;"/></div>
+	padding-top:3px; text-align:left; padding-left:10px;">${hDTO.hp_name} </div>
+<br /><br /><br />
+<div class="logo">
+    <h4>진료예약</h4>   
+</div><br />
+<table style="text-align:center; float:none; margin:0 auto;">
+	<tr style="height:100px;">
+		<td>
+			<div style="display:inline-block; margin-top:23px; margin-right:30px;">
+				<div style="display:inline-block;"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;날짜&nbsp;&nbsp;&nbsp;</div>
+				<div style="display:inline-block;">
+					<input type="text" data-type="date" id="date-input" name="date-input" class="form-control" placeholder="날짜 선택" style="font-size:0.9em; width:250px;"/></div><br /><br />
+			</div>
+		</td>
+		<td>
+			<div>
+				<div style="display:inline-block;"><i class='far fa-clock'></i>&nbsp;&nbsp;&nbsp;시간&nbsp;&nbsp;&nbsp;</div>
+				<div style="display:inline-block">
+					<!-- <input type="text" id="time" class="form-control" placeholder="시간 선택" style="font-size:0.9em;"/></div> -->
+					<select class="form-control" id="time" name="time" placeholder="시간 선택" style="font-size:0.9em; width:250px;">
+	                 <option value="시간선택">시간선택</option>
+	                 <%
+	                  // 요일 배열
+	                  String time = "";
+	                  for(int i=9; i<=24; i++) {
+	                	  if(Integer.toString(i).length() == 1)
+	                      	  time = "0"+i+":00";
+	                	  else
+	                		  time = i+":00";
+	                      %>
+	                      <option value="<%=time%>" id="time<%=time%>"><%=time%></option>
+	                      <%
+	                      if(i == 24) 
+	                         break;
+	                  }
+	                  %>               
+	               </select>
+	            </div>
+	         </div>
+	    </td>
+	 </tr>
+</table>
+		
+				<input type="hidden" id="hp_idx" name="hp_idx" value="<%=hp_idx %>" />
+				<div>
+					<div style="font-size:0.8em; font-weight:bold; text-align:left; margin-left:60px;">진료증상(필수)</div>
+					<textarea name="resv_symp" id="resv_symp" cols="91" rows="3" placeholder="진료증상을 입력해주세요." style="font-size:0.9em;"></textarea><br /><br />
+					<div style="font-size:0.8em; font-weight:bold; text-align:left; margin-left:60px;">요청사항(선택)</div>
+					<textarea name="resv_req" id="resv_req" cols="91" rows="3" placeholder="요청사항을 입력해주세요." style="font-size:0.9em;"></textarea><br />				
+				</div>
+			
+				<div style="text-align:left; margin-left:60px;">
+			        <span style="font-size:0.9em; font-weight:bold;">진료예약은 즉시'확정'이 아닙니다.</span><br />
+					<span style="font-size:0.8em;">진료예약을 남겨주신것은 바로 확정이 아니며, [진료시간 내]순차 확인뒤 확정을 드리고 있습니다.</span><br />
+					<span style="font-size:0.8em;">문의사항이 있으시면 톡톡채팅방을 통해 문의를 주시길 바랍니다.</span><br /><br />
+					<i class='far fa-hospital' style="margin-left:2px; margin-right:1px; margin-top:12px;"></i>&nbsp;&nbsp;&nbsp;<span style="font-size:0.8em; font-weight:bold;">병원소개</span><br />
+					<span style="font-size:0.8em; margin-left:32px;">${hDTO.hp_intro}</span><br />
+					<i class='far fa-bell' style="margin-left:2px; margin-top:12px;"></i>&nbsp;&nbsp;&nbsp;<span style="font-size:0.8em; font-weight:bold;">병원공지사항 </span><br />
+					<span style="font-size:0.8em; margin-left:32px;">${hDTO.hp_notice}</span><br /><br /><br />
+					<input type="submit" class="btn btn-primary btn-lg btn-block" style="width:92%;" value="예약신청하기"/>
+				</div><br />
+
 			<script src='https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js'></script>
 			<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 			<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
 			<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js'></script>
 			<script >var headerHtml = $("#material-header-holder .ui-datepicker-material-header");
-			
+			var isoDay; // 요일을 전역변수로 선언
 			var changeMaterialHeader = function (header, date) {
 			  var year = date.format('YYYY');
 			  var month = date.format('MMM');
 			  var dayNum = date.format('D');
-			  var isoDay = date.isoWeekday();
+			  isoDay = date.isoWeekday();
 			
 			  var weekday = new Array(7);
 			  weekday[1] = "Monday";
@@ -195,15 +367,14 @@ $(function () {
 			  headerHtml.remove();
 			  $(".ui-datepicker").prepend(headerHtml);
 			};
-			
+			var date;
 			$("input[data-type='date']").on("focus", function () {
-			  //var date;
-			  //if (this.value == "") {
-			  //  date = moment();
-			  //} else {
-			  //  date = moment(this.value, 'MM/DD/YYYY');
-			  //}
-			
+			  
+			  if (this.value == "") {
+			    date = moment();
+			  } else {
+			    date = moment(this.value, 'MM/DD/YYYY');
+			  }
 			  $(".ui-datepicker").prepend(headerHtml);
 			  //$(this).datepicker._selectDate(this, date);
 			});
@@ -212,7 +383,7 @@ $(function () {
 			  showButtonPanel: true,
 			  closeText: 'OK',
 			  onSelect: function (date, inst) {
-			    changeMaterialHeader(headerHtml, moment(date, 'YYYY/DD/MM'));
+			    changeMaterialHeader(headerHtml, moment(date, 'MM/DD/YYYY'));
 			  } });
 			
 			
@@ -220,39 +391,33 @@ $(function () {
 			$('input').datepicker('show');
 			//# sourceURL=pen.js
 			</script>
-		</td>
-		<td>
-			
-		</td>
-	</tr>
-</table>
-
 <div style="margin-left:31px;">
-				<table>
-					<tr>
-						<td>
-						<%String [] treat_dy ={"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"}; 
-						for(int a=0; a<treat_dy.length; a++){
-						%>
-						<%=treat_dy[a] %>&nbsp;&nbsp;<span style="color:gray;">|</span>&nbsp;&nbsp;<br />
-						<%} %>
-						</td>
-						<td>
-						<c:forEach items="${tDTO}" var="row">
-							<c:if test="${row.treat_open eq '오픈시간'}">
-								휴무 <br />
-							</c:if> 
-							<c:if test="${row.treat_open ne '오픈시간'}">
-								${row.treat_open } ~ ${row.treat_close } <br />
-							</c:if>
-							
-						</c:forEach>
-						</td>
-					</tr>
-				</table>
-				</div>
+	<%-- <table border="1">
+		<tr>
+			<td>
+			<%String [] treat_dy ={"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"}; 
+			for(int a=0; a<treat_dy.length; a++){
+			%>
+			<%=treat_dy[a] %>&nbsp;&nbsp;<span style="color:gray;">|</span>&nbsp;&nbsp;<br />
+			<%} %>
+			</td>
+			<td>
+			<c:forEach items="${tDTO}" var="row">
+				<c:if test="${row.treat_open eq '오픈시간'}">
+					휴무 <br />
+				</c:if> 
+				<c:if test="${row.treat_open ne '오픈시간'}">
+					${row.treat_open } ~ ${row.treat_close } <br />
+				</c:if>
+				
+			</c:forEach>
+			</td>
+		</tr>
+	</table> --%>
+</div>
 </div>
 <br /><br /><br />
 <jsp:include page="/resources/common/footer.jsp"/>
+</form>
 </body>
 </html>

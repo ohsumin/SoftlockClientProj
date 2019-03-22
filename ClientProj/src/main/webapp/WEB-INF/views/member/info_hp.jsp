@@ -185,23 +185,7 @@ $(window).load(function(){
 			<c:forEach items="${rDTO }" var="row">
 			
 			<input type="hid den" value="${row.rvw_score }" id="rvw_score" name="rvw_score"/>
-				<div>
-				
-				
-				<!--  <script>
-				var star = ${row.rvw_score};
-				var score = ['starR1','starR2','starR3','starR4','starR5'];
-				//alert(star);
-				//$(score[0]).addClass('on');
-				
-				for(var i=0; i<star; i++){
-					$('.star${row.rvw_idx}').children('.'+score[i]).addClass('on');
-					$('.'+score[i]).addClass('on');
-				}
-				</script> 
-				 -->
-				
-		
+				<div>		
 				<span class="star${row.rvw_idx} " style="margin-top:10px;">
                     <span class="starR1">별1</span>
                     <span class="starR2">별2</span>
