@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class HospitalDTO {
 
-   private int hp_idx;
+   private int hp_idx; 
    private String hp_id;
    private String hp_pw;
    private String hp_name;

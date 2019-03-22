@@ -180,7 +180,7 @@ $(function() {
 		        dataType : "json",
 		        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 		        success : function(d) {
-		        	var idReg = /^[A-za-z0-9]{5,15}/g;
+		        	var idReg = /^[A-za-z0-9]{6,15}/g;
 		        	// 아이디 체크
 		        	if( !idReg.test( $("input[name=mem_id]").val()) || $('#mem_id').val().length > 15) {
 		                 $('#idMsg').html("아이디는 6~15자의 영문자 또는 숫자여야 합니다.");
@@ -204,7 +204,7 @@ $(function() {
 	
 	// 비밀번호 폼값 체크
 	$('#mem_pw').change(function() {
-		var pwReg = /^[A-za-z0-9]{5,15}/g;
+		var pwReg = /^[A-za-z0-9]{6,15}/g;
 		if( !pwReg.test( $("input[name=mem_pw]").val()) || $('#mem_pw').val().length > 15) {
 			$('#pwMsg').show();
             $('#pwMsg').html("비밀번호는 6~15자의 영문자 또는 숫자여야 합니다.");

@@ -88,7 +88,7 @@ $(function() {
 	              success : function(d) {
 	                 
 	                 
-	                 var idReg = /^[A-za-z0-9]{5,15}/g;
+	                 var idReg = /^[A-za-z0-9]{6,15}/g;
 	                 // 아이디 체크
 	                 if( !idReg.test( $("input[name=hp_id]").val()) || $('#hp_id').val().length > 15) {
 	                       $('#idMsg').html("아이디는 6~15자의 영문자 또는 숫자여야 합니다.");
@@ -118,7 +118,7 @@ $(function() {
 	   
 	    // 비밀번호 폼값 체크
 	   $('#hp_pw').change(function() {      
-	      var pwReg = /^[A-za-z0-9]{5,15}/g;         
+	      var pwReg = /^[A-za-z0-9]{6,15}/g;         
 	      if( !pwReg.test( $("input[name=hp_pw]").val()) || $('#hp_pw').val().length > 15) {         
 	            $('#pwMSG').html("비밀번호는 6~15자의 영문자 또는 숫자여야 합니다.");
 	            $('#pwMSG').css("color", "red");   
