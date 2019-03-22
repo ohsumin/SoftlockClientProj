@@ -26,15 +26,21 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
+import com.softlock.model.MemberDTO;
 import com.softlock.model.PagingUtil;
 import com.softlock.model.ReservationDTO;
 import com.softlock.model.TreattimeDTO;
+import com.softlock.model.UserMailSendService;
 
 @Controller
 public class HospitalController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	//이메일인증
+		@Autowired
+		private UserMailSendService mailsender;
 	
 	@RequestMapping("/hospital/home")
 	public String home() {
@@ -205,7 +211,7 @@ public class HospitalController {
    int countNum = 0;
    for(ReservationDTO reserDTO : lists) {
       reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
-      reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
+      //reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
       
       //가상번호
       virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
@@ -438,7 +444,7 @@ public class HospitalController {
     public String reservView(Model model, HttpServletRequest req, HttpSession session) {
     	String resv_idx = req.getParameter("resv_idx");
        ReservationDTO dto = sqlSession.getMapper(HospitalImpl.class).reservView(resv_idx);
-       dto.setResv_time(dto.getResv_time().split(" ")[1]); 
+       //dto.setResv_time(dto.getResv_time().split(" ")[1]); 
        dto.setResv_date(dto.getResv_date().split(" ")[0]); 
        
        model.addAttribute("dto", dto);
@@ -447,13 +453,22 @@ public class HospitalController {
     
     //예약회원 예약확정
     @RequestMapping("/hospital/hp_resvConf")
-    public String reservConf(HttpServletRequest req) {
+    public String reservConf(HttpServletRequest req, MemberDTO memJoinDTO) {
        sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
        System.out.println("sdfdsf"+req.getParameter("resv_idx"));
-     
-      
-      return "redirect:hpModify?tab=1";
+       
+       String mem_email = req.getParameter("mem_email");
+       String mem_id = req.getParameter("id");
+
+       
+       System.out.println("이메일" + mem_email + mem_id);
+      //예약확정시 메일을 보냄
+   	  mailsender.mailSendWithUserKeyForReserv(memJoinDTO.getMem_email(), memJoinDTO.getMem_id(), req); 
+   	  return "redirect:hpModify?tab=1";
     }
+    
+    
+  	
     //예약회원 예약거절
     @RequestMapping("/hospital/hp_resvRej")
     public String reservRej(HttpServletRequest req) {

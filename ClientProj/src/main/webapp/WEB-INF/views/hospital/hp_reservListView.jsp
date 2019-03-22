@@ -145,7 +145,7 @@
          </tr>
       </tbody>
       </table><br /><br />
-      <button type="button" class="btn btn-primary" style="display:inline-block; width:48%; margin-right:20px;" onclick="location.href='./hp_resvConf?resv_idx=${dto.resv_idx}';">예약확정</button>
+      <button type="button" class="btn btn-primary" style="display:inline-block; width:48%; margin-right:20px;" onclick="location.href='./hp_resvConf?resv_idx=${dto.resv_idx}&mem_email=${dto.mem_email}&mem_id=${mem_id}';">예약확정</button>
       <button type="button" class="btn btn-danger" style="display:inline-block; width:48%;" onclick="location.href='./hp_resvRej?resv_idx=${dto.resv_idx}';">예약거절</button>
       <!-- 예약확정되면 버튼바뀜
       <button type="button" class="btn btn-danger" style="display:inline-block; width:48%;">예약취소</button>

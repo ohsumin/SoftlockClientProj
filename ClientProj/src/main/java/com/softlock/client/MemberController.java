@@ -247,7 +247,7 @@ public class MemberController {
 	for(ReservationDTO reserDTO : reservationDTO) {
 		
 		reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
-		reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
+		//reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
 		
 		virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
         reserDTO.setVirtualNum(virtualNum);

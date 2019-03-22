@@ -136,7 +136,7 @@
    <!-- 예약회원 상세보기 -->
    <select id="reservView" resultType="com.softlock.model.ReservationDTO">
       SELECT * FROM ( 
-          SELECT resv_idx, mem_name, resv_date, resv_time, mem_birth, mem_gender,mem_phone, resv_perm, resv_symp, resv_req
+          SELECT resv_idx, mem_name, resv_date, resv_time, mem_birth, mem_email, mem_id, mem_gender,mem_phone, resv_perm, resv_symp, resv_req
                 FROM member M, reservation R WHERE M.mem_idx = R.resv_mem_idx 
       )WHERE resv_idx=#{param1}
    </select>
