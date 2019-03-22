@@ -179,9 +179,10 @@ $(window).load(function(){
 		</script> 
 		
 		
-		<hr style="border: solid 1px #283B56"/>
+		
 		</div>
 		<div style="width: 650px;">
+			<hr style="border: solid 1px #283B56; width:100%;"/>
 			<c:forEach items="${rDTO }" var="row">
 			
 			<input type="hid den" value="${row.rvw_score }" id="rvw_score" name="rvw_score"/>
