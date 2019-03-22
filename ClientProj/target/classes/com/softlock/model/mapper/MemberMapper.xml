@@ -127,4 +127,61 @@
 	<delete id="memClipDelete">
 		delete from clip WHERE clip_mem_idx = #{param1} and clip_hp_idx = #{param2}
 	</delete>
+	
+	<!-- 건강게시판 -->
+	<select id="searchGlo" resultType="com.softlock.model.GlobalDicDTO" parameterType="com.softlock.model.GlobalDicDTO">
+	     SELECT * FROM global_dic WHERE 1=1 
+		 <choose>
+		     <when test='title == "ㄱ"'>
+			    and (title LIKE '^(ㄱ|ㄲ)' OR ( title <![CDATA[ > ]]>= '가' AND title <![CDATA[ < ]]> '나' ))
+			 </when>
+			 <when test='title == "ㄴ"'>
+			    and (title LIKE '^ㄴ' OR ( title <![CDATA[ > ]]>= '나' AND title <![CDATA[ < ]]> '다' ))
+			 </when>
+			 <when test='title == "ㄷ"'>
+			    and (title LIKE '^(ㄷ|ㄸ)' OR ( title <![CDATA[ > ]]>= '다' AND title <![CDATA[ < ]]> '라' ))
+			 </when>
+			 <when test='title == "ㄹ"'>
+			    and (title LIKE '^ㄹ' OR ( title <![CDATA[ > ]]>= '라' AND title <![CDATA[ < ]]> '마' ))
+			 </when>
+			 <when test='title == "ㅁ"'>
+			    and (title LIKE '^ㅁ' OR ( title <![CDATA[ > ]]>= '마' AND title <![CDATA[ < ]]> '바' ))
+			 </when>
+			 <when test='title == "ㅂ"'>
+			    and (title LIKE '^ㅂ' OR ( title <![CDATA[ > ]]>= '바' AND title <![CDATA[ < ]]> '사' ))
+			 </when>
+			 <when test='title == "ㅅ"'>
+			    and (title LIKE '^(ㅅ|ㅆ)' OR ( title <![CDATA[ > ]]>= '사' AND title <![CDATA[ < ]]> '아' ))
+			 </when>
+			 <when test='title == "ㅇ"'>
+			     and (title LIKE '^ㅇ' OR ( title <![CDATA[ > ]]>= '아' AND title <![CDATA[ < ]]> '자' ))
+			 </when>
+			 <when test='title == "ㅈ"'>
+			    and (title LIKE '^(ㅈ|ㅉ)' OR ( title <![CDATA[ > ]]>= '자' AND title <![CDATA[ < ]]> '차' ))
+			 </when>
+			 <when test='title == "ㅊ"'>
+			    and (title LIKE '^ㅊ' OR ( title <![CDATA[ > ]]>= '차' AND title <![CDATA[ < ]]> '카' ))
+			 </when>
+			 <when test='title == "ㅋ"'>
+			    and (title LIKE '^ㅋ' OR ( title <![CDATA[ > ]]>= '카' AND title <![CDATA[ < ]]> '타' ))
+			 </when>
+			 <when test='title == "ㅌ"'>
+			     and (title LIKE '^ㅌ' OR ( title <![CDATA[ > ]]>= '타' AND title <![CDATA[ < ]]> '파' ))
+			 </when>
+			 <when test='title == "ㅍ"'>
+			    and (title LIKE '^ㅍ' OR ( title <![CDATA[ > ]]>= '파' AND title <![CDATA[ < ]]> '하' ))
+			 </when>
+			 <when test='title == "ㅎ"'>
+			    and (title LIKE '^ㅎ' OR ( title <![CDATA[ > ]]>= '하'))
+			 </when>
+			 <otherwise>
+		     	and title LIKE '%'||#{title}||'%'  
+			 </otherwise>
+		</choose>
+		ORDER BY title ASC
+	</select>
+	<select id="searchInfo" resultType="com.softlock.model.GlobalDicDTO" parameterType="String">
+		SELECT * FROM global_dic where title=#{param1}
+	</select>
+	<!-- 건강게시판 -->
 </mapper>
