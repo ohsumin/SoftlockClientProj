@@ -26,7 +26,7 @@
   background-size: auto 100%;
   width: 15px;
   height: 15px;
-  display: inline-block;
+  display: inline-block; 
   text-indent: -9999px;
   cursor: pointer;
 }
