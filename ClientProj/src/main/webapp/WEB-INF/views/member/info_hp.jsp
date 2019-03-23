@@ -1,3 +1,4 @@
+<%@page import="com.softlock.model.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -72,7 +73,21 @@ $(window).load(function(){
 <%
 String lat = request.getParameter("lat");
 String lon = request.getParameter("lon");
+
+MemberDTO memInfo = (MemberDTO)session.getAttribute("memberInfo");
+String mem_id = memInfo.getMem_id();
 %>
+
+<script>
+	function chatWin(){
+		alert('dd');
+		var mem_chatId = 
+		var id = <%=mem_id%>
+		var room = document.getElementById("chat_room");
+		window.open("member/chat.do?chat_id="+id.value+"&chat_room="+room.value, room.value+"-"+id.value,"width=400,height=500"); 
+	}
+</script>
+
 <div class="container">
 	<br /><br />
 	<div class="jumbotron" style="text-align: center; width:800px; height:850px; background-color:white; text-align:center; 
@@ -104,7 +119,7 @@ String lon = request.getParameter("lon");
 					    	</a>
 						</td>
 						<td style="width:80px;">
-					    	<a href="#">
+					    	<a href="" onclick="chatWin();";>
 						    	<i class="fas fa-comments" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">톡톡</span>
 					    	</a>

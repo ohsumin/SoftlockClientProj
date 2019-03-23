@@ -36,4 +36,11 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/member/chat.do", method = RequestMethod.GET)
+	public String chat(Model model) {
+		
+		model.addAttribute("serverTime", "");		
+		return "chat/chat";
+	}
+	
 }
