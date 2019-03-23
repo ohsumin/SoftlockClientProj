@@ -78,15 +78,15 @@ MemberDTO memInfo = (MemberDTO)session.getAttribute("memberInfo");
 String mem_id = memInfo.getMem_id();
 %>
 
-<script>
-	function chatWin(){
-		alert('dd');
-		var mem_chatId = 
-		var id = <%=mem_id%>
-		var room = document.getElementById("chat_room");
-		window.open("member/chat.do?chat_id="+id.value+"&chat_room="+room.value, room.value+"-"+id.value,"width=400,height=500"); 
-	}
+<script type="text/javascript">
+function chatWin(){
+		
+		var id = "<%=mem_id%>";
+		var room = $('#hp_name').val();
+		window.open("chat.do?chat_id="+id+"&chat_room="+room, room.value+"-"+id.value,"width=400,height=500");
+}
 </script>
+
 
 <div class="container">
 	<br /><br />
@@ -100,7 +100,8 @@ String mem_id = memInfo.getMem_id();
 				<!-- 예약 길찾기 톡톡 테이블 -->
 				<table style="margin-left: auto; margin-right: auto;">
 					<tr>
-						<td style="width:80px; border-right:1px solid #E6E6E6">			
+						<td style="width:80px; border-right:1px solid #E6E6E6">	
+						<input type="hid den" value="${hDTO.hp_name }" id="hp_name" name="hp_name"/>		
 					    	<a href="http://map.daum.net/link/map/${hDTO.hp_name},<%=lat%>,<%=lon%> ">
 						    	<i class="fas fa-map-marker-alt" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">지도</span>
