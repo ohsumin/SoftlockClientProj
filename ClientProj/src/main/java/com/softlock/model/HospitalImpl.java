@@ -27,20 +27,25 @@ public interface HospitalImpl{
      //회원탈퇴 처리
    	public int delete(String mem_id);
    	
-   	//수정하기 폼 진입
-   	public HospitalDTO view(String hp_id);
+   	//병원회원상세보기 읽기 및 수정 동시에 진행
+   	public HospitalDTO viewModify(int hp_idx);
+   	public ArrayList<TreattimeDTO> viewModifytime(int hp_idx);
    	
-   	//수정하기 처리
-   	public int modifyAction(String hp_pw, String hp_phone, String hp_name, String hp_id);
    	
- 	//수정하기 처리
-    public int modifyAction(String hp_hpphone, String hp_night, String hp_wkend, String hp_intro, String hp_notice, String hp_image, String hp_id);
-    public int tmodifyAction(String oTime, String cTime, int hp_idx, String dy);
-    
-  //게시물카운트
+   	//회원가입 시 treattime 테이블에 월~금 레코드 넣기
+   	public void addTreatTime(int hp_idx, String treat_dy, String treat_open, String treat_close);
+   	
+   	//HOSPITAL 테이블 시간제외 넣기
+   	public int modifyAction(int hp_idx, String hp_hpphone, String hp_night, String hp_detailInfo, String hp_etc, String originalName, String saveFileName);
+   
+   	//HOSPITAL 테이블 시간넣기
+   	public void treatmodifyAction(int hp_idx, String dy, String dyopen, String dyclose);
+   	
+   	//게시물카운트
     public int getTotalCount(int resv_hp_idx);
     public ArrayList<ReservationDTO> listPage(int s, int e, int hp_idx);   
     public ReservationDTO reservView(String resv_idx);
     public int reservConf(String resv_idx);
     public int reservRej(String resv_idx);
+    public int hp_resvDone(String resv_idx);
 }

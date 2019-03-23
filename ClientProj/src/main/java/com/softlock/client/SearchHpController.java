@@ -48,11 +48,16 @@ public class SearchHpController {
 		return searchList;
 	}
 	
-	@RequestMapping("/member/searchHpNight")
+	@RequestMapping("/member/searchHpNW")
 	@ResponseBody
-	public ArrayList<HospitalDTO> searchHpNight(HttpServletRequest req, HttpSession session){
+	public ArrayList<HospitalDTO> searchHpNW(HttpServletRequest req, HttpSession session){
 
-		ArrayList<HospitalDTO> searchList = (ArrayList<HospitalDTO>) sqlSession.getMapper(SearchHpImpl.class).searchHpNight();
+		String type_search = req.getParameter("type_search");
+		String toggleNight = req.getParameter("toggleNight");
+		String toggleWeekend = req.getParameter("toggleWeekend");
+		System.out.println("toggleNight:"+toggleNight);
+		System.out.println("toggleWeekend:"+toggleWeekend);
+		ArrayList<HospitalDTO> searchList = (ArrayList<HospitalDTO>) sqlSession.getMapper(SearchHpImpl.class).searchHpNW(type_search, toggleNight, toggleWeekend);
 		
 		return searchList;
 	}
@@ -61,8 +66,9 @@ public class SearchHpController {
 	@ResponseBody
 	public ArrayList<HospitalDTO> searchHpWeekend(HttpServletRequest req, HttpSession session){
 		
-		
-		ArrayList<HospitalDTO> searchList = (ArrayList<HospitalDTO>) sqlSession.getMapper(SearchHpImpl.class).searchHpWeekend();
+		String type_search = req.getParameter("type_search");
+		String toggleWeekend = req.getParameter("toggleWeekend");
+		ArrayList<HospitalDTO> searchList = (ArrayList<HospitalDTO>) sqlSession.getMapper(SearchHpImpl.class).searchHpWeekend(type_search, toggleWeekend);
 		
 		return searchList;
 	}

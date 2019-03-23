@@ -1,6 +1,7 @@
 package com.softlock.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -58,4 +59,10 @@ public interface MemberImpl {
 	public ArrayList<HospitalDTO> clipRecordPage(int start, int end, int clip_mem_idx);
 	public void memClipDelete(String clip_mem_idx,String clip_hp_idx);
 	/** 스크랩 **/
+	
+	/** 건강사전 **/
+	//실시간검색
+	public List<GlobalDicDTO> searchGlo(GlobalDicDTO gDto);
+	public GlobalDicDTO searchInfo(String title);
+	/** 건강사전 **/
 }

@@ -110,15 +110,18 @@
                <td class="text-center">${row.resv_date }</td>
                <td class="text-center">${row.resv_time }</td>
                <td class="text-center">${row.resv_regidate }</td>
-               <c:if test="${row.resv_perm eq 'w' }">
-					<td><button type="button" onclick="" class="btn btn-warning">승인대기중</button></td>
-               </c:if>
-               <c:if test="${row.resv_perm eq 'y' }">
-               <td><button type="button" class="btn btn-success">승인</button></td>
-               </c:if>
-               <c:if test="${row.resv_perm eq 'c' }">
-               <td><button type="button" class="btn btn-primary">진료완료</button></td>    
-               </c:if>
+ 				<c:choose>
+               		<c:when test="${row.resv_perm eq '예약확정' }">
+               		    <td class="text-center"><button type="button" class="btn btn-primary">예약확정</button></td>
+               		</c:when>
+               		<c:when test="${row.resv_perm eq '예약거절' }">
+               		    <td class="text-center"><button type="button" class="btn btn-success">예약거절</button></td>
+               		</c:when>
+               		<c:otherwise>
+               		    <td class="text-center"><button type="button" class="btn btn-secondary">예약대기</button></td>
+               		</c:otherwise>
+               </c:choose>
+
 				<td><button type="button" onclick="location.href='reserdelete?resv_idx=${row.resv_idx}&hp_name=${row.hp_name }&resv_date=${row.resv_date }';" class="btn btn-danger">삭제</button></td>
             </tr>
             <%-- </c:if> --%>

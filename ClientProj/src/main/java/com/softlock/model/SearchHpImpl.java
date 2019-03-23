@@ -9,7 +9,7 @@ public interface SearchHpImpl {
 	// 병원이름으로 검색
 	public ArrayList<HospitalDTO> searchHpName(String hp_name);
 	// 야간진료병원 검색
-	public ArrayList<HospitalDTO> searchHpNight();
+	public ArrayList<HospitalDTO> searchHpNW(String type_search, String toggleNight, String toggleWeekend);
 	// 주말진료병원 검색
-	public ArrayList<HospitalDTO> searchHpWeekend();
+	public ArrayList<HospitalDTO> searchHpWeekend(String type_search, String toggleWeekend);
 }

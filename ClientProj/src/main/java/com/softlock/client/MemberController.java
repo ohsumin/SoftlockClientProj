@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.softlock.model.GlobalDicDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.MemberDTO;
 import com.softlock.model.MemberImpl;
@@ -151,6 +152,7 @@ public class MemberController {
 			MemberDTO vo = sqlSession.getMapper(MemberImpl.class).login(mem_id, mem_pw);
 			session.setAttribute("memberInfo", vo);
 			sqlSession.getMapper(MemberImpl.class).alter_naverKey(mem_id);
+			resp.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = resp.getWriter();
 			out.println("<script>alert('회원가입이 완료되었습니다.');</script>");
 			out.flush();
@@ -246,7 +248,7 @@ public class MemberController {
 	for(ReservationDTO reserDTO : reservationDTO) {
 		
 		reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
-		reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
+		//reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
 		
 		virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
         reserDTO.setVirtualNum(virtualNum);
@@ -519,4 +521,54 @@ public class MemberController {
 			out.flush();
 			
 		}
+		
+	//건강정보
+	@RequestMapping("/information/information")
+	public String information() {
+		
+		return "information/information";
+	}
+	
+	@RequestMapping("/information/searchInformation")
+    @ResponseBody
+    public ArrayList<GlobalDicDTO> searchInformation(HttpServletRequest req){
+    	String title = req.getParameter("title");
+    	System.out.println("title="+title);
+    	
+    	GlobalDicDTO gDto = new GlobalDicDTO();
+    	gDto.setTitle(title);
+    	
+    	ArrayList<GlobalDicDTO> searchList = (ArrayList<GlobalDicDTO>) sqlSession.getMapper(MemberImpl.class).searchGlo(gDto);
+        return searchList;
+    }
+	
+/*	@RequestMapping("/information/searchInfo")
+	public String searchInfo(HttpServletRequest req, Model model) {
+		if(!req.getParameter("title").equals("")) {
+		
+		String title = req.getParameter("title");
+		System.out.println("title="+title);
+		
+		
+    	GlobalDicDTO gDto = sqlSession.getMapper(MemberImpl.class).searchInfo(title);
+    	model.addAttribute(gDto);
+		
+		return "information/information";
+		} else {	@RequestMapping("/information/searchInformation")
+	
+
+			return "information/information";
+		}
+	}*/
+	
+	@RequestMapping("/information/searchInfo")
+	@ResponseBody
+	public GlobalDicDTO searchInfo(HttpServletRequest req){
+		String title = req.getParameter("title");
+		System.out.println("title="+title);
+		
+		GlobalDicDTO globalDicDTO = sqlSession.getMapper(MemberImpl.class).searchInfo(title);
+		/*System.out.println("globalDicDTO.getDic_contents="+globalDicDTO.getDic_contents());*/
+		return globalDicDTO;
+	}
 }
