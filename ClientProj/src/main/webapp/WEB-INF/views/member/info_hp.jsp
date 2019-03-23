@@ -1,3 +1,4 @@
+<%@page import="com.softlock.model.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -72,7 +73,25 @@ $(window).load(function(){
 <%
 String lat = request.getParameter("lat");
 String lon = request.getParameter("lon");
+
+MemberDTO memInfo = (MemberDTO)session.getAttribute("memberInfo");
+String mem_id = memInfo.getMem_id();
 %>
+
+<script type="text/javascript">
+
+
+
+//채팅창 2개 띄우기
+function chatWin(){
+	var id = "<%=mem_id%>";
+	var room = $('#hp_name').val();
+		window.open("chat1.do?chat_id="+id+"&chat_room="+room, "1","width=400,height=500" );
+		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=400,height=500,top=100,left=500");
+}
+</script>
+
+
 <div class="container">
 	<br /><br />
 	<div class="jumbotron" style="text-align: center; width:800px; height:850px; background-color:white; text-align:center; 
@@ -85,7 +104,8 @@ String lon = request.getParameter("lon");
 				<!-- 예약 길찾기 톡톡 테이블 -->
 				<table style="margin-left: auto; margin-right: auto;">
 					<tr>
-						<td style="width:80px; border-right:1px solid #E6E6E6">			
+						<td style="width:80px; border-right:1px solid #E6E6E6">	
+						<input type="hid den" value="${hDTO.hp_name }" id="hp_name" name="hp_name"/>		
 					    	<a href="http://map.daum.net/link/map/${hDTO.hp_name},<%=lat%>,<%=lon%> ">
 						    	<i class="fas fa-map-marker-alt" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">지도</span>
@@ -104,7 +124,7 @@ String lon = request.getParameter("lon");
 					    	</a>
 						</td>
 						<td style="width:80px;">
-					    	<a href="#">
+					    	<a href="" onclick="chatWin();";>
 						    	<i class="fas fa-comments" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">톡톡</span>
 					    	</a>
