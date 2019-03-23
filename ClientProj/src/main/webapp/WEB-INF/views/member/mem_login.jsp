@@ -44,6 +44,9 @@ $(function() {
 	                $('#loginMsg').css("color", "red");
 	            } else if (d.success == 1){
 	            	location.href='../member/home';
+	            } else if(d.success == -1){
+	            	$('#loginMsg').html("이메일 인증이 되어있지 않습니다. 인증 후 로그인 해주세요."); 
+	                $('#loginMsg').css("color", "red");
 	            }
 	        },
 	        error : function(e) {

@@ -237,6 +237,16 @@ $(function() {
             $('#ad2MSG').hide();
          }
          
+         if($('#hp_type').val() == ""){            
+             $('#typeMSG').html('진료과를 선택해주세요.');
+             $('#typeMSG').css("color", "red");
+             $('#typeMSG').focus();
+             return false;
+          }
+          else{
+             $('#ad2MSG').hide();
+          }
+         
          if($('#hp_num').val() == ""){
             
             $('#numMSG').html('요양기관번호를 입력해주세요.');
@@ -323,6 +333,18 @@ $(function() {
    <input type="text" class="form-control" placeholder="상세주소를 입력하세요." 
       name="hp_address2" id="hp_address2" style=" font-size:0.8em; height:37px;"/>
    <div id="ad2MSG" style="text-align:left;  font-size:0.7em;"></div><br />
+
+	<div id="pos">&nbsp;진료과</div>
+    <select name="hp_type" id="hp_type" class="form-control" style="font-size:0.8em;">
+    	<option value="">진료과를 선택해주세요.</option>
+    	<option value="내과">내과</option>
+    	<option value="안과">안과</option>
+    	<option value="치과">치과</option>
+    	<option value="산부인과">산부인과</option>
+    	<option value="이비인후과">이비인후과</option>
+    	<option value="피부과">피부과</option>
+    </select>
+    <div id="typeMSG" style="text-align:left;  font-size:0.7em;"></div><br />
 
     <div id="pos">&nbsp;요양기관번호(숫자 8자리)</div>
     <input type="text" class="form-control" id="hp_num" name="hp_num" style="font-size:0.8em;">
