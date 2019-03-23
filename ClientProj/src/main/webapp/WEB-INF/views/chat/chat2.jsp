@@ -95,7 +95,7 @@ function onMessage(event) {
         			msg = makeBalloon(sender, temp);
         			messageWindow.innerHTML += msg ;
         			messageWindow.scrollTop = messageWindow.scrollHeight; */
-        		}
+        		} 
         	}
         	else {
         		//msg = makeBalloon(sender, content);    		
