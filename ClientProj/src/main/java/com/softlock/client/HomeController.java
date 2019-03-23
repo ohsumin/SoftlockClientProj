@@ -36,11 +36,18 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/member/chat.do", method = RequestMethod.GET)
-	public String chat(Model model) {
+	@RequestMapping(value = "/member/chat1.do", method = RequestMethod.GET)
+	public String chat1(Model model) {
 		
 		model.addAttribute("serverTime", "");		
-		return "chat/chat";
+		return "chat/chat1";
+	}
+	
+	@RequestMapping(value = "/member/chat2.do", method = RequestMethod.GET)
+	public String chat2(Model model) {
+		
+		model.addAttribute("serverTime", "");		
+		return "chat/chat2";
 	}
 	
 }

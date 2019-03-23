@@ -579,4 +579,10 @@ public class MemberController {
 			/*System.out.println("globalDicDTO.getDic_contents="+globalDicDTO.getDic_contents());*/
 			return globalDicDTO;
 		}
+		
+		@RequestMapping("/chat")
+		public String sock(Model model, HttpSession session) {
+			
+			return "chat";
+		}
 }

@@ -79,11 +79,15 @@ String mem_id = memInfo.getMem_id();
 %>
 
 <script type="text/javascript">
+
+
+
+//채팅창 2개 띄우기
 function chatWin(){
-		
-		var id = "<%=mem_id%>";
-		var room = $('#hp_name').val();
-		window.open("chat.do?chat_id="+id+"&chat_room="+room, room.value+"-"+id.value,"width=400,height=500");
+	var id = "<%=mem_id%>";
+	var room = $('#hp_name').val();
+		window.open("chat1.do?chat_id="+id+"&chat_room="+room, "1","width=400,height=500" );
+		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=400,height=500,top=100,left=500");
 }
 </script>
 
