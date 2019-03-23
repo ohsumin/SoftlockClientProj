@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.softlock.model.Coolsms;
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
@@ -462,21 +463,44 @@ public class HospitalController {
        return "hospital/hp_reservListView";
     }
     
-    //예약회원 예약확정
-    @RequestMapping("/hospital/hp_resvConf")
-    public String reservConf(HttpServletRequest req, MemberDTO memJoinDTO) {
-       sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
-       System.out.println("sdfdsf"+req.getParameter("resv_idx"));
-       
-       String mem_email = req.getParameter("mem_email");
-       String mem_id = req.getParameter("id");
-
-       
-       System.out.println("이메일" + mem_email + mem_id);
-      //예약확정시 메일을 보냄
-   	  mailsender.mailSendWithUserKeyForReserv(memJoinDTO.getMem_email(), memJoinDTO.getMem_id(), req); 
-   	  return "redirect:hpModify?tab=1";
-    }
+  //예약회원 예약확정(이메일 & SMS 보내기)
+	@RequestMapping("/hospital/hp_resvConf")
+	public String reservConf(HttpServletRequest req, MemberDTO memJoinDTO, HttpSession session) throws IOException {
+		sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
+		System.out.println("sdfdsf"+req.getParameter("resv_idx"));
+		   
+		String mem_email = req.getParameter("mem_email");
+		String mem_id = req.getParameter("id");
+		
+		   
+		System.out.println("이메일" + mem_email + mem_id);
+		//예약확정시 메일을 보냄
+		mailsender.mailSendWithUserKeyForReserv(memJoinDTO.getMem_email(), memJoinDTO.getMem_id(), req); 
+		//예약확정시 병원전화번호로 멤버에게 SMS 보내기
+		String mem_name = (String)req.getParameter("mem_name");
+		String mem_phone = (String)req.getParameter("mem_phone");
+		String resv_time = (String)req.getParameter("resv_time");
+		String resv_date = req.getParameter("resv_date");
+		HospitalDTO hospitalInfo = (HospitalDTO) session.getAttribute("hospitalInfo");
+		String hp_phone = hospitalInfo.getHp_phone();
+		String hp_name = hospitalInfo.getHp_name();
+		
+		String api_key = "NCSTDOOHRGU6YMQP";
+		String api_secret = "AAY9Y5KHW6Y3F2F4RJMFCS5DHBSBF5M8";
+		Coolsms coolsms = new Coolsms(api_key, api_secret);
+		
+		HashMap<String, String> set = new HashMap<String, String>();
+		set.put("to", "01028700688"); // to
+		
+		set.put("from", "01028700688"); // from <= "01028700688" 회원번호 mem_phone 으로 수정하기 
+		set.put("text", (String)(mem_name+"님 병원:"+hp_name+" 내원날짜:"+resv_date+" 예약확정. 전화걸기("+hp_phone+")")); // 문자내용
+		/*                                                                                                         ........<=여기까지문자감..*/
+		set.put("type", "sms"); // 문자 타입
+		System.out.println(set);
+		coolsms.send(set); // 보내기(&전송결과받기)
+		
+		  return "redirect:hpModify?tab=1";
+	}
     
     
   	
