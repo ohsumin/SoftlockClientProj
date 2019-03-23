@@ -90,7 +90,68 @@ function chatWin(){
 		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=400,height=500,top=100,left=500");
 }
 </script>
+<!-- 스크랩 -->
+<script>
+$(function() {
+	var clip_mem_idx = $('#clip_mem_idx').val();
+	var clip_hp_idx = $('#clip_hp_idx').val();
+		
+	$.ajax({
+		type : 'get',
+	    url : '../member/ClipCheck?',
+		data : {
+			'clip_mem_idx' : clip_mem_idx,
+			'clip_hp_idx' : clip_hp_idx
+		},
+		dataType : "json",
+	    contentType : "text/html;charset:utf-8;",
+		success : function(data) {
+			if(data.result == 1){
+				$('#clip').attr('class','btn btn-warning');
+				$('#clip').text('스크랩취소');
+			}  
+			if(data.result == 0){
+				$('#clip').attr('class','btn btn-primary');
+				$('#clip').text('스크랩');
+			} 
+		},
+		error : function(e) {
+			alert("실패" + e.status + " : " + e.statusText);
+		}
+	});
 
+
+	$('#clip').click(function() {
+		
+		if($('#clip').text() == "스크랩"){
+			$.get(
+				'../member/ClipAdd?',
+				{
+					'clip_mem_idx' : clip_mem_idx,
+					'clip_hp_idx' : clip_hp_idx
+				},
+				function(data) {
+					$('#clip').attr('class','btn btn-warning');
+					$('#clip').text('스크랩취소');
+				}
+			);
+		}
+		if($('#clip').text() == "스크랩취소"){
+			$.get(
+				'../member/ClipDelete?',
+				{
+					'clip_mem_idx' : clip_mem_idx,
+					'clip_hp_idx' : clip_hp_idx
+				},
+				function(data) {
+					$('#clip').attr('class','btn btn-primary');
+					$('#clip').text('스크랩');
+				}
+			);
+		}
+	}); 
+});
+</script>
 
 <div class="container">
 	<br /><br />
@@ -99,13 +160,26 @@ function chatWin(){
 		<div style="background-color:#314c75; width:100%; height:200px; position:relative;"></div>
 			<div style="position:absolute; top:250px; left:500px; width:730px; height:200px; background-color:white; box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.8);">
 				<br />
-				<span style="font-weight:bold; font-size:2.0em;">${hDTO.hp_name}</span><br />
+				<table style="text-align:center; float:none; margin:0 auto;">
+				<tr>
+					<td>
+						<span style="font-weight:bold; font-size:2.1em; margin-right:20px;">${hDTO.hp_name}</span>
+					</td>
+					<td>
+						<!-- 스크랩추가 -->
+						<button class="btn btn-primary" id="clip"></button>	<br />
+					</td>
+				</tr>
+				</table>
+				<input type="hidden" id="clip_mem_idx" value="${memberInfo.mem_idx}"/>
+				<input type="hidden" id="clip_hp_idx" value="1" />
+				
 				<small class="text-muted">치과</small><br /><br />
 				<!-- 예약 길찾기 톡톡 테이블 -->
 				<table style="margin-left: auto; margin-right: auto;">
 					<tr>
 						<td style="width:80px; border-right:1px solid #E6E6E6">	
-						<input type="hid den" value="${hDTO.hp_name }" id="hp_name" name="hp_name"/>		
+						<input type="hidden" value="${hDTO.hp_name }" id="hp_name" name="hp_name"/>		
 					    	<a href="http://map.daum.net/link/map/${hDTO.hp_name},<%=lat%>,<%=lon%> ">
 						    	<i class="fas fa-map-marker-alt" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">지도</span>
@@ -190,7 +264,7 @@ function chatWin(){
 		<input type="hid den" value="${rvwAvg }" id="rvwAvg" name="rvwAvg"/>
 		
 		 <script>
-			var star = ${rvwAvg};
+			var star = 1;
 			
 			var score = ['starR','starR','starR','starR','starR'];
 			//$(score[0]).addClass('on');

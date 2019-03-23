@@ -123,7 +123,6 @@ border:1px solid;
 		<br /><button class="btn btn-primary" id="clip"></button>
 		<input type="hid den" id="clip_mem_idx" value="${memberInfo.mem_idx}"/>
 		<input type="hid den" id="clip_hp_idx" value="1" />
-      
    </div>
    <h4>서울웃는치과의원에서 드리는글
       <small class="text-muted">서울웃는치과의원</small>
