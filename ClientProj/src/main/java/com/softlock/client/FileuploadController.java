@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class FileuploadController {
  
 	//물리적 경로 확인하기
-	@RequestMapping("/fileUpload/uploadPath.do")
+	@RequestMapping("/fileUpload/uploadPath.do") 
 	public void uploadPath(HttpServletRequest req,  
 			HttpServletResponse resp) {
 		
