@@ -69,6 +69,10 @@ $(window).load(function(){
 <body style="background-color:#F5F6F9">
 <!-- bottom -->
 <jsp:include page="/resources/common/nav.jsp"/>
+<%
+String lat = request.getParameter("lat");
+String lon = request.getParameter("lon");
+%>
 <div class="container">
 	<br /><br />
 	<div class="jumbotron" style="text-align: center; width:800px; height:850px; background-color:white; text-align:center; 
@@ -82,13 +86,13 @@ $(window).load(function(){
 				<table style="margin-left: auto; margin-right: auto;">
 					<tr>
 						<td style="width:80px; border-right:1px solid #E6E6E6">			
-					    	<a href="#">
+					    	<a href="http://map.daum.net/link/map/${hDTO.hp_name},<%=lat%>,<%=lon%> ">
 						    	<i class="fas fa-map-marker-alt" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">지도</span>
 					    	</a>
 						</td>
 						<td style="width:80px; border-right:1px solid #E6E6E6">
-					    	<a href="#">
+					    	<a href="http://map.daum.net/link/to/${hDTO.hp_name},<%=lat%>,<%=lon%> ">
 						    	<i class="fas fa-directions" style="font-size:2em;margin-bottom:3px;"></i><br />
 						    	<span style="margin-bottom:0px; font-size:0.8em; color:black;">길찾기</span>
 					    	</a>
@@ -169,7 +173,6 @@ $(window).load(function(){
 			var star = ${rvwAvg};
 			
 			var score = ['starR','starR','starR','starR','starR'];
-			alert(star);
 			//$(score[0]).addClass('on');
 			
 			for(var i=0; i<star; i++){

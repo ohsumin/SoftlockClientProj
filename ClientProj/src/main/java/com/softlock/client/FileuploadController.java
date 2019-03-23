@@ -25,7 +25,7 @@ public class FileuploadController {
 
 	//물리적 경로 확인하기
 	@RequestMapping("/fileUpload/uploadPath.do")
-	public void uploadPath(HttpServletRequest req, 
+	public void uploadPath(HttpServletRequest req,  
 			HttpServletResponse resp) {
 		
 		String path = req.getSession().getServletContext()
