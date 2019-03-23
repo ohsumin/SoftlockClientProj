@@ -78,6 +78,8 @@ public class MemberController {
 		MemberDTO vo = sqlSession.getMapper(MemberImpl.class).login(id, pass);
 		// 회원존재여부 판단
 		int user = sqlSession.getMapper(MemberImpl.class).isUser(id, pass);
+		// 회원이메일인증 여부 판단
+		String auth = sqlSession.getMapper(MemberImpl.class).isAuth(id);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 				
@@ -92,11 +94,17 @@ public class MemberController {
 			mv.setViewName(backUrl);
 		}*/
 		
+		// 만약 존재하는 회원이라면
 		if(user == 1) {
-			map.put("success", 1);
-			map.put("memberInfo", vo);
-			session.setAttribute("memberInfo", vo);
-			//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
+			if(auth.equals("y")) {
+				map.put("success", 1);
+				map.put("memberInfo", vo);
+				session.setAttribute("memberInfo", vo);
+				//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
+			}
+			else {
+				map.put("success", -1);
+			}
 		}
 		else {
 			map.put("success", 0);
@@ -522,53 +530,53 @@ public class MemberController {
 			
 		}
 		
-	//건강정보
-	@RequestMapping("/information/information")
-	public String information() {
-		
-		return "information/information";
-	}
-	
-	@RequestMapping("/information/searchInformation")
-    @ResponseBody
-    public ArrayList<GlobalDicDTO> searchInformation(HttpServletRequest req){
-    	String title = req.getParameter("title");
-    	System.out.println("title="+title);
-    	
-    	GlobalDicDTO gDto = new GlobalDicDTO();
-    	gDto.setTitle(title);
-    	
-    	ArrayList<GlobalDicDTO> searchList = (ArrayList<GlobalDicDTO>) sqlSession.getMapper(MemberImpl.class).searchGlo(gDto);
-        return searchList;
-    }
-	
-/*	@RequestMapping("/information/searchInfo")
-	public String searchInfo(HttpServletRequest req, Model model) {
-		if(!req.getParameter("title").equals("")) {
-		
-		String title = req.getParameter("title");
-		System.out.println("title="+title);
-		
-		
-    	GlobalDicDTO gDto = sqlSession.getMapper(MemberImpl.class).searchInfo(title);
-    	model.addAttribute(gDto);
-		
-		return "information/information";
-		} else {	@RequestMapping("/information/searchInformation")
-	
-
+		//건강정보
+		@RequestMapping("/information/information")
+		public String information() {
+			
 			return "information/information";
 		}
-	}*/
-	
-	@RequestMapping("/information/searchInfo")
-	@ResponseBody
-	public GlobalDicDTO searchInfo(HttpServletRequest req){
-		String title = req.getParameter("title");
-		System.out.println("title="+title);
 		
-		GlobalDicDTO globalDicDTO = sqlSession.getMapper(MemberImpl.class).searchInfo(title);
-		/*System.out.println("globalDicDTO.getDic_contents="+globalDicDTO.getDic_contents());*/
-		return globalDicDTO;
-	}
+		@RequestMapping("/information/searchInformation")
+	    @ResponseBody
+	    public ArrayList<GlobalDicDTO> searchInformation(HttpServletRequest req){
+	    	String title = req.getParameter("title");
+	    	System.out.println("title="+title);
+	    	
+	    	GlobalDicDTO gDto = new GlobalDicDTO();
+	    	gDto.setTitle(title);
+	    	
+	    	ArrayList<GlobalDicDTO> searchList = (ArrayList<GlobalDicDTO>) sqlSession.getMapper(MemberImpl.class).searchGlo(gDto);
+	        return searchList;
+	    }
+		
+	/*	@RequestMapping("/information/searchInfo")
+		public String searchInfo(HttpServletRequest req, Model model) {
+			if(!req.getParameter("title").equals("")) {
+			
+			String title = req.getParameter("title");
+			System.out.println("title="+title);
+			
+			
+	    	GlobalDicDTO gDto = sqlSession.getMapper(MemberImpl.class).searchInfo(title);
+	    	model.addAttribute(gDto);
+			
+			return "information/information";
+			} else {	@RequestMapping("/information/searchInformation")
+		
+	
+				return "information/information";
+			}
+		}*/
+		
+		@RequestMapping("/information/searchInfo")
+		@ResponseBody
+		public GlobalDicDTO searchInfo(HttpServletRequest req){
+			String title = req.getParameter("title");
+			System.out.println("title="+title);
+			
+			GlobalDicDTO globalDicDTO = sqlSession.getMapper(MemberImpl.class).searchInfo(title);
+			/*System.out.println("globalDicDTO.getDic_contents="+globalDicDTO.getDic_contents());*/
+			return globalDicDTO;
+		}
 }

@@ -16,6 +16,10 @@
 		VALUES (seq_member.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
 	</insert>
 	
+	<select id="isAuth" parameterType="String" resultType="String">
+		select mem_auth from member where mem_id=#{0}
+	</select>
+	
 	<select id="isUser" resultType="int" parameterType="String">
 		select count(*) from member
 			where mem_id=#{0} and mem_pw=#{1}

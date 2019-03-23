@@ -32,6 +32,9 @@ public interface MemberImpl {
 	int GetKey(String mem_id, String mem_key); //유저 인증키 생성 메서드
 	int alter_userKey(String mem_id, String key);// 유저 인증키 Y로 바꿔주는 메서드
 	
+	// 회원 이메일인증 여부
+	public String isAuth(String mem_id);
+	
 	// 네이버회원 mem_auth를 y로 처리
 	public void alter_naverKey(String mem_id);
 	
