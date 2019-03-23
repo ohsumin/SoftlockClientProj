@@ -13,7 +13,7 @@ public interface HospitalImpl{
     /*public ArrayList<HospitalDTO> hpjoinAction(String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username, String hp_email, 
           String hp_phone, String hp_address);*/
 	public void hpJoinAction(String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username, String hp_email, 
-	          String hp_phone, String hp_address, String hp_address2);
+	          String hp_phone, String hp_address, String hp_address2, String hp_type);
     
     // 회원아이디 중복여부 확인
     public int isUserId(String hp_id);

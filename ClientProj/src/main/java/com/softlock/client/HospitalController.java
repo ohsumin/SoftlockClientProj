@@ -419,10 +419,11 @@ public class HospitalController {
        String hp_phone = req.getParameter("hp_phone");
        String hp_address = req.getParameter("hp_address");
        String hp_address2 = req.getParameter("hp_address2");
+       String hp_type = req.getParameter("hp_type");
        
        // 회원정보 저장
        sqlSession.getMapper(HospitalImpl.class).hpJoinAction(
-    		   	hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2);
+    		   	hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2, hp_type);
        
        HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).loginHp(hp_id, hp_pw);
 	   session.setAttribute("hospitalInfo", vo);
