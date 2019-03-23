@@ -27,6 +27,7 @@ import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
 import com.softlock.model.MemberDTO;
+import com.softlock.model.MemberImpl;
 import com.softlock.model.PagingUtil;
 import com.softlock.model.ReservationDTO;
 import com.softlock.model.TreattimeDTO;
@@ -91,6 +92,8 @@ public class HospitalController {
 		HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).loginHp(id, pass);
 		// 회원존재여부 판단
 		int user = sqlSession.getMapper(HospitalImpl.class).isUser(id, pass);
+		// 허가회원인지 판단
+		String perm = sqlSession.getMapper(HospitalImpl.class).isPerm(id);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 				
@@ -105,11 +108,18 @@ public class HospitalController {
 			mv.setViewName(backUrl);
 		}*/
 		
+		// 만약 존재하는 회원이라면
 		if(user == 1) {
-			map.put("success", 1);
-			map.put("hospitalInfo", vo);
-			session.setAttribute("hospitalInfo", vo);
-			//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
+			if(perm.equals("y")) {
+				map.put("success", 1);
+				map.put("hospitalInfo", vo);
+				session.setAttribute("hospitalInfo", vo);
+				//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
+			}
+			// 허가가 안되어있으면
+			else {
+				map.put("success", -1);
+			}
 		}
 		else {
 			map.put("success", 0);

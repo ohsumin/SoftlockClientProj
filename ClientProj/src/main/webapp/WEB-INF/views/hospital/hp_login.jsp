@@ -44,6 +44,9 @@ $(function() {
 	                $('#loginMsg').css("color", "red");
 	            } else if (d.success == 1){
 	            	location.href='../hospital/home';
+	            } else if(d.success == -1){
+	            	$('#loginMsg').html("아직 허가가 되지 않았습니다. 허가가 되면 이메일 발송을 해드리겠습니다."); 
+	                $('#loginMsg').css("color", "red");
 	            }
 	        },
 	        error : function(e) {

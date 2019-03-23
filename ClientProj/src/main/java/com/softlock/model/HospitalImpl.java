@@ -27,6 +27,9 @@ public interface HospitalImpl{
      //회원탈퇴 처리
    	public int delete(String mem_id);
    	
+   	// 회원 허가여부
+   	public String isPerm(String mem_id);
+   	
    	//병원회원상세보기 읽기 및 수정 동시에 진행
    	public HospitalDTO viewModify(int hp_idx);
    	public ArrayList<TreattimeDTO> viewModifytime(int hp_idx);

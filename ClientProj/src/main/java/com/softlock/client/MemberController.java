@@ -394,7 +394,7 @@ public class MemberController {
 		
 	}
 	
-	//스크랩(1.병원상세보기)
+		//스크랩(1.병원상세보기)
 		@RequestMapping("/member/memHpView")
 		public String memHpView(HttpServletRequest req) {
 			return "member/mem_hpView";	
