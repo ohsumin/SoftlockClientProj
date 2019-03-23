@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>실시간상담</title>
+<title>실시간상담환자</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
 
 
@@ -46,7 +46,7 @@ sock.onclose = onClose;
 
  
 sock.onopen = function(){
-    sock.send(chat_id+"님이 입장하셨습니다.");
+    sock.send(/* chat_id+"님이 입장하셨습니다." */);
 }; 
 
 
@@ -100,13 +100,20 @@ function onMessage(event) {
         	}
         	else {
         		//msg = makeBalloon(sender, content);    		
-    			$("#messageWindow").append("<div>"+sender+" : "+content+"<div>");
-    			//messageWindow.scrollTop = messageWindow.scrollHeight;
+    			$("#messageWindow").append("<div>"+room+" : "+content+"<div>");
+    			//$("body").scrollTop = $("#messageWindow").scrollHeight;
+    			//$("body").scrollTop($("body").height());
+    			$('body').scrollTop($('body').prop('scrollHeight'));
+
         	}   		
     	}   	    		
     }
         
     //sock.close();
+}
+
+window.onload=function(){
+	//$("body").scrollTop($("body").height());
 }
 
 function onClose(event) {
@@ -116,23 +123,28 @@ function onClose(event) {
 </head>
 
 <body>
+<input type="hidden" id="chat_id" value="${param.chat_id }" />
+<input type="hidden" id="chat_room" value="${param.chat_room }" />
+<div style="background-color: #F5F6F9; height: 100%; width: 400px;">
+	<span class="badge badge-warning" style="width: 100%;">상담을 위한 1:1 채팅방입니다! 무엇을 도와드릴까요?</span>
+	<div style="text-align: center;"><strong>${param.chat_id }</strong>님이 <strong>${param.chat_room }</strong>과 상담중입니다</div>
+		<div id="messageWindow">
+			<%-- <div style="text-align:right;">${param.chat_id }</div>
+			<div>${param.chat_room }</div> --%>
+			
+		</div>   
 
-	<div style="background-color: #F5F6F9; height: 100%;'">
-	<span class="badge badge-warning" style="width: 100%;">상담을 위한 1:1 채팅방입니다</span>
-	<!-- <div style="width: 100%; height: 400px;"></div> -->
-		<div style="width: 100%; height: 50px; margin-top: 426px; background-color: yellow;">
-			<!-- <div style="display: inline-block; border: 1px solid black;"><input type="text" class="form-control" placeholder="상담하실 내용을 입력하세요" id="inputMessage" style=" width: 50px;"></div>
-			<span style="display: inline-block; border: 1px solid black;"><button type="button" class="btn btn-primary" id="sendBtgn" style="margin-left: 300px; margin-top: 5px;">보내기</button></span> -->
-			<div>
-			<table border="1" style="width: 400px;">
-				<tr>
-					<td><textarea class="form-control" id="inputMessage" rows="3"></textarea></td>
-					<td><button type="button" class="btn btn-primary" id="sendBtgn">보내기</button></td>
-				</tr>
-			</table>
-			</div>
+	    <div style="width: 100%; height: 50px; margin-top: 426px;">
+		<div>
+		<table style="width: 400px;">
+			<tr>
+				<td><textarea class="form-control" id="inputMessage" rows="3"></textarea></td>
+				<td><button type="button" class="btn btn-primary" id="sendBtn" style="width: 100%; height: 80px;" value="전송">전송</button></td>
+			</tr>
+		</table>
 		</div>
 	</div>
+</div>
 	
 	<%-- <ul>
 		<li>chat_id : <input type="hid-den" id="chat_id" value="${param.chat_id }" />  </li>
