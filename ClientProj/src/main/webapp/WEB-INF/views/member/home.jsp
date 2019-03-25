@@ -21,21 +21,28 @@
 <body style="background-color:#F5F6F9">
 <!-- Navigation -->
 <jsp:include page="/resources/common/nav.jsp"/>
-<div class="container">
+
 <form >
 	<!-- 로그인 처리 후 다시 돌아가야 할 페이지 URL -->
-	<input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
-	<div style="width:1000px; height:500px; background-color:white; text-align:center; float:none; margin:0 auto;">
-		<div style="width:400px; background-color:white; text-align:center; float:none; margin:0 auto;">
-			<br /><br /><br />
-			<div class="logo">
-				<h4>메인페이지</h4>	 				
-			</div>	
-			
-		</div>
+	<input type="hidden" name="returnPage" value="" />
+	<div>
+	<img alt="메인이미지" src="../resources/common/ddok_main2.png" style="border: 1px solid black; height: 100%;"><br />
+	 <%-- <div style="margin-left: 900px;">
+	 <br /><br />
+		<table border="1" style="text-align: center;">
+			<tr>
+				<td style="font-size: 1.3em;">접수 가능 병원</td>
+				<td style="font-size: 1.3em;">접수건수</td>
+			</tr>
+			<tr>
+				<td style="font-size: 2.3em;">${NumHospital}</td>
+				<td style="font-size: 2.3em;">${NumReserv}</td>
+			</tr>
+		</table>
+	</div>  --%>
 	</div>
-</form><br />
-</div><br /><br /><br />
+	
+</form>
 <!-- bottom -->
 <jsp:include page="/resources/common/footer.jsp"/>
 </body>

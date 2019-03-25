@@ -68,4 +68,6 @@ public class InfoHpController {
 		return "member/info_hp";
 		
 	}*/
+	
+	
 }

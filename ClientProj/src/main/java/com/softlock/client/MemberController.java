@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.softlock.model.GlobalDicDTO;
 import com.softlock.model.HospitalDTO;
+import com.softlock.model.InfoHpImpl;
 import com.softlock.model.MemberDTO;
 import com.softlock.model.MemberImpl;
 import com.softlock.model.ReservationDTO;
@@ -38,7 +39,16 @@ public class MemberController {
 	private UserMailSendService mailsender;
 	
 	@RequestMapping("/member/home")
-	public String memHome() {
+	public String memHome(Model model) {
+		/*
+		String NumHospital = sqlSession.getMapper(InfoHpImpl.class).getNumHospital();
+		System.out.println("NumHospital"+NumHospital);
+
+		String NumReserv = sqlSession.getMapper(InfoHpImpl.class).getNumReserv();
+		System.out.println("NumReserv"+NumReserv);
+		
+		model.addAttribute("NumHospital",NumHospital);
+		model.addAttribute("NumReserv",NumReserv);*/
 		
 		return "member/home";
 	}
@@ -59,7 +69,7 @@ public class MemberController {
 	@RequestMapping("/member/logout")
 	public String memLogout(HttpSession session) {
 		session.setAttribute("memberInfo", null);
-		session.invalidate();
+		//session.invalidate();
 		return "member/home";
 	}
 	

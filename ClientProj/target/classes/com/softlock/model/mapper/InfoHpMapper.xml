@@ -19,6 +19,13 @@
 	<select id="getRvwAvg" parameterType="String" resultType="String">
 		select trunc(avg(rvw_score),2) from review where rvw_hp_idx=#{param1} group by rvw_hp_idx
 	</select>
+	<!-- <select id="getNumHospital" resultType="String">
+		select count(*) from hospital
+	</select>
+	<select id="getNumReserv" resultType="String">
+		select count(*) from reservation
+	</select> -->
+	
 	
 	
 </mapper>
