@@ -188,7 +188,6 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-
 		<!-- 채팅설정을 위한 웻소켓 및 제이슨 의존설정 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -201,7 +200,7 @@
 			<version>2.5.1</version>
 		</dependency>
 		
-
+		
 	</dependencies>
     <build>
         <plugins>
