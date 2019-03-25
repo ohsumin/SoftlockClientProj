@@ -35,6 +35,11 @@ public class AndroidController {
 		String mem_birth_day = req.getParameter("mem_birth_day");
 		String mem_birth = mem_birth_year+mem_birth_month+mem_birth_day;
 		String mem_auth = req.getParameter("mem_auth");
+		
+		System.out.println(mem_birth_year);
+		System.out.println(mem_birth_month);
+		System.out.println(mem_birth_day);
+		System.out.println(mem_birth);
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 
