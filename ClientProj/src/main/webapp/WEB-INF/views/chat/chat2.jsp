@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>타이틀임</title>
+<title>실시간상담병원</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
 
 
 <!-- 
@@ -94,12 +95,12 @@ function onMessage(event) {
         			msg = makeBalloon(sender, temp);
         			messageWindow.innerHTML += msg ;
         			messageWindow.scrollTop = messageWindow.scrollHeight; */
-        		}
+        		} 
         	}
         	else {
         		//msg = makeBalloon(sender, content);    		
     			$("#messageWindow").append("<div>"+sender+" : "+content+"<div>");
-    			//messageWindow.scrollTop = messageWindow.scrollHeight;
+    			$("#messageWindow").scrollTop = $("#messageWindow").scrollHeight;
         	}   		
     	}   	    		
     }
@@ -114,8 +115,28 @@ function onClose(event) {
 </head>
 
 <body>
+<input type="hidden" id="chat_id" value="${param.chat_id }" />
+<input type="hidden" id="chat_room" value="${param.chat_room }" />
+<div style="background-color: #F5F6F9; height: 100%;">
+	<span class="badge badge-warning" style="width: 100%;">상담을 위한 1:1 채팅방입니다! 무엇을 도와드릴까요?</span>
+	<div style="text-align: center;"><strong>${param.chat_id }</strong>님이 <strong>${param.chat_room }</strong>과 상담중입니다</div>
+		<div id="messageWindow" >
+			<%-- <div style="text-align:right;">${param.chat_id }</div>
+			<div>${param.chat_room }</div> --%>
+		</div>   
+	    <div style="width: 100%; height: 50px; margin-top: 426px;">
+		<div>
+		<table style="width: 400px;">
+			<tr>
+				<td><textarea class="form-control" id="inputMessage" rows="3"></textarea></td>
+				<td><button type="button" class="btn btn-primary" id="sendBtn" style="width: 100%; height: 80px;" value="전송">전송</button></td>
+			</tr>
+		</table>
+		</div>
+	</div>
+</div>
 	
-	<ul>
+	<%-- <ul>
 		<li>chat_id : <input type="hid-den" id="chat_id" value="${param.chat_id }" />  </li>
 		<li>chat_room : <input type="hid-den" id="chat_room" value="${param.chat_room }" /></li>
 		<li>메시지:<input type="text" id="inputMessage" /></li>
@@ -126,6 +147,6 @@ function onClose(event) {
 		<div style="text-align:right;">내가쓴거</div>
 		<div>상대가보낸거</div>
 	</div>   
-    <div id="logWindow" style="border:red solid 1px;"></div>   
+    <div id="logWindow" style="border:red solid 1px;"></div>    --%>
 </body>
 </html>

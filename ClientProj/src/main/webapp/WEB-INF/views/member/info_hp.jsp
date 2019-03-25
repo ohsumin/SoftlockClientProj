@@ -26,7 +26,7 @@
   background-size: auto 100%;
   width: 15px;
   height: 15px;
-  display: inline-block;
+  display: inline-block; 
   text-indent: -9999px;
   cursor: pointer;
 }
@@ -86,8 +86,8 @@ String mem_id = memInfo.getMem_id();
 function chatWin(){
 	var id = "<%=mem_id%>";
 	var room = $('#hp_name').val();
-		window.open("chat1.do?chat_id="+id+"&chat_room="+room, "1","width=400,height=500" );
-		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=400,height=500,top=100,left=500");
+		window.open("chat1.do?chat_id="+id+"&chat_room="+room, "1","width=400,height=570" );
+		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=400,height=570,top=100,left=550");
 }
 </script>
 <!-- 스크랩 -->
