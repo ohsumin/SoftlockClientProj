@@ -7,8 +7,25 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'><link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-<script src="../resources/common/jquery/jquery-3.3.1.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'><link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>		
+<script>
+/*  
+HTML 문서가 생성될 때, notification 기능에 대한 허용 여부를
+확인한다.
+*/
+window.onload = function () {
+	if (window.Notification) {
+		Notification.requestPermission();
+	}
+}
+
+function calculate() {
+	alert('dd');
+	
+	
+}
+
+</script>
 <style class="cp-pen-styles">.ui-datepicker,
 .ui-datepicker-material-header {
   font-family: 'Roboto';
@@ -326,6 +343,7 @@ $(function () {
 					<i class='far fa-bell' style="margin-left:2px; margin-top:12px;"></i>&nbsp;&nbsp;&nbsp;<span style="font-size:0.8em; font-weight:bold;">병원공지사항 </span><br />
 					<span style="font-size:0.8em; margin-left:32px;">${hDTO.hp_notice}</span><br /><br /><br />
 					<input type="submit" class="btn btn-primary btn-lg btn-block" style="width:92%;" value="예약신청하기"/>
+					
 				</div><br />
 
 			<script src='https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js'></script>
