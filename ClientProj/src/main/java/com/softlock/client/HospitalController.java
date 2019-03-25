@@ -133,7 +133,7 @@ public class HospitalController {
 	@RequestMapping("/hospital/logout")
 	public String hpLogout(HttpSession session) {
 		session.setAttribute("hospitalInfo", null);
-		session.invalidate();
+		//session.invalidate();
 		return "hospital/home";
 	}
 
@@ -465,13 +465,13 @@ public class HospitalController {
     
   //예약회원 예약확정(이메일 & SMS 보내기)
 	@RequestMapping("/hospital/hp_resvConf")
-	public String reservConf(HttpServletRequest req, MemberDTO memJoinDTO, HttpSession session) throws IOException {
+	public String reservConf(HttpServletRequest req, MemberDTO memJoinDTO, HttpSession session, HttpServletResponse res) throws IOException {
+		
 		sqlSession.getMapper(HospitalImpl.class).reservConf(req.getParameter("resv_idx"));
 		System.out.println("sdfdsf"+req.getParameter("resv_idx"));
-		   
+		
 		String mem_email = req.getParameter("mem_email");
 		String mem_id = req.getParameter("id");
-		
 		   
 		System.out.println("이메일" + mem_email + mem_id);
 		//예약확정시 메일을 보냄
@@ -487,7 +487,7 @@ public class HospitalController {
 		
 		String api_key = "NCSTDOOHRGU6YMQP";
 		String api_secret = "AAY9Y5KHW6Y3F2F4RJMFCS5DHBSBF5M8";
-		Coolsms coolsms = new Coolsms(api_key, api_secret);
+		//Coolsms coolsms = new Coolsms(api_key, api_secret);
 		
 		HashMap<String, String> set = new HashMap<String, String>();
 		set.put("to", "01028700688"); // to
@@ -497,18 +497,15 @@ public class HospitalController {
 		/*                                                                                                         ........<=여기까지문자감..*/
 		set.put("type", "sms"); // 문자 타입
 		System.out.println(set);
-		coolsms.send(set); // 보내기(&전송결과받기)
-		
-		  return "redirect:hpModify?tab=1";
+		//coolsms.send(set); // 보내기(&전송결과받기)
+		 return "redirect:hpModify?tab=1";
 	}
     
-    
-  	
     //예약회원 예약거절
     @RequestMapping("/hospital/hp_resvRej")
-    public String reservRej(HttpServletRequest req) {
-    	System.out.println("reservRej" + req.getParameter("resv_idx"));
-       sqlSession.getMapper(HospitalImpl.class).reservRej(req.getParameter("resv_idx"));
+    public String reservRej(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    	
+		sqlSession.getMapper(HospitalImpl.class).reservRej(req.getParameter("resv_idx"));
        return "redirect:hpModify?tab=1";
     }
     //예약확정된 회원중 예약확정이 y인 회원들은 진료완료 버튼이 나오게 한다. 그 버튼이 c로 바꿈
