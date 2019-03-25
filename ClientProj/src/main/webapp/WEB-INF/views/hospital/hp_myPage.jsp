@@ -35,6 +35,7 @@
 <!-- Navigation -->
 <jsp:include page="/resources/common/navHp.jsp"/>
 <div class="container">
+
 <input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
 <div style="width:1000px; height:100%; background-color:white; text-align:center; float:none; margin:0 auto;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >

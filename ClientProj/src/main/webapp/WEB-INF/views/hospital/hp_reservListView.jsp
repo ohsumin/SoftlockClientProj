@@ -145,8 +145,15 @@
          </tr>
       </tbody>
       </table><br /><br />
-      <button type="button" class="btn btn-primary" style="display:inline-block; width:48%; margin-right:20px;" onclick="location.href='./hp_resvConf?resv_idx=${dto.resv_idx}&mem_email=${dto.mem_email}&mem_id=${mem_id}&mem_phone=${dto.mem_phone}&resv_date=${dto.resv_date}&mem_name=${dto.mem_name}&resv_time=${dto.resv_time}';">예약확정</button>
-      <button type="button" class="btn btn-danger" style="display:inline-block; width:48%;" onclick="location.href='./hp_resvRej?resv_idx=${dto.resv_idx}';">예약거절</button>
+      <c:choose>
+      	<c:when test="${dto.resv_perm eq '진료완료'}">
+      		<button type="button" class="btn btn-primary">이미 진료 완료된 회원입니다</button>
+     	</c:when>
+      	<c:otherwise>
+      		<button type="button" class="btn btn-primary" style="display:inline-block; width:48%; margin-right:20px;" onclick="location.href='./hp_resvConf?resv_idx=${dto.resv_idx}&mem_email=${dto.mem_email}&mem_id=${mem_id}&mem_phone=${dto.mem_phone}&resv_date=${dto.resv_date}&mem_name=${dto.mem_name}&resv_time=${dto.resv_time}';">예약확정</button>
+     		 <button type="button" class="btn btn-danger" style="display:inline-block; width:48%;" onclick="location.href='./hp_resvRej?resv_idx=${dto.resv_idx}';">예약거절</button>
+     	 </c:otherwise>
+      </c:choose>
       <!-- 예약확정되면 버튼바뀜
       <button type="button" class="btn btn-danger" style="display:inline-block; width:48%;">예약취소</button>
        -->
