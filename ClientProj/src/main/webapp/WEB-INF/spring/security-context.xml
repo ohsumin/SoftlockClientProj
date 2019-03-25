@@ -59,7 +59,7 @@
 			default-target-url="/client/hospital/home"
 			authentication-failure-url="/client/hospital/login"
 			username-parameter="id"
-			password-parameter="pass"/>
+			password-parameter="pass"/> 
 		<security:logout
 			logout-url="/client/hospital/logout"
 			logout-success-url="/client/hospital/home"/>
