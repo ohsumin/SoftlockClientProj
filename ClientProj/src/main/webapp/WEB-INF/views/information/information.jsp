@@ -89,14 +89,15 @@ $(function(){
 }  */
 </script>
 </head>
-<body>
+<body style="background-color:#F5F6F9">
 <!-- Navigation -->
 <jsp:include page="/resources/common/nav.jsp"/>
 <div class="container">
 	
 	<div class="tZA57_mawxr-jYuUhO_bp" data-reactid="239"></div>      
+	<br /><br /><br /><br />
 	<table  style="margin:10px; width:99%; height:91%; padding-left:15px;">            
-			<tr height="15%" style="background-color:#E6E7E9;"class="table-dark">             
+			<tr height="330px" style="background-color:white;"class="table-dark">             
 				<td width="45%">    
 					<div style="text-align: center;">
 					<br /><br />     
@@ -134,7 +135,7 @@ $(function(){
 
 			</tr>
 			<tr height="7%" style="background-color:#E6E7E9;">
-				<td width="25%">    
+				<td width="25%" style="padding-left:50px;">    
 					<!-- <div>
 					<br /><br />
 					<h3>건강정보
@@ -162,7 +163,7 @@ $(function(){
 			</tr>
 	</table>
 		
-	<br /><br /><br /><br /><br /><br /><br />    
+	<br /><br /><br /><br /><br /><br /><br /><br /> 
 <!-- 	<table style="margin:10px; width:99%; height:91%;">
 		<tr height="100%" style="background-color:#E6E7E9;">  
 			<td width="20%">

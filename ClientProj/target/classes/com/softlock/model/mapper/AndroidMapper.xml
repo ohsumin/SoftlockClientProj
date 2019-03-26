@@ -11,4 +11,8 @@
 		VALUES (seq_member.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},#{param8})
 	</insert>
 	
+	<select id="searchHp" resultType="com.softlock.model.HospitalDTO" parameterType="String">
+		select * from hospital where hp_name LIKE '%'||#{param4}||'%' and hp_type=#{param1} and hp_night=#{param2} and hp_wkend=#{param3}
+	</select>
+	
 </mapper>

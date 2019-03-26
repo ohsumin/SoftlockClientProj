@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="//code.jquery.com/jquery-1.9.1.js"></script>
   <style id="compiled-css">
-      .starR1,.starR2,.starR3,.starR4,.starR5{
+  .starR{
   background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
   background-size: auto 100%;
   width: 15px;
@@ -30,7 +30,7 @@
   text-indent: -9999px;
   cursor: pointer;
 }
-.starR1.on,.starR2.on,.starR3.on,.starR4.on,.starR5.on{background-position:0 0;}
+.starR.on{background-position:0 0;}
   </style>
 
   <script type="text/javascript">
@@ -251,56 +251,60 @@ $(function() {
 		float:none; margin:0 auto; padding:0px;">
 		
 		<div style="position:relative; top:20px; width:800px; height:200px; margin-left:70px; text-align:left;">
-		<div>
+		<div><br />
 		<span style="font-size: 1.2em; font-weight:bold;">전체&nbsp;&nbsp;</span><span style="color:blue; font-size: 1.2em; font-weight:bold;">${rvwCount}</span><br />
 		<span class="starRev" style="margin-top:10px;" >
-            <span class="starR">별1</span>
-            <span class="starR">별2</span>
-            <span class="starR">별3</span>
-            <span class="starR">별4</span>
-            <span class="starR">별5</span>
+            <span class="starR" id="s1">별1</span>
+            <span class="starR" id="s2">별2</span>
+            <span class="starR" id="s3">별3</span>
+            <span class="starR" id="s4">별4</span>
+            <span class="starR" id="s5">별5</span>
          </span>		
+         <script>
+         /* 별점매기기 */
+         $(window).load(function(){
+         	$('#s${rvwAvg}').parent().children('span').removeClass('on');
+         	$('#s${rvwAvg}').addClass('on').prevAll('span').addClass('on');
+         	//alert($(this).text());
+         	//$('#rvw_score').val($(this).text());
+         });
+         </script>
 		<span style="font-size: 1.4em; font-weight:bold;">${rvwAvg }점</span>
-		<input type="hid den" value="${rvwAvg }" id="rvwAvg" name="rvwAvg"/>
-		
-		 <script>
-			var star = 1;
-			
-			var score = ['starR','starR','starR','starR','starR'];
-			//$(score[0]).addClass('on');
-			
-			for(var i=0; i<star; i++){
-				$('.star${rvwAvg}').children('.'+score[i]).addClass('on');
-				//$('.'+score[i]).addClass('on');
-			}
-		</script> 
-		
-		
+		<input type="hidden" value="${rvwAvg }" id="rvwAvg" name="rvwAvg"/>	
 		
 		</div>
 		<div style="width: 650px;">
 			<hr style="border: solid 1px #283B56; width:100%;"/>
+			<%int i=0; %>
 			<c:forEach items="${rDTO }" var="row">
-			
-			<input type="hid den" value="${row.rvw_score }" id="rvw_score" name="rvw_score"/>
-				<div>		
+				<div style="padding-top:5px; padding-bottom:8px;">		
 				<span class="star${row.rvw_idx} " style="margin-top:10px;">
-                    <span class="starR1">별1</span>
-                    <span class="starR2">별2</span>
-                    <span class="starR3">별3</span>
-                    <span class="starR4">별4</span>
-                    <span class="starR5">별5</span>
-                </span>
-				<span>점수 : ${row.rvw_score }</span> <br />
+                    <span class="starR" id="s<%=i%>-1">별1</span>
+		            <span class="starR" id="s<%=i%>-2">별2</span>
+		            <span class="starR" id="s<%=i%>-3">별3</span>
+		            <span class="starR" id="s<%=i%>-4">별4</span>
+		            <span class="starR" id="s<%=i%>-5">별5</span>
+                </span><br />
 				<span>${row.rvw_content }</span><br />
-				<span ><strong>이름</strong> : ${row.mem_name }</span>&nbsp;&nbsp;
-				<span><strong>등록일</strong> : ${row.rvw_regidate }</span><br />
+				<span style="font-size:0.8em;"><strong>이름</strong> : ${row.mem_name }</span>&nbsp;&nbsp;
+				<span style="font-size:0.8em;"><strong>등록일</strong> : ${row.rvw_regidate }</span><br />
+				
 				<hr />
 				</div>
-			</c:forEach>
+				<script>
+		         /* 별점매기기 */
+		         $(window).load(function(){
+		         	$('#s<%=i%>-${row.rvw_score }').parent().children('span').removeClass('on');
+		         	$('#s<%=i%>-${row.rvw_score }').addClass('on').prevAll('span').addClass('on');
+		         	//alert($(this).text());
+		         	//$('#rvw_score').val($(this).text());
+		         });
+		         </script>
+		         <%i++; %>
+					</c:forEach>
 		</div>
 	</div>
-	</div>
+	</div><br /><br />
 </div>
 <!-- bottom -->
 <jsp:include page="/resources/common/footer.jsp"/>

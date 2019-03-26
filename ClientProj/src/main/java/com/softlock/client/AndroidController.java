@@ -1,5 +1,6 @@
 package com.softlock.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.softlock.model.AndroidImpl;
+import com.softlock.model.HospitalDTO;
 
 @Controller
 public class AndroidController {
@@ -47,5 +49,20 @@ public class AndroidController {
 		
 		map.put("isSuccess", "success");
 		return map; 
+	}
+	
+	@RequestMapping("/Android/searchHp")
+	@ResponseBody
+	public ArrayList<HospitalDTO> searchHp(HttpServletRequest req){
+		
+		String hp_type = req.getParameter("hp_type");
+		String hp_night = req.getParameter("hp_night");
+		String hp_weekend = req.getParameter("hp_weekend");
+		String hp_name = req.getParameter("hp_name");
+				
+		ArrayList<HospitalDTO> searchList = sqlSession.getMapper(AndroidImpl.class).searchHp(hp_type, hp_night, hp_weekend, hp_name);
+		//searchList
+		
+		return searchList;
 	}
 }
