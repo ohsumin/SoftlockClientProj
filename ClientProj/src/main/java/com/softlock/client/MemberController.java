@@ -1,7 +1,11 @@
 package com.softlock.client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,15 +59,164 @@ public class MemberController {
 		
 		return "member/home";
 	}
+	@RequestMapping("/member/Captcha")
+	public String Captcha(Model model, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		String clientId = "2WQHXW_ouJyzabqjO8zn";
+	      String clientSecret = "Nlwn_kYZq9";
+	      try {
+	          String code = "0"; // 키 발급 받을 때는 0으로 설정
+	          String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code;
+	          URL url = new URL(apiURL);
+	          HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	          con.setRequestMethod("GET");
+	          con.setRequestProperty("X-Naver-Client-Id", clientId);
+	          con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+	          int responseCode = con.getResponseCode();
+	          BufferedReader br;
+	          if(responseCode==200) { 
+	              br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	          } else {  
+	              br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	          }
+	          String inputLine;
+	          StringBuffer response = new StringBuffer();
+	          while ((inputLine = br.readLine()) != null) {
+	              response.append(inputLine);
+	          }
+	          br.close();
+	          System.out.println(response.toString());
+	          resp.setContentType("text/html;charset=UTF-8");
+	          
+				
+				//서블릿에서 세션객체를 얻어온다.
+				session = req.getSession();
+				
+				session.setAttribute("key", response.toString());
+	          
+	      } catch (Exception e) {
+	          System.out.println(e);
+	      }
+		return "member/captcha/captcha";
+	}
 	
-	@RequestMapping("/member/join")
+	
+	@RequestMapping("/member/CaptchaRes")
+	public String result(Model model, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		String clientId = "2WQHXW_ouJyzabqjO8zn";
+        String clientSecret = "Nlwn_kYZq9";
+        session = req.getSession();
+        StringBuffer response = new StringBuffer();
+        String apiResult = null;
+        try {
+            String code = "1"; 
+            String key = session.getAttribute("vkey").toString(); 
+            String value = req.getParameter("inputText"); 
+            String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code +"&key="+ key + "&value="+ value;
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-Naver-Client-Id", clientId);
+            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { 
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            //response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println(response.toString());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        apiResult = response.toString();
+        System.out.println(apiResult);
+        
+		JSONParser parser = new JSONParser();
+		Object obj = null;
+		try {
+			obj = parser.parse(apiResult);
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		JSONObject jsonobj = (JSONObject) obj;
+
+		Boolean result = (Boolean) jsonobj.get("result");
+        if(result == true) {
+        	//한글처리
+			resp.setContentType("text/html;charset=UTF-8");
+			
+			return "member/mem_join";
+        }else {
+        	//한글처리
+			resp.setContentType("text/html;charset=UTF-8");
+			//서블릿에서 out객체를 얻어온다.
+			return "member/captcha/false";
+        }		
+		
+	}
+/*	@RequestMapping("/member/join")
 	public String memJoin() {
 		 
 		return "member/mem_join";
-	}
+	}*/
 	
 	@RequestMapping("/member/login")
-	public String memLogin() {
+	public String memLogin(HttpServletRequest req, HttpSession session, HttpServletResponse resp) throws IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//key초기화
+		String key = "";
+		
+		//존재하지 않는 회원이거나 아이디or비밀번호 틀렸을때 캡차
+		String clientId = "2WQHXW_ouJyzabqjO8zn";
+		String clientSecret = "Nlwn_kYZq9";
+		
+		try {
+			String code = "0"; // 키 발급 받을 때는 0으로 설정
+			String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code;
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			
+				con.setRequestMethod("GET");
+				con.setRequestProperty("X-Naver-Client-Id", clientId);
+				con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+				
+			int responseCode = con.getResponseCode();
+			
+			BufferedReader br;
+			
+			if(responseCode==200) { 
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				response.append(inputLine);
+			}
+			br.close();
+			System.out.println(response.toString());
+			resp.setContentType("text/html;charset=UTF-8");
+				
+			session = req.getSession();
+			session.setAttribute("key", response.toString());
+			key = response.toString();
+			map.put("key", response.toString());
+			System.out.println(map.get("key"));
+			System.out.println(map);
+			System.out.println(session.getAttribute("key"));
+		} catch (Exception e) {
+		System.out.println(e);
+		}
 		
 		return "member/mem_login";
 	}
@@ -73,12 +229,80 @@ public class MemberController {
 		return "member/home";
 	}
 	
-	@RequestMapping("/member/loginAction")
+	@RequestMapping("/member/loginAction")          
 	@ResponseBody
-	public Map<String, Object> loginAction(HttpServletRequest req, HttpSession session) 
-	{
+	public Map<String, Object> loginAction(HttpServletRequest req, HttpSession session, HttpServletResponse resp) throws IOException
+	{                       
+		int checkFlag = 2;
 		String id = req.getParameter("id");
 		String pass = req.getParameter("pass");
+		System.out.println("inputText="+req.getParameter("inputText"));
+		if(req.getParameter("inputText")!=null&&!req.getParameter("inputText").equals("")) {
+			String clientId = "2WQHXW_ouJyzabqjO8zn";
+	        String clientSecret = "Nlwn_kYZq9";
+	        session = req.getSession();
+	        StringBuffer response = new StringBuffer();
+	        String apiResult = null;
+	        try {
+	            String code = "1"; 
+	            String key = session.getAttribute("vkey").toString(); 
+	            String value = req.getParameter("inputText"); 
+	            String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code +"&key="+ key + "&value="+ value;
+	
+	            URL url = new URL(apiURL);
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setRequestMethod("GET");
+	            con.setRequestProperty("X-Naver-Client-Id", clientId);
+	            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            if(responseCode==200) { 
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	            } else {  
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	            }
+	            String inputLine;
+	            //response = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            br.close();
+	            System.out.println(response.toString());
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+	        
+	        apiResult = response.toString();
+	        System.out.println(apiResult);
+	        
+			JSONParser parser = new JSONParser();
+			Object obj = null;
+			try {
+				obj = parser.parse(apiResult);
+			} catch (ParseException e) {
+				
+				e.printStackTrace();
+			}
+			JSONObject jsonobj = (JSONObject) obj;
+	
+			Boolean result = (Boolean) jsonobj.get("result");
+			
+	        if(result == true) {
+	        	//한글처리
+				resp.setContentType("text/html;charset=UTF-8");
+				checkFlag = 1;
+				
+				/*return "member/mem_join";*/
+	        }else {
+	        	//한글처리
+				resp.setContentType("text/html;charset=UTF-8");
+				checkFlag = 0;
+				//서블릿에서 out객체를 얻어온다.   
+				/*return "member/captcha/false";*/
+	        }
+	        
+		}
+		
 		
 		System.out.println(id);
 		System.out.println(pass);
@@ -97,29 +321,55 @@ public class MemberController {
 		/* 나중에처리
 		String backUrl = req.getParameter("backUrl");
 		if(backUrl==null || backUrl.equals("")) {
-			//돌아갈 url이 없다면 로그인 페이지로 다시 이동한다.
+			//돌아갈 url이 없다면 로그인 페이지로 다시 이동한다.    
 			mv.setViewName("member/mem_login");
 		}
 		else {
 			mv.setViewName(backUrl);
 		}*/
 		
-		// 만약 존재하는 회원이라면
+		// 만약 존재하는 회원이라면       
+		
 		if(user == 1) {
-			if(auth.equals("y")) {
+			
+			if(auth.equals("y")&&checkFlag==2) {
 				map.put("success", 1);
 				map.put("memberInfo", vo);
+				map.put("checkFlag", 2);
 				session.setAttribute("memberInfo", vo);
-				//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());
+				//System.out.println("session영역에 DTO저장됨:"+vo.getMem_idx()+vo.getMem_id()+vo.getMem_pw()+vo.getMem_name()+vo.getMem_regidate());     
 			}
-			else {
+			else if(auth.equals("y")&&checkFlag==1){
+				map.put("success", 1);
+				map.put("checkFlag", 1);
+				map.put("memberInfo", vo);
+				session.setAttribute("memberInfo", vo);
+			}
+			else if(auth.equals("n") && checkFlag == 1){
+				map.put("checkFlag", 1);
+				map.put("success", -1);
+			}
+			else if(auth.equals("n") && checkFlag == 0){
+				map.put("checkFlag", 0);
 				map.put("success", -1);
 			}
 		}
 		else {
-			map.put("success", 0);
+			if(checkFlag == 2) {
+				map.put("checkFlag", 2);
+				map.put("success", 0);
+			}else if(checkFlag == 1) {
+				map.put("checkFlag", 1);
+				map.put("success", 0);
+			}
+			else if(checkFlag == 0) {
+				map.put("checkFlag", 0);
+				map.put("success", 0);
+			}
 		}
 		
+		System.out.println("checkFlag="+checkFlag);
+		System.out.println("map="+map);
 		return map;
 	}
 	
@@ -181,6 +431,48 @@ public class MemberController {
 			mailsender.mailSendWithUserKey(memJoinDTO.getMem_email(), memJoinDTO.getMem_id(), req);
 
 		return "member/mem_joinAction";  
+	}
+	
+	//회원가입버튼 클릭시 호출됨
+	@RequestMapping("/Captcha")
+	public String captcha(Model model, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		String clientId = "2WQHXW_ouJyzabqjO8zn";
+	      String clientSecret = "Nlwn_kYZq9";
+	      try {
+	          String code = "0"; // 키 발급 받을 때는 0으로 설정
+	          String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code;
+	          URL url = new URL(apiURL);
+	          HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	          con.setRequestMethod("GET");
+	          con.setRequestProperty("X-Naver-Client-Id", clientId);
+	          con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+	          int responseCode = con.getResponseCode();
+	          BufferedReader br;
+	          if(responseCode==200) { 
+	              br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	          } else {  
+	              br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	          }
+	          String inputLine;
+	          StringBuffer response = new StringBuffer();
+	          while ((inputLine = br.readLine()) != null) {
+	              response.append(inputLine);
+	          }
+	          br.close();
+	          System.out.println(response.toString());
+	          resp.setContentType("text/html;charset=UTF-8");
+	          
+				
+				//서블릿에서 세션객체를 얻어온다.
+				session = req.getSession();
+				
+				session.setAttribute("key", response.toString());
+	          
+	      } catch (Exception e) {
+	          System.out.println(e);
+	      }
+		
+		return "member/captcha";
 	}
 	 
 	//이메일 인증 컨트롤러('y로바꿈')
