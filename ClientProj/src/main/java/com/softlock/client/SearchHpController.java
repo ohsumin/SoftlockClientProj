@@ -48,7 +48,7 @@ public class SearchHpController {
 		return searchList;
 	}
 	
-	@RequestMapping("/member/searchHpNW")
+	@RequestMapping("/member/searchHpNW") 
 	@ResponseBody
 	public ArrayList<HospitalDTO> searchHpNW(HttpServletRequest req, HttpSession session){
 
