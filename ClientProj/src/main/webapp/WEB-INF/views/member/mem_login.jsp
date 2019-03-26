@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String key = session.getAttribute("key").toString();
+	String vkey = key.substring(8, 24);
+	session.setAttribute("vkey", vkey);
+	System.out.println("keyyyyyy="+key);
+	/* String inputText = "0"; */
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +18,15 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
 $(function() {
-	// 로그인 버튼을 눌렀을때
-	$('#loginBtn').click(function() {
+	var count = 0;
+	<%-- var key = '<%=session.getAttribute("key")%>';
+	$.each(key,function(key,value) {
+		var key = value.key;
+	}); --%>
+
+	// 로그인 버튼을 눌렀을때          
+	$('#loginBtn').click(function() {  
+		
 		// 폼값확인
 		if($('#id').val() == ""){
 			$('#loginMsg').html('아이디를 입력해주세요.');
@@ -25,34 +40,63 @@ $(function() {
 			$('#pass').focus();
 			return false;
 		} 
+/* 		if($('#inputText').val() == ""){
+			alert("이미지에 보이는 문자를 입력해주세요.")
+			$('#inputText').focus();
+			return false;
+			
+		}  */
 		
-		// 폼전송
+		// 폼전송                                                                                      
 		var id = $('#id').val();
 		var pass = $('#pass').val();
+		var inputText = $('#inputText').val();
 		$.ajax({
 			type : 'post',
 			url : '../member/loginAction',
 			data : {
 	        	id : id,
-	        	pass : pass
+	        	pass : pass,
+	        	inputText : inputText
 	        },
 	        dataType : "json",
 			contentType : "application/x-www-form-urlencoded;charset:utf-8",
-			success : function(d) {
+			success : function(d) {    
 	            if (d.success == 0) {
 	                $('#loginMsg').html("아이디와 비밀번호를 확인해주세요."); 
 	                $('#loginMsg').css("color", "red");
-	            } else if (d.success == 1){
-	            	location.href='../member/home';
+					count++;
+					if(count == 3){
+						var strDOM = ' <img src = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=<%=vkey%>" /> ';
+		                strDOM += '<input type="text" class="form-control" id="inputText" name="inputText" placeholder="이미지에 보이는 문자를 입력해주세요." style="font-size:0.8em;"><hr/>';
+	                	$('#div01').html(strDOM);
+	                	strDOM = "";
+	                	count = 2;
+					}
+					
+	            } 
+	            else if (d.success == 1){
+	            	if(d.checkFlag == 1){
+		            	location.href='../member/home';
+	            	}else if(d.checkFlag==0){
+	            		alert("정확한 문자 입력 실패");
+	            	}else if(d.checkFlag==2){
+	            		location.href='../member/home';
+	            	}
+	            		
+	            	
 	            } else if(d.success == -1){
-	            	$('#loginMsg').html("이메일 인증이 되어있지 않습니다. 인증 후 로그인 해주세요."); 
-	                $('#loginMsg').css("color", "red");
+		            	$('#loginMsg').html("이메일 인증이 되어있지 않습니다. 인증 후 로그인 해주세요."); 
+		                $('#loginMsg').css("color", "red");
 	            }
 	        },
-	        error : function(e) {
-				alert("실패" + e.status + " : " + e.statusText);
+	        error : function(e) {  
+				alert("실패ek" + e.status + " : " + e.statusText);
 			}
 		});
+		
+		
+
 	});
 });
 </script>
@@ -70,14 +114,15 @@ $(function() {
 <jsp:include page="/resources/common/nav.jsp"/>
 <div class="container">
 <form name="loginForm">
-	<!-- 로그인 처리 후 다시 돌아가야 할 페이지 URL -->
+	<!-- 로그인 처리 후 다시 돌아가야 할 페이지 URL -->      
 	<input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
 	<div style="width:1000px; height:auto; background-color:white; text-align:center; float:none; margin:0 auto;">
 		<div style="width:400px; background-color:white; text-align:center; float:none; margin:0 auto;">
 			<br /><br /><br />
 			<div class="logo">
-				<h4>로그인</h4>	
-				<br /><br />		
+				<h4>로그인</h4>	   
+				<br /><br /> 
+				<div id="div01"></div>
 			</div>	
 			<div>
 				<input type="text" class="form-control" id="id" name="id" placeholder="아이디를 입력하세요."
@@ -92,7 +137,7 @@ $(function() {
 				<button type="button" id="loginBtn" class="btn btn-primary btn-lg btn-block">로그인</button>
 			</div>
 			<div style="margin-top:10px;">
-				<div style="width:48%; display:inline-block;"><a id="a" href="../member/join" style="font-size:0.7em;">회원가입</a></div>
+				<div style="width:48%; display:inline-block;"><a id="a" href="../member/Captcha" style="font-size:0.7em;">회원가입</a></div>
 				<div style="font-size:0.7em; color:gray; display:inline-block;">｜</div>
 				<div style="width:46%; display:inline-block;"><a id="a" href="../member/find" style="font-size:0.7em;">ID/PW찾기</a></div>
 			</div>
