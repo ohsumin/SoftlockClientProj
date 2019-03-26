@@ -21,21 +21,16 @@
 <body style="background-color:#F5F6F9">
 <!-- Navigation -->
 <jsp:include page="/resources/common/navHp.jsp"/>
-<div class="container">
 <form >
 	<!-- 로그인 처리 후 다시 돌아가야 할 페이지 URL -->
-	<input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
-	<div style="width:1000px; height:500px; background-color:white; text-align:center; float:none; margin:0 auto;">
-		<div style="width:400px; background-color:white; text-align:center; float:none; margin:0 auto;">
-			<br /><br /><br />
-			<div class="logo">
-				<h4>메인페이지</h4>	 				
-			</div>	
-			
-		</div>
+	<input type="hidden" name="returnPage" value="" />
+	<div>
+	<img src="../resources/common/dook_hp_trans.png" alt="병원메인이미지"/>
+	
 	</div>
-</form><br />
-</div><br /><br /><br />
+		
+			
+</form>
 <!-- bottom -->
 <jsp:include page="/resources/common/footer.jsp"/>
 </body>
