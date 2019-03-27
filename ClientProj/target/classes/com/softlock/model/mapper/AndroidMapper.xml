@@ -32,13 +32,13 @@
 	</select>
 	
 	<select id="reservationPage" resultType="com.softlock.model.ReservationDTO" >
-		SELECT * FROM(SELECT Tb.*, rownum rNum FROM  ( 
+		
 	            SELECT *
 	              FROM reservation res, hospital hos
 	              WHERE res.resv_hp_idx = hos.hp_idx and res.resv_mem_idx=#{param3}
 	              ORDER BY resv_idx DESC
-	          )Tb
-	      )WHERE rNum BETWEEN #{param1} AND #{param2}
+	          
+	      
 	</select>
 	
 </mapper>
