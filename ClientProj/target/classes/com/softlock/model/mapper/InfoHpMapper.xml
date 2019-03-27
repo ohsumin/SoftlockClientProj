@@ -27,5 +27,22 @@
 	</select> -->
 	
 	
+	<select id="getCountAge" resultType="com.softlock.model.MemberDTO" parameterType="String">
+		SELECT 
+		SUBSTR((EXTRACT(YEAR FROM SYSDATE) - (DECODE(SUBSTR(mem_birth,7,1),'1', '19','2','19','20') || SUBSTR(mem_birth,3,2)) +101),-2,1) as mem_idx,count(*) as mem_birth
+		FROM  reservation, member
+		where reservation.resv_mem_idx = member.mem_idx
+		and reservation.resv_hp_idx = #{param1}
+		group by SUBSTR((EXTRACT(YEAR FROM SYSDATE) - (DECODE(SUBSTR(mem_birth,7,1),'1', '19','2','19','20') || SUBSTR(mem_birth,3,2)) +101),-2,1)
+		order by mem_idx asc
+	</select>
+	<select id="getWNum" resultType="String">
+	select count(*)
+		from reservation R, member M where R.resv_mem_idx = M.mem_idx and resv_hp_idx=#{param1} and mem_gender='w'
+	</select>
 	
+	<select id="getMNum" resultType="String">
+	select count(*)
+		from reservation R, member M where R.resv_mem_idx = M.mem_idx and resv_hp_idx=#{param1} and (mem_gender='M' or mem_gender='m')
+	</select>
 </mapper>

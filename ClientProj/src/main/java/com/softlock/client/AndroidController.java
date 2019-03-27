@@ -59,10 +59,31 @@ public class AndroidController {
 		String hp_night = req.getParameter("hp_night");
 		String hp_weekend = req.getParameter("hp_weekend");
 		String hp_name = req.getParameter("hp_name");
-				
+		
+		if(hp_type.equals("전체과목"))
+			hp_type = "";
+		if(hp_night.equals(""))
+			hp_night = "0";
+		if(hp_weekend.equals(""))
+			hp_weekend = "0";
+		
+		HospitalDTO hDTO = new HospitalDTO();
+		hDTO.setHp_type(hp_type);
+		hDTO.setHp_night(hp_night);
+		hDTO.setHp_wkend(hp_weekend);
+		hDTO.setHp_name(hp_name);
+		
+		System.out.println(hDTO.getHp_type());
+		System.out.println(hDTO.getHp_night());
+		System.out.println(hDTO.getHp_wkend());
+		System.out.println(hDTO.getHp_name());
+		
 		System.out.println("searchHp호출");
-		ArrayList<HospitalDTO> searchList = sqlSession.getMapper(AndroidImpl.class).searchHp(hp_type, hp_night, hp_weekend, hp_name);
-		System.out.println(searchList.size());
+		ArrayList<HospitalDTO> searchList = sqlSession.getMapper(AndroidImpl.class).searchHp(hDTO);
+		for(int i=0; i<searchList.size(); i++) {
+			System.out.println(searchList.get(i).getHp_idx()+"/"+searchList.get(i).getHp_name());
+		}
+		
 		
 		return searchList;
 	}

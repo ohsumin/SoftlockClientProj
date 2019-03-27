@@ -246,6 +246,40 @@ $(function() {
 			</div>
 		<br />
 	</div><br />
+	
+	<!-- 각각의 병원 통계들어가는 박스 -->                                    
+	<div class="jumbotron" style="text-align: center; width:800px; height:350px; background-color:white; float:none; margin:0 auto; padding:0px;">
+		
+		<div style="position:relative; top:30px; width:800px; height:200px; margin-left:70px; text-align:left;">
+		<span style="font-weight:bold; font-size:0.9em; margin-top:500px;">병원통계</span><br /><br />
+			<div>
+				<div class="row">
+					<jsp:include page="/WEB-INF/views/member/info_hp_charts.jsp"/>
+					
+					
+					<jsp:include page="/WEB-INF/views/member/info_hp_charts1.jsp"/>
+				</div>
+			</div>
+		</div>
+	</div>   
+	
+	
+	<!-- <br /><br /> -->
+	
+	<div class="jumbotron" style="text-align: center; width:800px; height:50px; background-color:white; float:none; margin:0 auto; padding:0px;">
+		<div class="row" style="margin-left: 16%;"> 
+			<strong>남녀 비율</strong>
+			<div style="margin-left: 43%;">              
+			<strong>연령대별 방문</strong>
+		</div>
+		</div>
+		
+		
+	</div>
+	
+	<br />
+	
+	
 	<!-- 병원 후기 들어가는 박스 -->
 	<div class="jumbotron" style="width:800px; height:850px; background-color:white; 
 		float:none; margin:0 auto; padding:0px;">

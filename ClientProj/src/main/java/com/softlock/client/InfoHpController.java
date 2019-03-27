@@ -3,7 +3,6 @@ package com.softlock.client;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.MidiDevice.Info;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.InfoHpImpl;
-import com.softlock.model.ReservationDTO;
+import com.softlock.model.MemberDTO;
 import com.softlock.model.ReviewDTO;
 import com.softlock.model.TreattimeDTO;
 
@@ -56,6 +55,33 @@ public class InfoHpController {
 		//후기 평균점수가져오기
 		String rvwAvg = sqlSession.getMapper(InfoHpImpl.class).getRvwAvg(hp_idx);
 		model.addAttribute("rvwAvg", rvwAvg);
+		
+		
+		//병원 상세정보페이지의 통계에 쓰일 함수
+		String wCount = sqlSession.getMapper(InfoHpImpl.class).getWNum(hp_idx);
+		String mCount = sqlSession.getMapper(InfoHpImpl.class).getMNum(hp_idx);
+		model.addAttribute("wCount",wCount);
+		model.addAttribute("mCount",mCount);
+		System.out.println("mCount="+mCount);
+		
+		
+		ArrayList<MemberDTO> mDTO = new ArrayList<MemberDTO>();
+		mDTO = sqlSession.getMapper(InfoHpImpl.class).getCountAge(hp_idx);
+		System.out.println(mDTO.size());
+		//for(int i=0; i<mDTO.size(); i++) {
+		String mem1 = mDTO.get(0).getMem_birth();
+		String mem2 = mDTO.get(1).getMem_birth();
+		String mem3 = mDTO.get(2).getMem_birth();
+		String mem4 = mDTO.get(3).getMem_birth();
+		String mem5 = mDTO.get(4).getMem_birth();
+		model.addAttribute("mem1", mem1);
+		model.addAttribute("mem2", mem2);
+		model.addAttribute("mem3", mem3);
+		model.addAttribute("mem4", mem4);
+		model.addAttribute("mem5", mem5);
+		//}
+		model.addAttribute("mDTO", mDTO);
+		
 		
 		return "member/info_hp";
 	}
