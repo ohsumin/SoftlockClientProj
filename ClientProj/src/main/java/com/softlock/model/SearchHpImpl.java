@@ -11,5 +11,5 @@ public interface SearchHpImpl {
 	// 야간진료병원 검색
 	public ArrayList<HospitalDTO> searchHpNW(String type_search, String toggleNight, String toggleWeekend);
 	// 주말진료병원 검색
-	public ArrayList<HospitalDTO> searchHpWeekend(String type_search, String toggleWeekend);
+	public ArrayList<HospitalDTO> searchHpWeekend(String type_search, String toggleWeekend);	
 }

@@ -25,13 +25,14 @@ public class HospitalDTO {
    private String hp_type; // 진료과 추가
    private String hp_stored_filename;
    private int virtualNum; // 가상번호컬럼 추가
+   private int score; // 점수 추가
    
    public HospitalDTO() {}
 
    public HospitalDTO(int hp_idx, String hp_id, String hp_pw, String hp_name, String hp_num, String hp_username,
          String hp_email, String hp_phone, String hp_address, String hp_night, String hp_wkend, String hp_intro,
          String hp_notice, String hp_ori_filename, String hp_perm, Date hp_regidate, String hp_hpphone,
-         String hp_address2, String hp_type, String hp_stored_filename, int virtualNum) {
+         String hp_address2, String hp_type, String hp_stored_filename, int virtualNum, int score) {
       super();
       this.hp_idx = hp_idx;
       this.hp_id = hp_id;
@@ -56,6 +57,14 @@ public class HospitalDTO {
       this.virtualNum = virtualNum;
     }
 
+   public int getScore() {
+      return score;
+   }
+   
+   public void setScore(int score) {
+      this.score = score;
+   }
+   
    public int getHp_idx() {
       return hp_idx;
    }

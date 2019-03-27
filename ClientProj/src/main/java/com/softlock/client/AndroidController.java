@@ -60,8 +60,9 @@ public class AndroidController {
 		String hp_weekend = req.getParameter("hp_weekend");
 		String hp_name = req.getParameter("hp_name");
 				
+		System.out.println("searchHp호출");
 		ArrayList<HospitalDTO> searchList = sqlSession.getMapper(AndroidImpl.class).searchHp(hp_type, hp_night, hp_weekend, hp_name);
-		//searchList
+		System.out.println(searchList.size());
 		
 		return searchList;
 	}

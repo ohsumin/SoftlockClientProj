@@ -31,7 +31,7 @@ public class SearchHpController {
 	public ArrayList<HospitalDTO> searchHpType(HttpServletRequest req, HttpSession session) {
 		
 		String hp_type = req.getParameter("hp_type");
-		
+				
 		ArrayList<HospitalDTO> searchList = (ArrayList<HospitalDTO>) sqlSession.getMapper(SearchHpImpl.class).searchHpType(hp_type);
 		
 		return searchList;
