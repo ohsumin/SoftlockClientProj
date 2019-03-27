@@ -43,7 +43,7 @@ public interface AppMemberImpl {
 	//public int reserMemCount(int resv_mem_idx);
 	//public int reserCount(int resv_mem_idx);
 	//start와 end를 파라미터로 받아 게시물 가져오기
-	public ArrayList<ReservationDTO> reservationPage(int resv_idx);	
+	//public ArrayList<ReservationDTO> reservationPage(int resv_idx);	
 	//public ArrayList<ReservationDTO> reserPage(int start, int end, int resv_idx);	
 	//예약 삭제 처리하기
 	//public void reserdelete(String resv_idx);

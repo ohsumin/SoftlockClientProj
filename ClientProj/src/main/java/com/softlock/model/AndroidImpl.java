@@ -9,4 +9,6 @@ public interface AndroidImpl {
 	
 	public ArrayList<HospitalDTO> searchHp(HospitalDTO hDTO);
 	
+	public ArrayList<ReservationDTO> reservationPage(int resv_idx);
+	
 }
