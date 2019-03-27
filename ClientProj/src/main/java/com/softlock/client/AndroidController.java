@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.softlock.model.AndroidImpl;
 import com.softlock.model.HospitalDTO;
+import com.softlock.model.MemberDTO;
+import com.softlock.model.MemberImpl;
 
 @Controller
 public class AndroidController {
@@ -24,7 +27,7 @@ public class AndroidController {
 	
 	@RequestMapping("/Android/join")
 	@ResponseBody
-	public Map<String, Object> join(HttpServletRequest req){
+	public Map<String, Object> join(HttpServletRequest req, HttpSession session){
 		
 		String mem_id = req.getParameter("mem_id"); 
 		String mem_pw = req.getParameter("mem_pw");
@@ -45,7 +48,18 @@ public class AndroidController {
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		sqlSession.getMapper(AndroidImpl.class).memjoinAction(mem_id, mem_pw, mem_name, mem_birth, mem_phone, mem_gender, mem_email, mem_auth);
+		// 회원가입여부 확인
+		int isUser = sqlSession.getMapper(MemberImpl.class).isUserId(mem_id);
+		// 만약 회원가입이 되어있지 않으면
+		if(isUser != 1) {
+			// 회원가입
+			sqlSession.getMapper(AndroidImpl.class).memjoinAction(mem_id, mem_pw, mem_name, mem_birth, mem_phone, mem_gender, mem_email, mem_auth);
+		} 	
+		// 로그인
+		MemberDTO vo = sqlSession.getMapper(MemberImpl.class).login(mem_id, mem_pw);
+		session.setAttribute("memberInfo", vo);
+		
+		System.out.println(((MemberDTO)session.getAttribute("memberInfo")).getMem_name());
 		
 		map.put("isSuccess", "success");
 		return map; 

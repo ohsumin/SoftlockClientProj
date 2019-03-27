@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.softlock.model.GlobalDicDTO;
 import com.softlock.model.HospitalDTO;
-import com.softlock.model.InfoHpImpl;
 import com.softlock.model.MemberDTO;
 import com.softlock.model.MemberImpl;
 import com.softlock.model.ReservationDTO;
@@ -163,11 +162,11 @@ public class MemberController {
         }		
 		
 	}
-/*	@RequestMapping("/member/join")
+	@RequestMapping("/member/join")
 	public String memJoin() {
 		 
 		return "member/mem_join";
-	}*/
+	}
 	
 	@RequestMapping("/member/login")
 	public String memLogin(HttpServletRequest req, HttpSession session, HttpServletResponse resp) throws IOException {
