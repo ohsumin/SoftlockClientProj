@@ -35,7 +35,7 @@ import com.softlock.model.UserMailSendService;
 import com.softlock.model.UserSearchService;
 
 @Controller
-public class MemberController {
+public class MemberController { 
 	
 	@Autowired
 	private SqlSession sqlSession;

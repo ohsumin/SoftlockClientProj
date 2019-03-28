@@ -63,11 +63,11 @@ public class ResvController {
 		TreattimeDTO tDTO = sqlSession.getMapper(ResvImpl.class).getTime(hp_idx, dy);
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(tDTO.getTreat_open());
-		System.out.println(tDTO.getTreat_open());
+		System.out.println(tDTO.getTreat_close());
 		map.put("open", tDTO.getTreat_open());
 		map.put("close", tDTO.getTreat_close());
 		
-		return map;
+		return map; 
 	}
 	
 	@RequestMapping("/member/getResv")
@@ -77,6 +77,9 @@ public class ResvController {
 		String hp_idx = req.getParameter("hp_idx");	
 		String date = req.getParameter("date");
 		ArrayList<ReservationDTO> resvList = sqlSession.getMapper(ResvImpl.class).getResv(hp_idx, date);
+		for(int i=0; i<resvList.size(); i++) {
+			resvList.get(i).getResv_time();
+		}
 		
 		return resvList;
 	}

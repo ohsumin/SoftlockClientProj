@@ -68,6 +68,10 @@ function func() {
     	   rvw_hp_idx : $('#rvw_hp_idx').val(),
     	   comment : $('#comment').val(),
        },
+       beforeSend : function(xhr)
+       {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+           xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+       },
        contentType : "text/html;charset:utf-8",
        success: function(d) {
            //alert('후기성공');

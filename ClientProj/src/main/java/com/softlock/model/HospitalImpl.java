@@ -23,6 +23,9 @@ public interface HospitalImpl{
      
 	//병원회원 로그인 추상메소드
 	public HospitalDTO loginHp(String id, String pass);
+	
+	// 시큐리티로 로그인할때 로그인처리
+	public HospitalDTO loginHpid(String id);
  
      //회원탈퇴 처리
    	public int delete(String mem_id);

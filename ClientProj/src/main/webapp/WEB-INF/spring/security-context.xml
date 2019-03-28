@@ -2,95 +2,43 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
-
-	<!-- 1단계 : 시큐리티가 제공하는 디폴트 로그인 페이지 사용 -->
-	<!-- 
-	intercept-url : 감시해야할 url과 접근가능한 권한을 정의한다.
-		즉, 권한이 없다면 해당 요청까지 들어가지 못하고 중간에 인터셉트 된다.
-	pattern : 권한을 적용할 URL 요청명
-	access : 접근권한 설정
-		- hasRole('권한명') : 해당권한만 접근가능함
-		- hasAnyRole('권한1','권한2',...) : 여러권한중 1개만 획득하면 접근가능함
-		- permitAll : 권한없이 누구나 접근가능함
-	form-login : 로그인 페이지에 대한 요소지정. 여기서는 디폴트 페이지를 사용하므로 필요없음. 
-	logout : 로그아웃 페이지의 요소지정. 역시나 여기서는 디폴트 사용함.
-	 -->
-<!-- 	<security:http>
-		<security:intercept-url pattern="/security1/**" access="hasRole('USER')"/>
-		<security:intercept-url pattern="/**" access="permitAll"/>
-		<security:form-login/>
-		<security:logout/>
-	</security:http>
-	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="kosmo" password="1234" authorities="ROLE_USER"/>
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager> -->
-	
-	<!-- 2단계  : 로그인 화면 커스터마이징 하기 -->
-	<!-- 
-	form-login 하위속성
-			login-page : 커스텀로그인 페이지를 지정
-			default-target-url : 로그인에 성공했을때 기본으로 이동할 페이지 지정
-			authentication-failure-url : 로그인에 실패했을때 이동할 페이지 지정
-			username-parameter : 로그인 아이디폼의 name속성
-			password-parameter : 로그인 패스워드폼의 name속성
-			※아이디/패스워드는 반드시 input태그의 name속성과 일치해야 한다. 
-	logout 하위속성
-		logout-url : 로그아웃시 사용될  URL 요청명
-		logout-success-url : 로그아웃에 성공했을때 이동할 페이지
-	access-denied-handler 하위속성 
-		error-page : 로그인하였으나 권한이 없는 페이지를 요청할때 이동할 페이지
-	※intercept-url : 해당 속성을 지정할때는 디테일한 권한(즉 작은권한)을 먼저 지정한 후 아래로 내려가면서 전체에 대한 권한을 지정해야 한다.
-	※권한부여를 위한 권한명을 지정할때는 일반적으로 "ROLE_명칭" 형태로 제작한다.
-	 -->
-	<security:http>
-		<security:intercept-url pattern="/client/hospital/hpModify" access="hasAnyRole('HOSPITAL, ADMIN')"/>
-		<!-- <security:intercept-url pattern="/security2/admin/**" access="hasRole('ADMIN')"/>
-		<security:intercept-url pattern="/security2/**" access="hasAnyRole('USER, ADMIN')"/>
-		<security:intercept-url pattern="/**" access="permitAll"/> -->
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
-		<security:form-login
-			login-page="/client/hospital/login"
-			default-target-url="/client/hospital/home"
-			authentication-failure-url="/client/hospital/login"
-			username-parameter="id"
-			password-parameter="pass"/> 
-		<security:logout
-			logout-url="/client/hospital/logout"
-			logout-success-url="/client/hospital/home"/>
-		<security:access-denied-handler
-			error-page="/security2/accessDenied.do"/>
-	</security:http>
-	<!-- 시큐리티2단계에서 사용 : 권한 및 접속계정을 해당 파일에서 지정후 사용함. -->
-	<!-- <security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="kosmo_user" password="1111" authorities="ROLE_USER"/>
-				<security:user name="kosmo_admin" password="2222" authorities="ROLE_ADMIN"/>
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager> -->
-	
-	<!-- 시큐리티3단계에서 사용 : 권한 및 접속계정을 DB를 사용하여 처리함 -->
 	<!-- 
 	jdbc-user-service 하위속성 
 		data-source-ref : DB연결을 위한 dataSource를 지정한다. 해당 연결은 반드시 root-context.xml에서 해야한다.(servlet-context.xml에서는 할 수 없음)
 		role-prefix : "ROLE_"와 같은 권한명의 접두어를 지정한다. 만약 해당 항목을 "ROLE_"라고 지정한다면 DB에는 "USER" 혹은 "ADMIN"처럼 접두어를 제거한 상태로 권한명이 입력되어야 한다.
-		users-by-username-query : 아이디를 이용하여 사용자 정보를 가져오는 쿼리문을 작성한다.
-		authorities-by-username-query : 아이디를 이용하여 권한정보를 가져오는 쿼리문을 작성한다.
+		users-by-username-query : 아이디를 이용하여 사용자 정보를 가져오는 쿼리문을 작성한다.(ID에따른 비번 일치여부 확인)
+		authorities-by-username-query : 아이디를 이용하여 권한정보를 가져오는 쿼리문을 작성한다.(로그인에 성공한 사용자의 권한을 확인하기위해)
 	 -->
+	<security:http>
+		<security:intercept-url pattern="/hospital/login" access="permitAll"/>
+		<security:intercept-url pattern="/hospital/hpModify" access="hasAnyRole('ADMIN')"/>
+		<security:intercept-url pattern="/**" access="permitAll"/>
+		
+		<!-- default-target-url는 언제가는거지??? -->
+		
+		<!-- login-processing-url="/nakjalogin" -->
+		<security:form-login login-page="/security/login_secu"
+						default-target-url="/hospital/home" 
+						authentication-failure-url="/security/login_secu?error"
+						username-parameter="id"
+						password-parameter="pass" />
+		<security:logout logout-url="/security/logout"
+						logout-success-url="/hospital/home" />
+		<security:access-denied-handler error-page="/security/hp_Denied"/>
+	</security:http>
+	
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service 
 				data-source-ref="dataSource"
 				role-prefix=""
-				users-by-username-query="SELECT user_id, user_pw, enabled FROM security_admin WHERE user_id=?"
-				authorities-by-username-query="SELECT user_id, authority FROM security_admin WHERE user_id=?"/>
+				users-by-username-query="SELECT hp_id, hp_pw, enabled FROM hospital WHERE hp_id=?"
+				authorities-by-username-query="SELECT hp_id, authority FROM hospital WHERE hp_id=?"/>
 		</security:authentication-provider>
-	</security:authentication-manager>	
+	</security:authentication-manager>		
+	
+		
 </beans>

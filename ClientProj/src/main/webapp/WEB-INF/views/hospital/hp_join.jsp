@@ -43,6 +43,10 @@ $(function(){
 	      data : {
 	         searchStr : $('#hp_name').val()
 	      },
+	      beforeSend : function(xhr)
+          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+          },
 	      dataType : "json",
 	      contentType : "text/html;charset:utf-8;",
 	      success:function(d){   
@@ -82,6 +86,10 @@ $(function() {
 	              url : '../hospital/checkId', 
 	              data : {
 	                 hp_id : hp_id
+	              },
+	              beforeSend : function(xhr)
+	              {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	                  xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	              },
 	              dataType : "json",
 	              contentType : "application/x-www-form-urlencoded;charset:utf-8",

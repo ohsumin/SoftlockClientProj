@@ -16,6 +16,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.softlock.model.Coolsms;
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
 import com.softlock.model.MemberDTO;
-import com.softlock.model.MemberImpl;
 import com.softlock.model.PagingUtil;
 import com.softlock.model.ReservationDTO;
 import com.softlock.model.TreattimeDTO;
@@ -54,6 +55,13 @@ public class HospitalController {
 	public String hpLogin() {
 		
 		return "/hospital/hp_login";
+	}
+	
+	// 시큐리티 인증 실패시
+	@RequestMapping("/hospital/accessDenied")
+	public String accessDenied() {
+		
+		return "security/accessDenied";
 	}
 	
 	// 아이디중복확인
@@ -175,77 +183,90 @@ public class HospitalController {
    //마이페이지 진입
    @RequestMapping("/hospital/hpModify")
    public String hpModify(Model model, HttpServletRequest req,
-         HttpSession session) {
-  
-   //병원회원상세보기 읽기 및 수정 동시에 진행함   
-   HospitalDTO hospitalInfo = (HospitalDTO)session.getAttribute("hospitalInfo");
-   System.out.println("세션확인" +  hospitalInfo.getHp_idx());
-   int hp_idx = hospitalInfo.getHp_idx();
-    
-   //병원상세정보 읽어오기 일반정보  
-   HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
-         .viewModify(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
-  
-    //병원상세정보 읽어오기 진료시간
-   ArrayList<TreattimeDTO> treatDTOs = sqlSession.getMapper(HospitalImpl.class).viewModifytime(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
-   System.out.println("개수개수" + treatDTOs.size());
-   System.out.println(treatDTOs.get(0).getTreat_open());
-  
-   model.addAttribute("dto", dto);
-   model.addAttribute("treatDTOs",treatDTOs);
-   
-   String tab = req.getParameter("tab");
-   //회원리스트보기
-   int totalRecordCount = sqlSession
-         .getMapper(HospitalImpl.class)
-         .getTotalCount(dto.getHp_idx());
-   ReservationDTO reservationDTO = new ReservationDTO();
-   String addQueryString = "";
-   
-   //페이지 처리를 위한 설정값
-   int pageSize = 4;
-   int blockPage = 4;
-   
-   //전체페이지수계산하기
-   int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
+         HttpSession session, Authentication authentication) {
+	   
 
-   //시작 및 끝 rownum 구하기
-   int nowPage = req.getParameter("nowPage")==null ? 1 :
-      Integer.parseInt(req.getParameter("nowPage"));
-   int start = (nowPage-1) * pageSize + 1;
-   int end = nowPage * pageSize;
-   System.out.println("나우페이지="+nowPage);//읽음
-   ArrayList<ReservationDTO> lists = sqlSession
-         .getMapper(HospitalImpl.class).listPage(start, end, hp_idx);
-
-   int virtualNum = 0;
-   int countNum = 0;
-   for(ReservationDTO reserDTO : lists) {
-      reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
-      //reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
-      
-      //가상번호
-      virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
-      reserDTO.setVirtualNum(virtualNum);
-   }
-   
-
-
-   //페이지 처리를 위한 처리부분
-   String pagingImg = PagingUtil.pagingImg(totalRecordCount,
-         pageSize, blockPage, nowPage,
-         req.getContextPath()+"/hospital/hpModify?"+addQueryString,tab);
-
-   model.addAttribute("totalRecordCount", totalRecordCount);
-   model.addAttribute("pagingImg", pagingImg);
-   model.addAttribute("tab", tab);
-   model.addAttribute("lists", lists);
-   model.addAttribute("nowPage", nowPage);
-   
-   System.out.println("nowPge");
-   System.out.println("병원인덱스" + dto.getHp_idx());
-   System.out.println("총게시물수222=" + totalRecordCount);
-   return "hospital/hp_myPage";
+	   if((HospitalDTO)session.getAttribute("hospitalInfo") == null) {
+		   System.out.println("hpModify진입");
+		   Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		   User user = (User)principal;
+		   String username = user.getUsername();
+		   
+		   System.out.println(username);
+			
+		   HospitalDTO vo = sqlSession.getMapper(HospitalImpl.class).loginHpid(username);
+		   session.setAttribute("hospitalInfo", vo);
+	   }
+	   
+	   //병원회원상세보기 읽기 및 수정 동시에 진행함   
+	   HospitalDTO hospitalInfo = (HospitalDTO)session.getAttribute("hospitalInfo");
+	   System.out.println("세션확인" +  hospitalInfo.getHp_idx());
+	   int hp_idx = hospitalInfo.getHp_idx();
+	    
+	   //병원상세정보 읽어오기 일반정보  
+	   HospitalDTO dto = sqlSession.getMapper(HospitalImpl.class)
+	         .viewModify(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
+	  
+	    //병원상세정보 읽어오기 진료시간
+	   ArrayList<TreattimeDTO> treatDTOs = sqlSession.getMapper(HospitalImpl.class).viewModifytime(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx());
+	   System.out.println("개수개수" + treatDTOs.size());
+	   System.out.println(treatDTOs.get(0).getTreat_open());
+	  
+	   model.addAttribute("dto", dto);
+	   model.addAttribute("treatDTOs",treatDTOs);
+	   
+	   String tab = req.getParameter("tab");
+	   //회원리스트보기
+	   int totalRecordCount = sqlSession
+	         .getMapper(HospitalImpl.class)
+	         .getTotalCount(dto.getHp_idx());
+	   ReservationDTO reservationDTO = new ReservationDTO();
+	   String addQueryString = "";
+	   
+	   //페이지 처리를 위한 설정값
+	   int pageSize = 4;
+	   int blockPage = 4;
+	   
+	   //전체페이지수계산하기
+	   int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
+	
+	   //시작 및 끝 rownum 구하기
+	   int nowPage = req.getParameter("nowPage")==null ? 1 :
+	      Integer.parseInt(req.getParameter("nowPage"));
+	   int start = (nowPage-1) * pageSize + 1;
+	   int end = nowPage * pageSize;
+	   System.out.println("나우페이지="+nowPage);//읽음
+	   ArrayList<ReservationDTO> lists = sqlSession
+	         .getMapper(HospitalImpl.class).listPage(start, end, hp_idx);
+	
+	   int virtualNum = 0;
+	   int countNum = 0;
+	   for(ReservationDTO reserDTO : lists) {
+	      reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
+	      //reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
+	      
+	      //가상번호
+	      virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+	      reserDTO.setVirtualNum(virtualNum);
+	   }
+	   
+	
+	
+	   //페이지 처리를 위한 처리부분
+	   String pagingImg = PagingUtil.pagingImg(totalRecordCount,
+	         pageSize, blockPage, nowPage,
+	         req.getContextPath()+"/hospital/hpModify?"+addQueryString,tab);
+	
+	   model.addAttribute("totalRecordCount", totalRecordCount);
+	   model.addAttribute("pagingImg", pagingImg);
+	   model.addAttribute("tab", tab);
+	   model.addAttribute("lists", lists);
+	   model.addAttribute("nowPage", nowPage);
+	   
+	   System.out.println("nowPge");
+	   System.out.println("병원인덱스" + dto.getHp_idx());
+	   System.out.println("총게시물수222=" + totalRecordCount);
+	   return "hospital/hp_myPage";
    }
    
 	

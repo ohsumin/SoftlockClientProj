@@ -114,6 +114,10 @@ $(function() {
 	        data : {
 	        	hp_type : "내과"
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -186,6 +190,10 @@ $(function() {
 	        data : {
 	        	hp_type : "안과"
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -255,6 +263,10 @@ $(function() {
 	        data : {
 	        	hp_type : "치과"
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -324,6 +336,10 @@ $(function() {
 	        data : {
 	        	hp_type : "산부인과"
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -393,6 +409,10 @@ $(function() {
 	        data : {
 	        	hp_type : "이비인후과"
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -462,6 +482,10 @@ $(function() {
 	        data : {
 	        	hp_type : "피부과"
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -524,6 +548,10 @@ $(function() {
 	        data : {
 	        	searchStr : searchStr
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        dataType : "json",
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
@@ -600,6 +628,10 @@ $(function() {
 	        	toggleNight : toggleNight,
 	        	toggleWeekend : toggleWeekend
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
 	        	var strHTML = "";
@@ -673,6 +705,10 @@ $(function() {
 	        	toggleNight : toggleNight,
 	        	toggleWeekend : toggleWeekend
 	        },
+	        beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 	        contentType : "application/x-www-form-urlencoded;charset:utf-8",
 	        success : function(d) {
 	        	var strHTML = "";
