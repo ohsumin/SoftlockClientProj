@@ -25,7 +25,7 @@ public class AppMemberController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping("/member/reservationlist")
+	/*@RequestMapping("/member/reservationlist")
 	@ResponseBody
 	public ArrayList<ReservationDTO> memberModify(Model model, HttpServletRequest req,
 			HttpSession session) {
@@ -45,7 +45,7 @@ public class AppMemberController {
 	    map.put("reservationDTO", reservationDTO);
 		
 	    return reservationDTO;
-	}
+	}*/
 	
 	
 }
