@@ -11,4 +11,8 @@ public interface AndroidImpl {
 	
 	public ArrayList<ReservationDTO> reservationPage(int resv_idx);
 	
+	public ArrayList<ReservationDTO> reservationPage2(int resv_idx);
+	
+	public ArrayList<HospitalDTO> clipRecordPage(int clip_mem_idx);
+	
 }

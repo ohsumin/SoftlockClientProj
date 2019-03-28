@@ -126,4 +126,47 @@ public class AndroidController {
 		
 	    return reservationDTO;
 	}
+	
+	@RequestMapping("/Android/reservationlist2")
+	@ResponseBody
+	public ArrayList<ReservationDTO> memberModify2(Model model, HttpServletRequest req,
+			HttpSession session) {
+		int mem_idx = ((MemberDTO)session.getAttribute("memberInfo")).getMem_idx();
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		//회원정보 가져오기
+		MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
+				.view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
+		model.addAttribute("dto", dto);
+		
+		
+	
+		ArrayList<ReservationDTO> reservationDTO = sqlSession.getMapper(AndroidImpl.class).reservationPage2(mem_idx);
+		
+	    map.put("reservationDTO", reservationDTO);
+		
+	    return reservationDTO;
+	}
+	
+	@RequestMapping("/Android/memberClip")
+	@ResponseBody
+	public ArrayList<HospitalDTO> memberClip(Model model, HttpServletRequest req,
+			HttpSession session) {
+		
+		int mem_idx = ((MemberDTO)session.getAttribute("memberInfo")).getMem_idx();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		//회원정보 가져오기
+		MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
+				.view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
+		model.addAttribute("dto", dto);
+				
+		
+		ArrayList<HospitalDTO> HospitalDTO = sqlSession.getMapper(AndroidImpl.class).clipRecordPage(mem_idx);
+		
+		map.put("HospitalDTO", HospitalDTO);
+		
+		return HospitalDTO;
+	}
 }

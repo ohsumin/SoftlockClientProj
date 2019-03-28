@@ -31,14 +31,32 @@
 		</choose>
 	</select>
 	
+	<!-- 예약내역리스트 -->
 	<select id="reservationPage" resultType="com.softlock.model.ReservationDTO" >
 		
-	            SELECT *
-	              FROM reservation res, hospital hos
-	              WHERE res.resv_hp_idx = hos.hp_idx and res.resv_mem_idx=#{param3}
-	              ORDER BY resv_idx DESC 
-	          
-	      
+		select * from reservation RESV, hospital HOSP 
+			where RESV.resv_hp_idx=HOSP.hp_idx 
+				and RESV.resv_mem_idx=#{param1} and resv_perm !='진료완료'		
+	</select>
+	
+	<!-- 진료완료 리스트 -->
+	<select id="reservationPage2" resultType="com.softlock.model.ReservationDTO" >
+		
+		select * from reservation RESV, hospital HOSP 
+		where RESV.resv_hp_idx=HOSP.hp_idx 
+			and RESV.resv_mem_id=#{param1} and resv_perm ='진료완료'		
+	</select>
+	
+	<!-- 스크랩  -->
+	<select id="clipRecordPage" resultType="com.softlock.model.HospitalDTO" >
+		
+		 	 
+		       select * from clip CLI, hospital HOSP
+		        	 where CLI.clip_hp_idx = HOSP.hp_idx 
+		        	 	and CLI.clip_mem_idx=#{param1}
+		       			  order by clip_idx desc
+		         
+		     
 	</select>
 	
 </mapper>
