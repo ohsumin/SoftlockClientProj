@@ -60,6 +60,10 @@ var idV = "";
 var idSearch_click = function(){
 	$.ajax({
 		type:"POST",
+		beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
 		url:"${pageContext.request.contextPath}/member/memSearch?mem_name="
 				+$('#mem_name').val().toString()+"&mem_phone="+$('#mem_phone').val().toString(),
 		success:function(data){

@@ -206,7 +206,7 @@
 		   <version>2.2</version>
 		</dependency>
 		
-		<!-- SPRING Security를 사용하기 위한 의존설정 -->
+		<!-- Spring Security를 사용하기 위한 의존설정 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>

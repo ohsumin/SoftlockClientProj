@@ -7,6 +7,6 @@
 <title>타이틀</title>
 </head>
 <body>
-
+병원회원만 진입 가능
 </body>
 </html>
