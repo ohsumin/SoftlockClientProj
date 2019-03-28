@@ -67,7 +67,7 @@ public class ResvController {
 		map.put("open", tDTO.getTreat_open());
 		map.put("close", tDTO.getTreat_close());
 		
-		return map;
+		return map; 
 	}
 	
 	@RequestMapping("/member/getResv")
