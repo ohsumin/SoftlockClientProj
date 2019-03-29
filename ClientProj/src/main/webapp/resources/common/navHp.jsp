@@ -19,7 +19,7 @@
 
   <div class="collapse navbar-collapse" id="navbarColor03">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active" style="margin-left:100px;">
+     <!--  <li class="nav-item active" style="margin-left:100px;">
         <a class="nav-link" href="#">병원찾기 <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" style="margin-left:50px;">
@@ -27,7 +27,7 @@
       </li>
       <li class="nav-item" style="margin-left:50px;">
         <a class="nav-link" href="#">서비스소개</a>
-      </li>
+      </li> -->
     </ul>
     <%if(session.getAttribute("hospitalInfo")==null) {%>
     <button type="button" class="btn btn-outline-warning" onclick="location.href='../hospital/login';">로그인</button>

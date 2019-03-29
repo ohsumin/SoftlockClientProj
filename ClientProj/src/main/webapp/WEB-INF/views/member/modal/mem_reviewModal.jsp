@@ -99,9 +99,9 @@ function func() {
         </button>
       </div>
       <div class="modal-body">
-        <input type="hid den" id="rvw_score" name="rvw_score"/>
-		<input type="hid den" id="rvw_mem_idx" name="rvw_mem_idx" value="${memberInfo.mem_idx }"/>
-		<input type="hid den" id="rvw_hp_idx" name="rvw_hp_idx"/>
+        <input type="hidden" id="rvw_score" name="rvw_score"/>
+		<input type="hidden" id="rvw_mem_idx" name="rvw_mem_idx" value="${memberInfo.mem_idx }"/>
+		<input type="hidden" id="rvw_hp_idx" name="rvw_hp_idx"/>
 		<div class="starRev" style="margin-top:10px;">
 		병원점수 :
 	        <span class="starR" name="s1">1</span>
