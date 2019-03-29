@@ -390,6 +390,9 @@ public class HospitalController {
         	if(req.getParameter(dyopen[i])!=null) {
         		sqlSession.getMapper(HospitalImpl.class).treatmodifyAction(idx,
     					treat_dy[i], req.getParameter(dyopen[i]), req.getParameter(dyclose[i]));
+        	} else {
+        		sqlSession.getMapper(HospitalImpl.class).treatmodifyAction(idx,
+    					treat_dy[i], "오픈시간", "마감시간");
         	}
 		}
        

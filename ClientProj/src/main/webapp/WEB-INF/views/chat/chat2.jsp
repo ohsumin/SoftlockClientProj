@@ -64,6 +64,8 @@ function sendMessage() {
 	    
     //입력창비우기
     $("#inputMessage").val("");
+    
+    location.href = "#gotobottom";
 }
 
 //event 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
@@ -99,8 +101,11 @@ function onMessage(event) {
         	}
         	else {
         		//msg = makeBalloon(sender, content);    		
-    			$("#messageWindow").append("<div>"+sender+" : "+content+"<div>");
+    			/* $("#messageWindow").append("<div>"+sender+" : "+content+"<div>");
     			$("#messageWindow").scrollTop = $("#messageWindow").scrollHeight;
+    			document.body.scrollTop = document.body.scrollHeight; 
+    			messageWindow.scrollTop = messageWindow.scrollHeight; */
+        		location.href = "#gotobottom";
         	}   		
     	}   	    		
     }
@@ -148,5 +153,6 @@ function onClose(event) {
 		<div>상대가보낸거</div>
 	</div>   
     <div id="logWindow" style="border:red solid 1px;"></div>    --%>
+    <div id="gotobottom"></div>
 </body>
 </html>

@@ -16,16 +16,16 @@
 	<select id="searchHpNW" resultType="com.softlock.model.HospitalDTO" parameterType="String">
 		<choose>
 			<when test='param2.equals("true") and param3.equals("true")'>
-				select * from hospital where hp_night='Y' and hp_wkend='Y' and hp_type=#{param1} and hp_perm='y'
+				select * from hospital where hp_night='y' and hp_wkend='y' and hp_type=#{param1} and hp_perm='y'
 			</when>
 			<when test='param2.equals("true") and param3.equals("false")'>
-				select * from hospital where hp_night='Y' and hp_type=#{param1} and hp_perm='y'
+				select * from hospital where hp_night='y' and hp_type=#{param1} and hp_perm='y'
 			</when>
 			<when test='param2.equals("false") and param3.equals("false")'>
 				select * from hospital where hp_type=#{param1} and hp_perm='y'
 			</when>
 			<when test='param2.equals("false") and param3.equals("true")'>
-				select * from hospital where hp_wkend='Y' and hp_type=#{param1} and hp_perm='y'
+				select * from hospital where hp_wkend='y' and hp_type=#{param1} and hp_perm='y'
 			</when>
 		</choose>
 	</select>

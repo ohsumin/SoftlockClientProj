@@ -65,6 +65,8 @@ function sendMessage() {
 	    
     //입력창비우기
     $("#inputMessage").val("");
+    
+    location.href = "#gotobottom";
 }
 
 //event 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
@@ -103,8 +105,8 @@ function onMessage(event) {
     			$("#messageWindow").append("<div>"+room+" : "+content+"<div>");
     			//$("body").scrollTop = $("#messageWindow").scrollHeight;
     			//$("body").scrollTop($("body").height());
-    			$('body').scrollTop($('body').prop('scrollHeight'));
-
+    			//$('body').scrollTop($('body').prop('scrollHeight'));
+				location.href = "#gotobottom";
         	}   		
     	}   	    		
     }
@@ -145,7 +147,7 @@ function onClose(event) {
 		</div>
 	</div>
 </div>
-	
+<div id="gotobottom"></div>	
 	<%-- <ul>
 		<li>chat_id : <input type="hid-den" id="chat_id" value="${param.chat_id }" />  </li>
 		<li>chat_room : <input type="hid-den" id="chat_room" value="${param.chat_room }" /></li>
