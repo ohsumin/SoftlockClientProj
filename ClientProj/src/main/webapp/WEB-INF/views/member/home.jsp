@@ -21,7 +21,7 @@
 <body style="background-color:#F5F6F9">
 <!-- Navigation -->
 <jsp:include page="/resources/common/nav.jsp"/>
-<br />
+
 <form >
 	<!-- 로그인 처리 후 다시 돌아가야 할 페이지 URL -->
 	<input type="hidden" name="returnPage" value="" />
@@ -40,10 +40,12 @@
 			</tr>
 		</table>
 	</div>  --%>
+	<img alt="메인이미지" src="../resources/common/dookMain2.png"><br />
+	
 	</div>
 	
 </form>
-<br />
+
 <!-- bottom -->
 <jsp:include page="/resources/common/footer.jsp"/>
 </body>

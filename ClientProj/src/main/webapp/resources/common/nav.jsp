@@ -26,9 +26,9 @@
       <li class="nav-item" style="margin-left:50px;">
         <a class="nav-link" href="../information/information">건강정보</a>
       </li>
-      <li class="nav-item" style="margin-left:50px;">
+<!--       <li class="nav-item" style="margin-left:50px;">
         <a class="nav-link" href="#">서비스소개</a>
-      </li>
+      </li> -->
     </ul>
     <!-- 비로그인 상태 -->
     <%if(session.getAttribute("memberInfo")==null) {%>

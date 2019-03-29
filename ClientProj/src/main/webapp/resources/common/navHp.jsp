@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#" style="margin-left:50px; font-weight:bold;">
+  <a class="navbar-brand" href="../hospital/home" style="margin-left:50px; font-weight:bold;">
   	<img src="../resources/common/hospital-64.png" style="width:30px; margin-right:10px;"/>Navbar
   </a>
   <button class="navbar-toggler" aria-expanded="false" aria-controls="navbarColor03" aria-label="Toggle navigation" type="button" data-target="#navbarColor03" data-toggle="collapse">
