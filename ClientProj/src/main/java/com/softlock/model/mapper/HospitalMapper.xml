@@ -115,8 +115,8 @@
    
    
    <insert id="hpJoinAction" parameterType="String">
-   		INSERT INTO hospital(hp_idx, hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2, hp_type)
-   			VALUES(seq_hospital.nextval , #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, #{param9}, #{param10})
+   		INSERT INTO hospital(hp_idx, hp_id, hp_pw, hp_name, hp_num, hp_username, hp_email, hp_phone, hp_address, hp_address2, hp_type, authority, enabled)
+   			VALUES(seq_hospital.nextval , #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, #{param9}, #{param10}, 'ROLE_ADMIN', '1')
    </insert>
 
    <!-- 회원정보 가져오기 -->   

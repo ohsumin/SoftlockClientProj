@@ -1,6 +1,7 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -369,7 +370,7 @@ $(function() {
 <jsp:include page="/resources/common/nav.jsp"/>
 <div class="container"><br /><br /><br /><br />
 	<div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
-		<form action="../member/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;" id="form">
+		<form:form action="../member/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;" id="form">
 			<input type="hidden" id="hiddenId" name="hiddenId"/>
 			<input type="hidden" id="hiddenPw" name="hiddenPw"/>
 			<input type="hidden" id="hiddenGender" name="hiddenGender" />
@@ -470,7 +471,7 @@ $(function() {
 		      </div> -->
 		    <div style="height:200px; border:1px solid">약관내용</div><br />
 		    <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block">회원가입</button><br /><br /><br />
-		</form>
+		</form:form>
 	</div>
 </div>
 <br /><br /><br /><br />

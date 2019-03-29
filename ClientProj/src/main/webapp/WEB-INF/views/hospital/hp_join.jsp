@@ -1,6 +1,7 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -309,7 +310,7 @@ $(function() {
 <jsp:include page="/resources/common/navHp.jsp"/>
 <div class="container"><br /><br /><br /><br />
    <div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
-      <form action="../hospital/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;" name="joinFrm">
+      <form:form action="../hospital/joinAction" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;" name="joinFrm">
       <br /><br /><br />
       <div class="logo">
          <h4>병원회원가입</h4>   
@@ -367,7 +368,7 @@ $(function() {
     <input type="text" class="form-control" id="hp_phone" name="hp_phone" style="font-size:0.8em;" placeholder="'-'없이 입력해주세요">
     <div id="phoneMSG" style="text-align:left;  font-size:0.7em;"></div><br /><br />
     <button type="submit" class="btn btn-primary btn-lg btn-block" id="joinBtn">병원가입 승인요청</button><br /><br /><br />
-</form>
+</form:form>
 </div>
 </div>
 <br /><br /><br /><br />

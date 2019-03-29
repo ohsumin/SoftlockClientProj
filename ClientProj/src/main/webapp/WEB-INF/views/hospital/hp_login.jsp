@@ -30,18 +30,18 @@ $(function() {
 		var id = $('#id').val();
 		var pass = $('#pass').val();
 		$.ajax({
-			type : 'post',
+			type : 'get',
 			url : '../hospital/loginAction',
 			data : {
 	        	id : id,
 	        	pass : pass
 	        },
-	        beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	        /* beforeSend : function(xhr)
+            {  
                 xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
+            }, */
 	        dataType : "json",
-			contentType : "application/x-www-form-urlencoded;charset:utf-8",
+			contentType : "text/html;charset:utf-8",
 			success : function(d) {
 	            if (d.success == 0) {
 	                $('#loginMsg').html("아이디와 비밀번호를 확인해주세요."); 
@@ -49,7 +49,7 @@ $(function() {
 	            } else if (d.success == 1){
 	            	location.href='../hospital/home';
 	            } else if(d.success == -1){
-	            	$('#loginMsg').html("아직 허가가 되지 않았습니다. 허가가 되면 이메일 발송을 해드리겠습니다."); 
+	            	$('#loginMsg').html("아직 허가가 되지 않았습니다. 빠른시일 내에 허가해드리도록 하겠습니다."); 
 	                $('#loginMsg').css("color", "red");
 	            }
 	        },

@@ -468,6 +468,7 @@ public class HospitalController {
 	   for(int i = 0; i<treat_dy.length;i++) {
 		   sqlSession.getMapper(HospitalImpl.class).addTreatTime(((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx(), treat_dy[i], treat_open, treat_close);	
 	   }
+	   session.setAttribute("hospitalInfo", null);
 	  
        return "hospital/hp_joinActionSuccess";  
     }
@@ -511,7 +512,7 @@ public class HospitalController {
 		//Coolsms coolsms = new Coolsms(api_key, api_secret);
 		
 		HashMap<String, String> set = new HashMap<String, String>();
-		set.put("to", "01028700688"); // to
+		set.put("to", "01025002592"); // to
 		
 		set.put("from", "01028700688"); // from <= "01028700688" 회원번호 mem_phone 으로 수정하기 
 		set.put("text", (String)(mem_name+"님 병원:"+hp_name+" 내원날짜:"+resv_date+" 예약확정. 전화걸기("+hp_phone+")")); // 문자내용

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +88,7 @@ function func() {
 </head>
 <body>     
  <!-- 모달창 글쓰는 곳 -->
-<form action="../member/review" method="post" id="form">
+<form:form action="../member/review" method="post" id="form">
 <div class="modal" id="myModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -121,6 +121,6 @@ function func() {
     </div>
   </div>
 </div>
-</form>
+</form:form>
 </body>
 </html>

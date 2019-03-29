@@ -16,9 +16,9 @@
       <table class="table table-bordered table-striped col-md-12 text-center" >         
       <tr>
          <td style="margin-top:200px; height:300px;"><br /><br /><br />
-            <h3>회원가입이 완료되었습니다.</h3><br />
-            <h4>똑딱똑딱 서비스를 이용하시려면 상세정보기입 후 이용해주세요.</h4><br /><br />
-            <a href="../hospital/hpModify">상세정보기입 페이지 바로가기</a>
+            <h3>회원가입이 완료되었습니다.</h3><br /><br />
+            <h6>관리자의 허가 후 이용이 가능합니다.</h6><br />
+            <h6>빠른시일내에 허가해드리도록 하겠습니다.</h6><br /><br />
          </td>
       </tr>
       </table>

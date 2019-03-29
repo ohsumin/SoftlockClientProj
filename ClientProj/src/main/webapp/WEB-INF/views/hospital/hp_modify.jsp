@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -239,7 +239,7 @@ $(function(){
 <body style="background-color:#F5F6F9">
 <div class="container"><br />
    <div style="width:985px; height:auto; background-color:white; float:none; margin:0 auto;">
-      <form action="../hospital/modifyAction" onsubmit="return func();" method="post" enctype="multipart/form-data" style="float:none; margin:0 auto; text-align:center; width:760px;">
+      <form:form action="../hospital/modifyAction" onsubmit="return func();" method="post" style="float:none; margin:0 auto; text-align:center; width:760px;">
       <div class="logo">
          <h4>병원 상세정보기입</h4>   
       </div><br />
@@ -347,16 +347,16 @@ $(function(){
        <div id="txt">&nbsp;그외 특이사항</div>
        <textarea class="form-control" id="hp_etc" name="hp_etc" 
           style="font-size:0.8em;" rows="5" placeholder="Ex)예약전 미리연락, 공지사항, 휴무여부 등">${dto.hp_notice }</textarea><br />
-       <c:set var="imguuid" value="${dto.hp_stored_filename }"/>
-       <div id="txt">&nbsp;병원사진</div><br />
+       <%--<c:set var="imguuid" value="${dto.hp_stored_filename }"/>
+        <div id="txt">&nbsp;병원사진</div><br />
        
        
        <input type="file" class="form-control-file" id="hp_img" name="hp_img" style="font-size:0.8em;" />${dto.hp_ori_filename }
- 
+  --%>
        <br /><br />
        <input type="submit" class="btn btn-primary btn-lg btn-block" value="확인"/>
        <br /><br />
-   </form>
+   </form:form>
 </div>
 </div>
 <br /><br />

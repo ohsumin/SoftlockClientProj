@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,7 +104,7 @@ $(function() {
 <body style="background-color:#F5F6F9">
 
    <div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
-      <form action="../member/modifyAction" id="form" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;">
+      <form:form action="../member/modifyAction" id="form" method="post" style="float:none; margin:0 auto; text-align:center; width:400px;">
          <br /><br /><br />
          <div class="logo">
             <h4>회원정보수정</h4>   
@@ -185,7 +186,7 @@ $(function() {
             </div> -->
           <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block">회원정보수정</button>
           <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block" onclick="location.href='../member/memberDeleteCk'">탈퇴하기</button><br /><br /><br />
-      </form>
+      </form:form>
    </div>
 <br /><br /><br /><br />
 <!-- bottom -->
