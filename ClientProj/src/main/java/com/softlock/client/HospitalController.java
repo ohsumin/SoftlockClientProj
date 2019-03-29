@@ -1,12 +1,9 @@
 package com.softlock.client;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,9 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.softlock.model.Coolsms;
 import com.softlock.model.HospListDTO;
 import com.softlock.model.HospitalDTO;
 import com.softlock.model.HospitalImpl;
@@ -275,8 +271,10 @@ public class HospitalController {
     @RequestMapping("/hospital/modifyAction")
     public String modifyAction(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws IOException {
     	
+    	String originalName="";
+		String saveFileName="";
     	
-    	/*파일업로드*/
+    	/*파일업로드
 		//upload폴더의 물리적경로 얻어오기
 		String path = req.getSession().getServletContext().getRealPath("/resources/upload");
 		String originalName="";
@@ -284,11 +282,11 @@ public class HospitalController {
 	
 		try
 		{
-			/*
+			
 			파일업로드를 위한 객체생성. 객체 생성과 동시에 파일업로드는
 			완료되고 나머지 폼값은 Multipart객체가 통째로 받아서 
 			처리한다. 
-			 */
+			 
 			MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
 			
 			//업로드폼의 file속성 필드의 이름을 모두 읽음			
@@ -298,10 +296,10 @@ public class HospitalController {
 			MultipartFile mfile = null;			
 			String fileName = "";		
 				
-			/*
+			
 			파일 하나의 정보를 저장하기 위한 List계열의 컬렉션을 
 			생성한다. (원본파일명과 실제저장된파일명)
-			 */
+			 
 			List resultList = new ArrayList();
 				
 			String title = mhsr.getParameter("title");
@@ -333,10 +331,10 @@ public class HospitalController {
 					continue;
 				}
 				
-				/*
+				
 				파일명에서 확장자를 가져온다. 파일명에서 확장자는 마지막
 				.(점) 이후에 있기때문에 lastIndexOf()를 사용한다. 				
-				 */
+				 
 				String ext = originalName.substring(
 						originalName.lastIndexOf('.'));		
 				
@@ -359,7 +357,7 @@ public class HospitalController {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		int idx = ((HospitalDTO)session.getAttribute("hospitalInfo")).getHp_idx();
 		System.out.println(idx);
@@ -507,19 +505,19 @@ public class HospitalController {
 		String hp_phone = hospitalInfo.getHp_phone();
 		String hp_name = hospitalInfo.getHp_name();
 		
-		String api_key = "NCSTDOOHRGU6YMQP";
-		String api_secret = "AAY9Y5KHW6Y3F2F4RJMFCS5DHBSBF5M8";
-		//Coolsms coolsms = new Coolsms(api_key, api_secret);
+		String api_key = "NCSPLPOBA53IXJIR";
+		String api_secret = "UNDOO56JXO40KWUW6YZGBRIBVQWCYUHT";
+		Coolsms coolsms = new Coolsms(api_key, api_secret);
 		
 		HashMap<String, String> set = new HashMap<String, String>();
-		set.put("to", "01025002592"); // to
+		set.put("to", "01032660223"); // to
 		
-		set.put("from", "01028700688"); // from <= "01028700688" 회원번호 mem_phone 으로 수정하기 
+		set.put("from", "01032660223"); // from <= "01028700688" 회원번호 mem_phone 으로 수정하기  // 01032660223 다혜 01025002592 수민
 		set.put("text", (String)(mem_name+"님 병원:"+hp_name+" 내원날짜:"+resv_date+" 예약확정. 전화걸기("+hp_phone+")")); // 문자내용
 		/*                                                                                                         ........<=여기까지문자감..*/
 		set.put("type", "sms"); // 문자 타입
 		System.out.println(set);
-		//coolsms.send(set); // 보내기(&전송결과받기)
+		coolsms.send(set); // 보내기(&전송결과받기)
 		 return "redirect:hpModify?tab=1";
 	}
     

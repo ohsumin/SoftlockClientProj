@@ -13,8 +13,10 @@
 		authorities-by-username-query : 아이디를 이용하여 권한정보를 가져오는 쿼리문을 작성한다.(로그인에 성공한 사용자의 권한을 확인하기위해)
 	 -->
 	<security:http>
-		<security:intercept-url pattern="/hospital/hpModify" access="hasAnyRole('ADMIN')"/>
+		<security:intercept-url pattern="/hospital/login" access="permitAll"/>
+		<security:intercept-url pattern="/hospital/joinAction" access="permitAll"/>
 		<security:intercept-url pattern="/hospital/modifyAction" access="permitAll"/>
+		<security:intercept-url pattern="/hospital/hpModify" access="hasAnyRole('ADMIN')"/>
 		<security:intercept-url pattern="/**" access="permitAll"/>
 		
 		<!-- default-target-url는 언제가는거지??? -->

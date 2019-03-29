@@ -131,13 +131,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					/**************주소로 장소표시********************/
@@ -206,13 +199,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -279,13 +265,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -352,13 +331,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -425,13 +397,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -498,13 +463,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -570,13 +528,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -650,13 +601,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {
@@ -727,13 +671,6 @@ $(function() {
 					strHTML += "	</div>";
 					strHTML += "	<span style='font-size:0.9em;'>"+d.hp_address+"</span><br />";
 					strHTML += "	<span style='font-size:0.8em;'>"+d.hp_address2+"</span><br />";
-					strHTML += "	<div class='starRev' style='margin-top:10px;'>";
-					strHTML += "		 <span class='starR on'>별1</span>";
-					strHTML += "		 <span class='starR on'>별2</span>";
-					strHTML += "		 <span class='starR '>별3</span>";
-					strHTML += "		 <span class='starR '>별4</span>";
-					strHTML += "		 <span class='starR '>별5</span>";
-					strHTML += "	</div>";
 					strHTML += "</div><hr/>";
 					
 					geocoder.addressSearch(d.hp_address , function(result, status) {

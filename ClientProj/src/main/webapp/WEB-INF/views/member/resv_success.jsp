@@ -32,7 +32,7 @@ function notify() {
 		
 		//Noti에 핸들러를 사용한다.
 		notification.onclick = function () {
-			window.open('');
+			window.open('about:blank').location.href='../hospital/hpModify?tab=1';
 		};
 	}
 }
