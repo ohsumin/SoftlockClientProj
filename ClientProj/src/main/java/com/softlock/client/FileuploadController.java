@@ -34,7 +34,7 @@ public class FileuploadController {
 			resp.setContentType("text/html;charset=utf-8");
 			PrintWriter print = resp.getWriter();
 			print.println("/upload 폴더의 물리적경로");
-			print.print(path);
+			print.print(path); 
 		}
 		catch (Exception e) {
 			e.printStackTrace(); 
