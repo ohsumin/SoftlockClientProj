@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="../member/home" style="margin-left:50px; font-weight:bold;">
-  	<img src="../resources/common/hospital-64.png" style="width:30px; margin-right:10px;"/>Navbar
+  	<img src="../resources/common/hospital-64.png" style="width:30px; margin-right:10px;"/>똑닥똑닥
   </a>
   <button class="navbar-toggler" aria-expanded="false" aria-controls="navbarColor03" aria-label="Toggle navigation" type="button" data-target="#navbarColor03" data-toggle="collapse">
     <span class="navbar-toggler-icon"></span>
@@ -26,9 +26,9 @@
       <li class="nav-item" style="margin-left:50px;">
         <a class="nav-link" href="../information/information">건강정보</a>
       </li>
-      <li class="nav-item" style="margin-left:50px;">
+<!--       <li class="nav-item" style="margin-left:50px;">
         <a class="nav-link" href="#">서비스소개</a>
-      </li>
+      </li> -->
     </ul>
     <!-- 비로그인 상태 -->
     <%if(session.getAttribute("memberInfo")==null) {%>
