@@ -112,7 +112,7 @@ public class UserMailSendService {
 		userDao = sqlSession.getMapper(MemberImpl.class);
 		userDao.GetKey(mem_id, key); 
 		MimeMessage mail = mailsender.createMimeMessage();
-		 
+		  
 		
 		String htmlStr=""
 				+"<div style='background-color: #F1F3F5; width: 600px; height: 400px; padding-top: 60px; padding-left: 70px;'>"
