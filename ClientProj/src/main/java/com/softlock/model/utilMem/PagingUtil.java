@@ -1,7 +1,5 @@
 package com.softlock.model.utilMem;
 
-import org.omg.CORBA.Request;
-
 public class PagingUtil {
 	//페이지번호와 페이지블럭 이미지를 같이 출력
 		//해주는 메소드
@@ -58,13 +56,13 @@ public class PagingUtil {
 			//페이지표시 제어를 위한 변수
 			int blockCount = 1;
 			/*
-			4.페이지를 뿌려주는 로직 : blockPage의 수만큼 또는
-				마지막페이지가 될때까지 페이지를 출력한다.
+			4.페이지를 뿌려주는 로직 : blockPage의 수만큼 또는      
+				마지막페이지가 될때까지 페이지를 출력한다.      
 			*/
 			while(blockCount<=blockPage && intTemp<=totalPage)
 			{
 				if(intTemp==nowPage) {
-					pagingStr +=  "<li class=\"page-item\"><a class=\"page-link\" href='"+page
+					pagingStr +=  "<li class=\"page-item active\"><a class=\"page-link\" href='"+page
 							+"tab="+tab+"&nowPage="+intTemp+"'>"+
 							intTemp+"</a></li>";
 				}

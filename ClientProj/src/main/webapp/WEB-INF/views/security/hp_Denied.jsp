@@ -15,8 +15,8 @@
 <br /><br /><br /><br /><br /><br /><br />
       <table class="table table-bordered table-striped col-md-12 text-center" >         
       <tr>
-         <td style="margin-top:200px; height:300px;"><br /><br /><br />
-            <h3>병원회원만 진입 가능</h3><br /><br />
+         <td style="margin-top:200px; height:300px;"><br /><br /><br /><br /><br />
+            <h3>잘못된 진입경로입니다.</h3>
          </td>
       </tr>
       </table>

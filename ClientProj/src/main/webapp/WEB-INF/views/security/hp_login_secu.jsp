@@ -20,7 +20,7 @@
 				<br /><br />		
 			</div>	
 			<c:if test="${param.error != null }"> 
-				<p>아이디와 패스워드가 잘못되었습니다.</p>
+				<h4>잘못된 진입경로입니다.</h4>
 			</c:if>
 			<form:form name="loginFrm" action="${loginUrl }" method="post">
 				<div>

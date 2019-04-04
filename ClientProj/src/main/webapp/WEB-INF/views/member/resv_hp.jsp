@@ -21,7 +21,6 @@ window.onload = function () {
 }
 
 function calculate() {
-	alert('dd');
 	
 	
 }
@@ -180,7 +179,7 @@ $(function () {
 		}
 		// 오픈시간 마감시간 가져오기
 		$.ajax({
-	        type : 'post',
+	        type : 'get',
 	        url : '../member/getTime', 
 	        data : {
 	        	dy : isoDay,
@@ -303,7 +302,7 @@ $(function () {
 			<div style="display:inline-block; margin-top:23px; margin-right:30px;">
 				<div style="display:inline-block;"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;날짜&nbsp;&nbsp;&nbsp;</div>
 				<div style="display:inline-block;">
-					<input type="text" data-type="date" id="date-input" name="date-input" class="form-control" placeholder="날짜 선택" style="font-size:0.9em; width:250px;"/></div><br /><br />
+					<input type="text" data-type="date" id="date-input" name="date-input" class="form-control" autocomplete="off" placeholder="날짜 선택" style="font-size:0.9em; width:250px;"/></div><br /><br />
 			</div>
 		</td>
 		<td>

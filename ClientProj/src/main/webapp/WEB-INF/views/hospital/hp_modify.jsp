@@ -211,7 +211,6 @@ $(function(){
 	}); 
 	
 	function func() {
-		alert('dd');
 		$('#mon_open').attr("disabled", "false"); $('#mon_close').attr("disabled", "false");
 		$('#tue_open').attr("disabled", "false"); $('#tue_close').attr("disabled", "false");
 		$('#wed_open').attr("disabled", "false"); $('#wed_close').attr("disabled", "false");
@@ -334,14 +333,15 @@ $(function(){
          </tr>
          <tr style="font-size:0.9em; text-align:left;">
             <td colspan="7">
-               <input type="checkbox" name="hp_night" id="hp_night"/>&nbsp;야간진료여부
+               <input type="checkbox" name="hp_night" id="hp_night"/>&nbsp;야간진료여부&nbsp;&nbsp;&nbsp;&nbsp;
                <input type="hidden" value="${dto.hp_night}" id="hp_nightHd"/>
+               <input type="checkbox"/>&nbsp;주말진료여부
                <!-- <input type="checkbox" value="sunTreatYes" style="margin-left:30px;"/>&nbsp;일요일진료여부 -->
             </td>
          </tr>
-      </table><br />
+      </table><br />  
          
-       <div id="txt">&nbsp;병원소개</div>
+       <div id="txt">&nbsp;병원소개</div>  
        <textarea class="form-control" id="hp_detailInfo" name="hp_detailInfo" rows="3">${dto.hp_intro }</textarea><br />
          
        <div id="txt">&nbsp;그외 특이사항</div>

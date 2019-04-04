@@ -41,12 +41,12 @@ public class PagingUtil {
       //페이지표시 제어를 위한 변수
       int blockCount = 1;
       
-      //페이지를 뿌려주는 로직 : 블럭페이지 수만큼 혹은 마지막
+      //페이지를 뿌려주는 로직 : 블럭페이지 수만큼 혹은 마지막     
       //페이지가 될때까지 페이지를 표시한다.
       while(blockCount<=blockPage && intTemp<=totalPage)
         {
            if(intTemp==nowPage) {
-              pagingStr +=  "<li class=\"page-item\"><a class=\"page-link\" href='"+page
+              pagingStr +=  "<li class=\"page-item active\"><a class=\"page-link\" href='"+page
                     +"tab=1&nowPage="+intTemp+"'>"+
                     intTemp+"</a></li>";
            }

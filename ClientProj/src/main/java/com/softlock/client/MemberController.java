@@ -3,6 +3,7 @@ package com.softlock.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,6 +44,62 @@ public class MemberController {
 	//이메일인증
 	@Autowired
 	private UserMailSendService mailsender;
+	
+	/****테스트****/
+	@RequestMapping(value="mobile/sendFCM")
+    public String index(Model model, HttpServletRequest request, HttpSession session)throws Exception{
+            
+            
+                String token = "ffqM_24aZDo:APA91bG8Vj7i7aiKl8QonJ8JbX43Y1vwGQyU_dxoNYy0RglKtib9GWRWIEzwCZHFrJ4bVH7-3CDIQe3CsiUtsbkUkc1RVGELm2q9suJs1rsQ65mDqpjWpDd_FtEyvFMoN6zCuEPLWawB";
+                
+                final String apiKey = "AAAAxkwlp1E:APA91bG-D_ryl34S3U4MkXBlOVpehmgdtIqoV4vXTOmtPu93ayHtMpxMGCHDuGcFqY9O-8OgtB0_l9TjM7RlXf9NnTjX9fgzAJhSYtPalQk4he6orue-urdJBBxpLzBnT1cRoozPFong";
+                URL url = new URL("https://fcm.googleapis.com/fcm/send");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Authorization", "key=" + apiKey);
+ 
+                conn.setDoOutput(true);
+                
+                String userId ="851681060689";
+ 
+                // 이걸로 보내면 특정 토큰을 가지고있는 어플에만 알림을 날려준다  위에 둘중에 한개 골라서 날려주자
+                String input = "{\"notification\" : {\"title\" : \"여기다 제목 넣기 \", \"body\" : \"여기다 내용 넣기\"}, \"to\":\"/topics/ALL\"}";
+
+ 
+                OutputStream os = conn.getOutputStream();
+                
+                // 서버에서 날려서 한글 깨지는 사람은 아래처럼  UTF-8로 인코딩해서 날려주자
+                os.write(input.getBytes("UTF-8"));
+                os.flush();
+                os.close();
+ 
+                int responseCode = conn.getResponseCode();
+                System.out.println("\nSending 'POST' request to URL : " + url);
+                System.out.println("Post parameters : " + input);
+                System.out.println("Response Code : " + responseCode);
+                
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+ 
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                // print result
+                System.out.println(response.toString());
+                
+ 
+        return "jsonView";
+    }
+
+
+	@RequestMapping("/member/pushTest")
+	public String pushTest(Model model) {
+		return "member/pushTest";
+	}
 	
 	@RequestMapping("/member/home")
 	public String memHome(Model model) {
@@ -508,73 +565,80 @@ public class MemberController {
 		return map;
 	}
 	
-	////회원정보수정폼진입
-	@RequestMapping("/member/memberModify")
-	public String memberModify(Model model, HttpServletRequest req,
-			HttpSession session) {
-		String tab = req.getParameter("tab");
-		System.out.println("tab="+tab);
-		
-	//회원정보 가져오기
-	MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
-			.view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
-	model.addAttribute("dto", dto);
-	
-	
-	/*********페이지처리>접수현황**********/
-	//멤버의 접수현황 레코드 갯수
-	String addQueryString = "";
-	int totalRecordCount = 0;
-	if(tab==null) tab = "0";
-	int temp = Integer.parseInt(tab);
-	if(temp==2) {totalRecordCount = sqlSession.getMapper(MemberImpl.class).reserCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());}
-	else{totalRecordCount = sqlSession.getMapper(MemberImpl.class).reserMemCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());}
-	System.out.println("totalRecordCount="+totalRecordCount);
-	int mem_idx = ((MemberDTO)session.getAttribute("memberInfo")).getMem_idx();
-	
-	int pageSize = 5;
-	int blockPage = 5;
-	
-	//전체페이지수계산하기
-	int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
-	System.out.println("totalPage="+totalPage);
-	//시작 및 끝 rownum 구하기
-	int nowPage = req.getParameter("nowPage")==null ? 1 :
-		Integer.parseInt(req.getParameter("nowPage"));
-	int start = (nowPage-1) * pageSize + 1;
-	int end = nowPage * pageSize;
-	System.out.println("start="+start);
-	System.out.println("end="+end);
+////회원정보수정폼진입
+   @RequestMapping("/member/memberModify")
+   public String memberModify(Model model, HttpServletRequest req,
+         HttpSession session) {
+      String tab = req.getParameter("tab");
+      System.out.println("tab="+tab);
+      
+   //회원정보 가져오기
+   MemberDTO dto = sqlSession.getMapper(MemberImpl.class)
+         .view(((MemberDTO)session.getAttribute("memberInfo")).getMem_id());
+   model.addAttribute("dto", dto);
+   
+   
+   /*********페이지처리>접수현황**********/
+   //멤버의 접수현황 레코드 갯수
+   String addQueryString = "";
+   int totalRecordCount = 0;
+   if(tab==null) tab = "0";
+   int temp = Integer.parseInt(tab);
+   if(temp==2) {
+	   totalRecordCount = sqlSession.getMapper(MemberImpl.class).reserCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());
+	   //totalRecordCount = sqlSession.getMapper(MemberImpl.class).count(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());   
+   }
+	   
+   else{totalRecordCount = sqlSession.getMapper(MemberImpl.class).reserMemCount(((MemberDTO)session.getAttribute("memberInfo")).getMem_idx());}
+   System.out.println("totalRecordCount="+totalRecordCount);
+   int mem_idx = ((MemberDTO)session.getAttribute("memberInfo")).getMem_idx();
+   
+   int pageSize = 5;
+   int blockPage = 5;
+   
+   //전체페이지수계산하기
+   int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
+   System.out.println("totalPage="+totalPage);
+   //시작 및 끝 rownum 구하기
+   int nowPage = req.getParameter("nowPage")==null ? 1 :
+      Integer.parseInt(req.getParameter("nowPage"));
+   int start = (nowPage-1) * pageSize + 1;
+   int end = nowPage * pageSize;
+   System.out.println("start="+start);
+   System.out.println("end="+end);
 
-	//접수현황 가져오기
-	System.out.println("tab="+tab);
-	ArrayList<ReservationDTO> reservationDTO = null;
-	if(temp==2) {reservationDTO = sqlSession.getMapper(MemberImpl.class).reserPage(start, end, mem_idx);}
-	else {reservationDTO = sqlSession.getMapper(MemberImpl.class).reservationPage(start, end, mem_idx);}
-	//ArrayList<ReservationDTO> reservationDTO = sqlSession.getMapper(MemberImpl.class).reservationPage(start, end, mem_idx);
+   //접수현황 가져오기
+   System.out.println("tab="+tab);
+   ArrayList<ReservationDTO> reservationDTO = null;
+   if(temp==2) {reservationDTO = sqlSession.getMapper(MemberImpl.class).reserPage(start, end, mem_idx);}
+   else {reservationDTO = sqlSession.getMapper(MemberImpl.class).reservationPage(start, end, mem_idx);}
+   //ArrayList<ReservationDTO> reservationDTO = sqlSession.getMapper(MemberImpl.class).reservationPage(start, end, mem_idx);
     int virtualNum = 0;
     int countNum = 0;
-	for(ReservationDTO reserDTO : reservationDTO) {
-		
-		reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
-		//reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
-		
-		virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+   for(ReservationDTO reserDTO : reservationDTO) {
+      
+      reserDTO.setResv_date(reserDTO.getResv_date().split(" ")[0]); 
+      //reserDTO.setResv_time(reserDTO.getResv_time().split(" ")[1]);
+      
+      virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
         reserDTO.setVirtualNum(virtualNum);
-	}
-	//페이지 처리를 위한 처리부분
-		String pagingImg = com.softlock.model.utilMem.PagingUtil.pagingImg(totalRecordCount,
-		pageSize, blockPage, nowPage, 
-		req.getContextPath()+"/member/memberModify?"+addQueryString, tab);
-	
-	model.addAttribute("tab", tab);
-	model.addAttribute("virtualNum", virtualNum);
-	model.addAttribute("pagingImg", pagingImg);
-	model.addAttribute("totalRecordCount", totalRecordCount);
-	model.addAttribute("reservationDTO", reservationDTO);
-	model.addAttribute("mem_idx", mem_idx);
-	return "member/mem_myPage";
-	}
+   }
+   //페이지 처리를 위한 처리부분
+      String pagingImg = com.softlock.model.utilMem.PagingUtil.pagingImg(totalRecordCount,
+      pageSize, blockPage, nowPage, 
+      req.getContextPath()+"/member/memberModify?"+addQueryString, tab);
+      
+      System.out.println("reservationDTO.size()="+reservationDTO.size());
+      int size = reservationDTO.size();
+      model.addAttribute("size", size);
+   model.addAttribute("tab", tab);
+   model.addAttribute("virtualNum", virtualNum);
+   model.addAttribute("pagingImg", pagingImg);
+   model.addAttribute("totalRecordCount", totalRecordCount);
+   model.addAttribute("reservationDTO", reservationDTO);
+   model.addAttribute("mem_idx", mem_idx);
+   return "member/mem_myPage";
+   }
 	
 	//예약 삭제 처리
 	@RequestMapping("/member/reserdelete")

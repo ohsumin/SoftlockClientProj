@@ -9,7 +9,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>타이틀임</title>
+<title>타이틀임</title> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -33,51 +36,84 @@
        width : 100%;
 }
 </style>
-<script>
 
-</script>
+
 </head>
 <body style="background-color:#F5F6F9">
+
+ 
+
 <!-- Navigation -->
 <jsp:include page="/resources/common/nav.jsp"/>
 <div class="container">
-<input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
+
+
+<input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />    
 <div style="width:1000px; height:100%; background-color:white; text-align:center; float:none; margin:0 auto;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
-   <!-- <ul class="social-network social-circle">
-        <i class="fa fa-facebook"></i>
-    </ul>  -->     
-  <a class="navbar-brand" href="#">소프트락님 <br />이메일연동</a>
+   <!-- <ul class="social-network social-circle">       
+        <i class="fa fa-facebook"></i>                    
+    </ul>  -->      
+  <a class="navbar-brand" href="#">
+  <img src="../resources/common/hospital-64.png" style="width:30px; margin-right:10px;"/>
+  <%=((MemberDTO)session.getAttribute("memberInfo")).getMem_name() %>님  마이페이지</a>                 
 
   <div class="collapse navbar-collapse " id="navbarColor01">
     <form class="form-inline my-2 my-lg-1 ">   
-      <a class="navbar-brand" href="#" >접수현황&진료내역 <br />&nbsp;&nbsp;${totalRecordCount }</a>
+      <a class="navbar-brand" href="#" style="margin-left:360%;" >접수내역&nbsp;<span style="font-size:1.1em; font-weight:bold;">${totalRecordCount }</span>건</a>
       <!-- <a class="navbar-brand" href="#" >진료내역 <br />&nbsp;&nbsp;</a> -->
-    </form>
-  </div>
+    </form>        
+  </div>     
 </nav>
 
-<br /><br /><br /><br />
-<ul class="nav nav-tabs">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="./memberModify?tab=1">접수현황 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./memberModify?tab=2">진료내역</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./memberModify?tab=3">회원정보변경</a>
+      </li>
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form> -->   
+  </div>   
+</nav>
+
+
+     
+
+<!-- <ul class="nav nav-tabs" style="padding:0px; height:41px;">                                                 
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab1" href="./memberModify?tab=1">접수현황</a>
-    <br />
+    <a class="nav-link" data-toggle="tab1" id="tab1" href="./memberModify?tab=1">접수현황</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab2" href="./memberModify?tab=2">진료내역</a>
+    <a class="nav-link" data-toggle="tab2" id="tab2" href="./memberModify?tab=2">진료내역</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab3" href="./memberModify?tab=3">회원정보변경</a>
+    <a class="nav-link" data-toggle="tab3" id="tab3" href="./memberModify?tab=3">회원정보변경</a>
   </li> 
-</ul>
-<br />
-<div id="myTabContent" class="tab-content">
+</ul>    -->       
+
+<div id="myTabContent" class="tab-content" >               
 
 <c:set var="tab" value="${tab }" scope="page"/>
 <c:choose>
     <c:when test="${tab eq '1'}">
 <!-- 접수현황 s.. -->
-  <div id="profile1">
+  <div id="profile1">   
+<br /><div class="logo"><h4>접수현황</h4></div><br />
     <table id="mytable1" class="table table-bordred table-striped">
 		<thead>
 			<tr>
@@ -144,9 +180,10 @@
 <!-- 접수현황 e.. -->
 
     </c:when>
-    <c:when test="${tab eq '2'}">
+    <c:when test="${tab eq '2'}">    
 <!-- 진료내용 s.. -->
-  <div id="profile2">    
+<div id="profile2">       
+<br /><div class="logo"><h4>진료내역</h4></div><br />  
     <table id="mytable2" class="table table-bordred table-striped">
                    
 	<thead>
@@ -171,7 +208,9 @@
 		</c:when>
 		
 		<c:otherwise>
+		
 			<c:forEach items="${reservationDTO }" var="row" varStatus="loop">
+				
 				<%-- <c:if test="${row.resv_perm eq 'y'}"> --%>
 					<tr>
 						<td class="text-center">${row.virtualNum }</td>
@@ -183,6 +222,7 @@
 	data-id="${row.resv_hp_idx}">후기작성</button></td>
 					</tr>
 				<%-- </c:if> --%>
+				
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>       

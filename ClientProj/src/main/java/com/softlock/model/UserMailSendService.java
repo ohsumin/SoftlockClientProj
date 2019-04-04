@@ -60,15 +60,29 @@ public class UserMailSendService {
 		userDao = sqlSession.getMapper(MemberImpl.class);
 		userDao.GetKey(mem_id, key); 
 		MimeMessage mail = mailsender.createMimeMessage();
-		String htmlStr ="<div>"
-				+"<div>"+ mem_id +"님, 저희 서비스를 이용해주셔서 감사합니다.</div>"
-				+"똑닥똑닥서비스 이용을 위해 고객님의 이메일을 인증해주시기 바랍니다.<br/>"
-				+"이메일 인증이 완료되면 정상적으로 사이트 이용이 가능합니다.<br/>"
-				+ "<a href='http://localhost:8080" + request.getContextPath() + "/user/key_alter?mem_id="+ mem_id +"&user_key="+key+"'>인증하기</a><br/>"
-				+"(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다) <br/>"
-				+"<hr/>"
-				+"똑닥똑닥드림"
-			+"</div>";
+		String htmlStr=""
+	            +"<div style='background-color: #F1F3F5; width: 600px; height: 400px; padding-top: 60px; padding-left: 70px;'>"
+	            +"<div style='width: 500px; height: 300px; background-color: white; '>"
+	               +"<hr style='border: solid 3px #12264F; align-content: center;'>"
+	               +"<div><span style='margin-left: 10px; font-size: 1.5em;'><Strong>똑닥똑닥</Strong></span>"
+	               +"</div>"
+	                  +"<hr style='width: 460px;'/>"
+	                  +"<span style='color: #12264F; font-size: 1.6em; margin-left: 150px;'><Strong>비밀번호찾기</Strong></span>"
+	                     +"<div style='margin-left: 20px;'>"
+	                        +"<strong>"+mem_id +"</strong>님 안녕하세요. <br />"
+	                        +"똑닥똑닥에 가입해주셔서 감사합니다.<br />"
+	                        +"서비스 이용을 위해 고객님의 이메일을 인증해주시기 바랍니다.<br />"
+	                        +"이메일 인증이 완료되면 정상적으로 사이트 이용이 가능합니다.<br />"
+	                        +"<a href='http://localhost:8080" + request.getContextPath() + "/user/key_alter?mem_id="+ mem_id +"&user_key="+key+"'>인증하기</a><br />"
+	                        +"<small>(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)</small><fbr />"
+	                        +"</div>"
+	                        +"<div>"
+	                        +"<hr  style='width: 460px;'/>"
+	                        +"<div style='text-align: right; margin-right: 10px;'> 고객님의 건강보조! 똑닥똑닥드림 </div>"
+	                        +"</div>"
+	               +"<hr style='border: solid 3px #12264F; align-content: center;'>   "         
+	            +"</div>"
+	            +"</div>";
 
 		
 /*				"<h2>안녕하세요 MS :p 민수르~ 입니다!</h2><br><br>" 
@@ -94,13 +108,28 @@ public class UserMailSendService {
 		userDao = sqlSession.getMapper(MemberImpl.class);
 		userDao.GetKey(mem_id, key); 
 		MimeMessage mail = mailsender.createMimeMessage();
-		String htmlStr ="<div>"
-				+"<div>"+ mem_id +"님, 예약이 완료되었습니다/</div>"
-/*				+ "<a href='http://localhost:8080" + request.getContextPath() + "/user/key_alter?mem_id="+ mem_id +"&user_key="+key+"'>인증하기</a><br/>"
-*/				+"(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다) <br/>"
-				+"<hr/>"
-				+"똑닥똑닥드림"
-			+"</div>";
+
+	      String htmlStr=""
+	            +"<div style='background-color: #F1F3F5; width: 600px; height: 400px; padding-top: 60px; padding-left: 70px;'>"
+	            +"<div style='width: 500px; height: 300px; background-color: white; '>"
+	               +"<hr style='border: solid 3px #12264F; align-content: center;'>"
+	               +"<div><span style='margin-left: 10px; font-size: 1.5em;'><Strong>똑닥똑닥</Strong></span>"
+	               +"</div>"
+	                  +"<hr style='width: 460px;'/>"
+	                  +"<span style='color: #12264F; font-size: 1.6em; margin-left: 150px;'><Strong>예약완료메일</Strong></span>"
+	                     +"<div style='margin-left: 20px;'>"
+	                        +"<strong>"+mem_id +"</strong>님 예약완료메일입니다<br />"
+	                        +"고객님께서 예약하신 병원의 예약이<br />"
+	                        +"정상적으로 완료되었습니다!<br />"
+	                        +"<small>(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)</small><fbr />"
+	                        +"</div>"
+	                        +"<div>"
+	                        +"<hr  style='width: 460px;'/>"
+	                        +"<div style='text-align: right; margin-right: 10px;'> 고객님의 건강보조! 똑닥똑닥드림 </div>"
+	                        +"</div>"
+	               +"<hr style='border: solid 3px #12264F; align-content: center;'>   "         
+	            +"</div>"
+	            +"</div>";
 
 		
 /*				"<h2>안녕하세요 MS :p 민수르~ 입니다!</h2><br><br>" 
@@ -140,11 +169,29 @@ public class UserMailSendService {
 		String name = vo.getMem_name();
 		
 		MimeMessage mail = mailsender.createMimeMessage();
-		String htmlStr = "<h2>안녕하세요 '"+ name +"' 님</h2><br><br>" 
-				+ "<p>비밀번호 찾기를 신청해주셔서 임시 비밀번호를 발급해드렸습니다.</p>"
-				+ "<p>임시로 발급 드린 비밀번호는 <h2>'" + key +"'</h2>이며 임시비밀번호로 로그인 후 회원정보수정에서 비밀번호를 변경해주시면 됩니다.</p><br>"
-				+ "<h3><a href='http://localhost:8080/client/member/home'>똑닥똑닥홈페이지바로가기</a></h3><br><br>"
-				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
+		String htmlStr=""
+	            +"<div style='background-color: #F1F3F5; width: 600px; height: 400px; padding-top: 60px; padding-left: 70px;'>"
+	            +"<div style='width: 500px; height: 300px; background-color: white; '>"
+	               +"<hr style='border: solid 3px #12264F; align-content: center;'>"
+	               +"<div><span style='margin-left: 10px; font-size: 1.5em;'><Strong>똑닥똑닥</Strong></span>"
+	               +"</div>"
+	                  +"<hr style='width: 460px;'/>"
+	                  +"<span style='color: #12264F; font-size: 1.6em; margin-left: 150px;'><Strong>임시비밀번호 발송</Strong></span>"
+	                     +"<div style='margin-left: 20px;'>"
+	                        +"<strong>"+mem_id +"</strong>님 안녕하세요. <br />"
+	                        +"비밀번호 찾기를 신청해주셔서 임시 비밀번호를 발급해드렸습니다<br />"
+	                        +"임시로 발급 드린 비밀번호는 <h2>'" + key +"'</h2>이며 임시비밀번호로 로그인 후 회원정보수정에서 비밀번호를 변경해주시면 됩니다.<br />"
+	                        +"<h3><a href='http://localhost:8080/client/member/home'>똑닥똑닥홈페이지바로가기</a></h3><br />"
+	                        +"<small>(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)</small><fbr />"
+	                        +"</div>"
+	                        +"<div>"
+	                        +"<hr  style='width: 460px;'/>"
+	                        +"<div style='text-align: right; margin-right: 10px;'> 고객님의 건강보조! 똑닥똑닥드림 </div>"
+	                        +"</div>"
+	               +"<hr style='border: solid 3px #12264F; align-content: center;'>   "         
+	            +"</div>"
+	            +"</div>";
+	      
 		try {
 			mail.setSubject("[비밀번호찾기]임시 비밀번호가 발급되었습니다", "utf-8");
 			mail.setText(htmlStr, "utf-8", "html");

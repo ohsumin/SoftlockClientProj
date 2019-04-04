@@ -101,8 +101,8 @@ function onMessage(event) {
         	}
         	else {
         		//msg = makeBalloon(sender, content);    		
-    			/* $("#messageWindow").append("<div>"+sender+" : "+content+"<div>");
-    			$("#messageWindow").scrollTop = $("#messageWindow").scrollHeight;
+    			$("#messageWindow").append("<div>"+sender+" : "+content+"<div>");
+    			/*$("#messageWindow").scrollTop = $("#messageWindow").scrollHeight;
     			document.body.scrollTop = document.body.scrollHeight; 
     			messageWindow.scrollTop = messageWindow.scrollHeight; */
         		location.href = "#gotobottom";

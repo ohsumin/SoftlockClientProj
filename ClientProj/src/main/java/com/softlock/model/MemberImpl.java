@@ -46,6 +46,7 @@ public interface MemberImpl {
 	//멤버의 접수현황 레코드 갯수 카운트
 	public int reserMemCount(int resv_mem_idx);
 	public int reserCount(int resv_mem_idx);
+	public int count(int resv_mem_idx);
 	//start와 end를 파라미터로 받아 게시물 가져오기
 	public ArrayList<ReservationDTO> reservationPage(int start, int end, int resv_idx);	
 	public ArrayList<ReservationDTO> reserPage(int start, int end, int resv_idx);	

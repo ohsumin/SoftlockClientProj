@@ -77,8 +77,13 @@
 	<select id="reserCount" resultType="int">
 		select count(*) 
 		From reservation res, member mem
-		where res.resv_mem_idx = mem.mem_idx and res.resv_mem_idx=#{0} and res.resv_perm='c'
+		where res.resv_mem_idx = mem.mem_idx and res.resv_mem_idx=#{0} and res.resv_perm='진료완료'
 	</select>
+	<select id="count" resultType="int">
+      select count(*) 
+      From reservation res, member mem
+      where res.resv_mem_idx = mem.mem_idx and res.resv_mem_idx=#{0} and res.resv_perm='진료완료'
+   </select>
 	<!-- 페이지 start end -->
 	<select id="reservationPage" resultType="com.softlock.model.ReservationDTO" >
 	SELECT * FROM(SELECT Tb.*, rownum rNum FROM  ( 

@@ -86,8 +86,8 @@ String mem_id = memInfo.getMem_id();
 function chatWin(){
 	var id = "<%=mem_id%>";
 	var room = $('#hp_name').val();
-		window.open("chat1.do?chat_id="+id+"&chat_room="+room, "1","width=460,height=650" );
-		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=460,height=650,top=100,left=550");
+		window.open("chat1.do?chat_id="+id+"&chat_room="+room, "1","width=420,height=580" );//460 650              
+		window.open("chat2.do?chat_id="+id+"&chat_room="+room, "2","width=420,height=580,top=100,left=550");
 }
 </script>
 <!-- 스크랩 -->
@@ -162,7 +162,7 @@ $(function() {
 	<div class="jumbotron" style="text-align: center; width:800px; height:850px; background-color:white; text-align:center; 
 		float:none; margin:0 auto; padding:0px;"><!-- 메인 병원정보 -->
 		<div style="background-color:#314c75; width:100%; height:200px; position:relative;"></div>
-			<div style="position:absolute; top:250px; left:500px; width:730px; height:200px; background-color:white; box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.8);">
+			<div style="position:absolute; top:250px; left:588px; width:730px; height:200px; background-color:white; box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.8);">
 				<br />
 				<table style="text-align:center; float:none; margin:0 auto;">
 				<tr>

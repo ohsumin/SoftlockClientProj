@@ -1018,7 +1018,7 @@ $(function() {
 				    markers = [];
 				} 
 				
-				/* // 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
+				// 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
 				function displayPlaceInfo (place) {
 				    var content = '<div class="placeinfo">' +
 				                    '   <a class="title" href="' + place.place_url + '" target="_blank" title="' + place.place_name + '">' + place.place_name + '</a>';   
@@ -1037,7 +1037,7 @@ $(function() {
 				    contentNode.innerHTML = content;
 				    placeOverlay.setPosition(new daum.maps.LatLng(place.y, place.x));
 				    placeOverlay.setMap(map);  
-				} */
+				} 
 				
 				
 				// 각 카테고리에 클릭 이벤트를 등록합니다

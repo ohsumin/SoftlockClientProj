@@ -1,7 +1,12 @@
 package com.softlock.client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -521,6 +526,54 @@ public class HospitalController {
 		set.put("type", "sms"); // 문자 타입
 		System.out.println(set);
 		coolsms.send(set); // 보내기(&전송결과받기)
+		
+		
+		/*****안드로이드 푸시*****/
+		//String token = "eu09EU9Ak00:APA91bE4QVo5198LrKBpHJBiiwNX4uovXA1VZyV5PyURfSzSd6I6Ovp9eFlxbZ1o_g-pMUHxIYgWrX8eUnUZYzxfagNuv0ZEFShZN5s0r2PMTYIq4ycOPshXJdx66HPZgwNS-X3cyhNN";
+		//String token = "c5zVgBnbhag:APA91bEOnM9q5s0eUE9qRbR2irQUOAVEmRGFAcsScIGzuQrF8rg-hOs2wnY60soLBwMau4N48b4u7HxG4Feahp7GXhBBDDN3MAyUY9NKDtzPuoxcE1Bl0tF7MUYdFvu9_xwqakw6E59p";
+		String token = "dOzpQyI4K94:APA91bEZC7Z6xS1NS16LfrCvuJhZO-0WDuGPbP4ebyNgT9GJWuVqobT8Nw28DoUPEG5cDED07_XI9bvikxcl0kYYfr8Y9fzmG9BDaWa52CiVRr9ETdo4DT45KyzCcAxU7AFl5Bi24V_N";
+        
+        final String apiKey = "AAAAxkwlp1E:APA91bG-D_ryl34S3U4MkXBlOVpehmgdtIqoV4vXTOmtPu93ayHtMpxMGCHDuGcFqY9O-8OgtB0_l9TjM7RlXf9NnTjX9fgzAJhSYtPalQk4he6orue-urdJBBxpLzBnT1cRoozPFong";
+		//final String apiKey = "AAAAeyfSjNw:APA91bGldmdguRK7o0RLsZlxyKX0Tk1WXN5cdJf2iCiPk6s42EWoPYhWOjqJO-zSD2RF6G9gizaBBY4xt0z8UaTqml0AA_jJmh2vOBddmOyThO2lDq6FG5EkYaMZGTHn9j6ZfbYJ5l_w";
+        URL url = new URL("https://fcm.googleapis.com/fcm/send");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Authorization", "key=" + apiKey);
+
+        conn.setDoOutput(true);
+        
+        String userId ="851681060689";
+        //String userId ="528949087452";
+
+        // 이걸로 보내면 특정 토큰을 가지고있는 어플에만 알림을 날려준다  위에 둘중에 한개 골라서 날려주자
+        //String input = "{\"notification\" : {\"title\" : \"ㅇㅇㅇㅇ \", \"body\" : \"ㅇㅇㅇㅇ\"}, \"to\":\"/topics/ALL\"}";
+        String input = "{\"notification\" : {\"title\" : \"[똑닥똑닥]예약확정 알림 \", \"body\" : \"예약이 확정되었습니다. 자세한 사항은 어플에서 확인해주세요.\"}, \"to\":\""+token+"\"}";
+
+        OutputStream os = conn.getOutputStream();
+        
+        // 서버에서 날려서 한글 깨지는 사람은 아래처럼  UTF-8로 인코딩해서 날려주자
+        os.write(input.getBytes("UTF-8"));
+        os.flush();
+        os.close();
+
+        int responseCode = conn.getResponseCode();
+        System.out.println("\nSending 'POST' request to URL : " + url);
+        System.out.println("Post parameters : " + input);
+        System.out.println("Response Code : " + responseCode);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        // print result
+        System.out.println(response.toString());
+        
 		 return "redirect:hpModify?tab=1";
 	}
     

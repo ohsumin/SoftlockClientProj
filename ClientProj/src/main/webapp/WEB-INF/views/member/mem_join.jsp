@@ -468,8 +468,7 @@ $(function() {
 		          <input class="form-check-input" type="checkbox" name="user_agree">
 					약관을 모두 읽고 동의하였습니다.
 		        </label>
-		      </div> -->
-		    <div style="height:200px; border:1px solid">약관내용</div><br />
+		      </div> --><br />
 		    <button type="button" id="joinBtn" class="btn btn-primary btn-lg btn-block">회원가입</button><br /><br /><br />
 		</form:form>
 	</div>

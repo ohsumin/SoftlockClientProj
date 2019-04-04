@@ -37,7 +37,7 @@
 <div class="container">
 <input type="hidden" name="returnPage" value="" /><br /><br /><br /><br />
 <div style="width:1000px; height:100%; background-color:white; text-align:center; float:none; margin:0 auto;">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
    <ul class="social-network social-circle">
         <i class="fa fa-facebook"></i>
     </ul>      
@@ -55,9 +55,9 @@
       <a class="navbar-brand" href="#" >진료기록 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</a>
     </form>
   </div>
-</nav>
+</nav> -->      
 
-<br /><br /><br /><br />
+<!-- <br /><br /><br /><br />
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab1" href="../hospital/hpModify?tab=1">일반회원예약현황</a>
@@ -68,10 +68,13 @@
     <a class="nav-link" data-toggle="tab2" href="../hospital/hpModify?tab=2">회원정보변경</a>
   </li> 
 </ul>
+<br /> -->    
+<br />
+<br />
 <br />
    <div style="width:1000px; height:auto; background-color:white; float:none; margin:0 auto;">
       <form style="float:none; margin:0 auto; text-align:center; width:700px;">
-      <br /><br /><br />
+      
       <div class="logo">
          <h4>예약확정대기</h4>   
       </div><br /><br /><br />

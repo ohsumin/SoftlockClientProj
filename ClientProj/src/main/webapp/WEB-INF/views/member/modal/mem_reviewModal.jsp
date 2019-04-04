@@ -57,7 +57,6 @@ $(document).on("click", ".btn-lg", function () {
 });
 
 function func() {
-	alert('dd');
 	 $.ajax({
        type: "GET",
        url: "../member/review",
